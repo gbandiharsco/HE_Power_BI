@@ -1,14 +1,3 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/pbip/pbipProperties/1.0.0/schema.json",
-  "version": "1.0",
-  "artifacts": [
-    {
-      "report": {
-        "path": "AP Invoices.Report"
-      }
-    }
-  ],
-  "settings": {
-    "enableAutoRecovery": true
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6b0c8a7b0e85f5f27bd01fe55b008f6df286745cab87df57321aa669287e25a9
+size 290

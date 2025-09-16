@@ -1,14 +1,3 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/pbip/pbipProperties/1.0.0/schema.json",
-  "version": "1.0",
-  "artifacts": [
-    {
-      "report": {
-        "path": "Monthly SMU.Report"
-      }
-    }
-  ],
-  "settings": {
-    "enableAutoRecovery": true
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:0d6611b1115b840645348f84d44272cc3132b34883adb664b48cc30c4408b516
+size 290
