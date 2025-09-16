@@ -1,0 +1,453 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 2737.717170913601,
+            "y": 834.41056102040852
+          },
+          "nodeIndex": "_Currency",
+          "nodeLineageTag": "7e97ad6f-790c-42e9-bbb7-43bb06d8ca51",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3021.717170913601,
+            "y": 846.41056102040852
+          },
+          "nodeIndex": ".Measures",
+          "nodeLineageTag": "f1f45983-d7c8-428d-9ac1-7e34990f7e67",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3305.717170913601,
+            "y": 846.41056102040852
+          },
+          "nodeIndex": "Allowed Days",
+          "nodeLineageTag": "2a25f4e7-cc48-4ab7-8c22-41d712fdcc62",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 284.51079992848207,
+            "y": 1081.9514223192477
+          },
+          "nodeIndex": "DWH D_Security ORG",
+          "nodeLineageTag": "e134c643-b1d2-42a2-b2df-9a558d32d029",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10,
+            "y": 826.52462947096114
+          },
+          "nodeIndex": "DWH D_Security OU",
+          "nodeLineageTag": "c69e2d88-eb62-4476-8682-12545262771f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 879.95156408137041,
+            "y": -10
+          },
+          "nodeIndex": "PBI V_D_BANK",
+          "nodeLineageTag": "7a6fb5dc-180b-4719-8db8-7dd5279c643a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 589.9376300427939,
+            "y": 185.27851888758551
+          },
+          "nodeIndex": "PBI V_D_Date",
+          "nodeLineageTag": "d5e0ea66-3a1b-4d5a-8940-c74b6a4af381",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 298.88861119856386,
+            "y": 244.61503505894052
+          },
+          "nodeIndex": "PBI V_D_EMPLOYEE",
+          "nodeLineageTag": "51cadc03-0d8e-4ef6-a992-359fe33d3462",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1061.4987365238369,
+            "y": 1130.0221862451931
+          },
+          "nodeIndex": "PBI V_D_Finance_Location",
+          "nodeLineageTag": "99d6b77f-d3ba-4164-99ad-1b95dd27c2c2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1350.2197921844106,
+            "y": 1130.0427170081605
+          },
+          "nodeIndex": "PBI V_D_GL_Account",
+          "nodeLineageTag": "5ab53565-3eae-4f35-9112-97b0c7ba4432",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1144.1815700635359,
+            "y": 1486.821122040817
+          },
+          "nodeIndex": "PBI V_D_Inventory_Org",
+          "nodeLineageTag": "f8f23750-336b-4ede-bcf4-50d12e3ac116",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 771.91230934566238,
+            "y": 1102.7953840383661
+          },
+          "nodeIndex": "PBI V_D_OPERATING_UNIT",
+          "nodeLineageTag": "f39d94fd-3edb-4445-b62f-7e1744d37755",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1918.8604885031039,
+            "y": 638.58028471851549
+          },
+          "nodeIndex": "PBI V_D_PAYMENT_TERMS",
+          "nodeLineageTag": "d06e2ee5-ba28-441b-9288-a2418331d51a",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2463.717170913601,
+            "y": 751.27754119347776
+          },
+          "nodeIndex": "PBI V_D_PRODUCT",
+          "nodeLineageTag": "19b63448-a9a2-4d74-bbed-01bef25aa005",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1409.583667818682,
+            "y": 493.54200208806651
+          },
+          "nodeIndex": "PBI V_D_Status_P2P",
+          "nodeLineageTag": "82461585-dd80-44f2-ae96-50251f50e68a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1119.9054385015379,
+            "y": 698.89069431199721
+          },
+          "nodeIndex": "PBI V_D_SUPPLIER",
+          "nodeLineageTag": "1428adf1-cb51-4c15-b372-10c2fed0a739",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2086.402704376304,
+            "y": 1445.8930693397951
+          },
+          "nodeIndex": "PBI V_D_Types_P2P",
+          "nodeLineageTag": "310a5cc8-9ac3-4d5c-b223-0e3988602f5c",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1105.0040029821689,
+            "y": 268.73810662784308
+          },
+          "nodeIndex": "PBI V_D_USER",
+          "nodeLineageTag": "950cdf57-880f-498f-bc9c-a4d3f5c8b4a6",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3589.717170913601,
+            "y": 774.41056102040852
+          },
+          "nodeIndex": "PBI V_DG_AP_INVOICE_HOLDS_MAX",
+          "nodeLineageTag": "11cd4272-8c87-4d1a-b556-e22188763bf2",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1673.431988467795,
+            "y": 1446.4764322555952
+          },
+          "nodeIndex": "PBI V_DG_AP_INVOICES",
+          "nodeLineageTag": "77144833-891e-467b-8936-00ca12e0a7aa",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2417.2277053533994,
+            "y": 446.60598607996053
+          },
+          "nodeIndex": "PBI V_DG_Expense_Audit",
+          "nodeLineageTag": "4d840a84-f55a-4f4f-9d41-0a33fc6eafa7",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2376.2820350166794,
+            "y": 1108.4791519601267
+          },
+          "nodeIndex": "PBI V_DG_PURCHASE_ORDER_LINES",
+          "nodeLineageTag": "9691b54a-3dfb-405c-bce4-b32a5e80b030",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1918.3613990483348,
+            "y": 1089.2820647136609
+          },
+          "nodeIndex": "PBI V_F_AP_Invoice_Dist",
+          "nodeLineageTag": "0e2de09b-6f3f-4106-8a42-a91692984398",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1391.6832692231144,
+            "y": 139.2711217635333
+          },
+          "nodeIndex": "PBI V_F_AP_INVOICE_PAYMENTS",
+          "nodeLineageTag": "24f058b0-b921-48b5-8a1e-3760a133c32d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3873.717170913601,
+            "y": 748.41056102040852
+          },
+          "nodeIndex": "PBI V_F_AP_INVOICES",
+          "nodeLineageTag": "d4c3fc17-406c-42ce-96ed-b419066ff883",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1628.9553577494478,
+            "y": 773.04782083646455
+          },
+          "nodeIndex": "PBI V_F_AP_Invoices_WAVG_Days",
+          "nodeLineageTag": "75659480-e136-4769-9782-a925a442cc21",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 299.96516296189958,
+            "y": 474.49983068061306
+          },
+          "nodeIndex": "PBI V_F_PURCHASE_GRNI",
+          "nodeLineageTag": "ac80eb3f-8d34-4b24-892c-104a90554a02",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4147.717170913601,
+            "y": 822.41056102040852
+          },
+          "nodeIndex": "Parameter",
+          "nodeLineageTag": "5ee9d5c1-c2dd-4a4f-a6de-7875bd8fe1b5",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4431.717170913601,
+            "y": 822.41056102040852
+          },
+          "nodeIndex": "Parameter 2",
+          "nodeLineageTag": "1160a241-73bb-484c-937e-f6747e3778f2",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4715.717170913601,
+            "y": 748.41056102040852
+          },
+          "nodeIndex": "PBI V_F_Open_PO",
+          "nodeLineageTag": "696f57e6-c36b-46d2-9f03-a67134392464",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 294,
+            "y": 28
+          },
+          "nodeIndex": "PBI V_D_BANK",
+          "nodeLineageTag": "7a6fb5dc-180b-4719-8db8-7dd5279c643a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10,
+            "y": -10
+          },
+          "nodeIndex": "PBI V_F_AP_INVOICE_PAYMENTS",
+          "nodeLineageTag": "24f058b0-b921-48b5-8a1e-3760a133c32d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 1",
+  "defaultDiagram": "All tables"
+}

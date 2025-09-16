@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "AP Invoices"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e27d7170-9cb8-4e34-93ef-95012b28df08"
+  }
+}

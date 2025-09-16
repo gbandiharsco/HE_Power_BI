@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Monthly SMU"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ce90dddc-c3f1-408b-9258-23ed1f31ea3f"
+  }
+}

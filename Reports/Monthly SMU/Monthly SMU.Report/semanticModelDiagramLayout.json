@@ -1,0 +1,789 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 10373.673801529974,
+            "y": 1982.8513335803459
+          },
+          "nodeIndex": "_Currency Prompt",
+          "nodeLineageTag": "74dfacc9-3c4b-47a3-9462-c73f77cd97dc",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3444.5074695808016,
+            "y": 1896.8513335803459
+          },
+          "nodeIndex": "AMAX Work Order Master",
+          "nodeLineageTag": "c3865e48-cff1-4277-94b3-df7413c9432a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3852.1054891072235,
+            "y": 1896.8513335803459
+          },
+          "nodeIndex": "Current Date",
+          "nodeLineageTag": "503cb8de-8440-4b14-a1d3-ec0d934a9e86",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2199.6684141869637,
+            "y": 1316.1618637770123
+          },
+          "nodeIndex": "D_Activity",
+          "nodeLineageTag": "3d4e944d-5182-427b-a4d3-490328930276",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1617.4375311505619,
+            "y": 1047.6044075981915
+          },
+          "nodeIndex": "D_Asset",
+          "nodeLineageTag": "26b6f371-f1fe-474f-9fa1-2a1022714aee",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3017.8833952187642,
+            "y": 1746.8715526638823
+          },
+          "nodeIndex": "D_Asset_Activity",
+          "nodeLineageTag": "db90611e-460d-420e-8bbf-f20a95476571",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3036.9094500543797,
+            "y": 1262.2510347301743
+          },
+          "nodeIndex": "D_Asset_Meter",
+          "nodeLineageTag": "da85b08a-f09f-4d49-ad23-b40c8d26e1d9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 901.006558748009,
+            "y": 1188.7234915543368
+          },
+          "nodeIndex": "D_Date",
+          "nodeLineageTag": "b637f3a3-69fc-44f2-94b7-fbca104b9024",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 418.620517933708,
+            "y": 2642.5850453554608
+          },
+          "nodeIndex": "D_Date WO Completion",
+          "nodeLineageTag": "2b71ca38-d208-4f08-b647-7462cc0951e5",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 901.006558748009,
+            "y": 866.42305037934568
+          },
+          "nodeIndex": "D_DateCopy",
+          "nodeLineageTag": "e25a1a00-c107-4c96-9cd1-d8742df39354",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1449.3518208415389,
+            "y": 2479.847610116
+          },
+          "nodeIndex": "D_Employee",
+          "nodeLineageTag": "4e698543-67f8-4e13-8f36-a5841f9058a7",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1161.9641067815455,
+            "y": 311.34409126488219
+          },
+          "nodeIndex": "D_FA_Asset",
+          "nodeLineageTag": "5b257a1e-d749-4ffa-bb89-e7505ea48048",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 141.94931448789384,
+            "y": 369.76801338074046
+          },
+          "nodeIndex": "D_GL_Account",
+          "nodeLineageTag": "9263219e-b16c-4524-93a0-f4478a3a0537",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1319.627076681717,
+            "y": 1124.3768828194902
+          },
+          "nodeIndex": "D_Organization",
+          "nodeLineageTag": "0fb3d02e-c746-4677-894e-43f5d87a1f05",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2163.9625560153568,
+            "y": 18.8649951326031
+          },
+          "nodeIndex": "D_PM_Schedule",
+          "nodeLineageTag": "7c7cb8ea-3ea5-499b-9988-f61c137b702c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2618.2889321206717,
+            "y": 976.89711192327263
+          },
+          "nodeIndex": "D_Resource",
+          "nodeLineageTag": "a964a394-1bed-431c-b368-109d544e78c3",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2617.3196999212942,
+            "y": 665.86370409537949
+          },
+          "nodeIndex": "D_WorkOrder",
+          "nodeLineageTag": "0362ca36-609b-4356-b1a7-93b7b347f0c4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1186.2004051585486,
+            "y": 2479.8476101160004
+          },
+          "nodeIndex": "D_WorkOrder_DWH",
+          "nodeLineageTag": "748f4de5-95db-4378-b45d-d6c3f155b8b0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 969.27055520055364,
+            "y": 1995.2270921822922
+          },
+          "nodeIndex": "F_Asset_Costs_SMU",
+          "nodeLineageTag": "792829aa-ed91-4ba8-a671-a4c51961d1f1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 242.71291864388104,
+            "y": 1188.7234915543368
+          },
+          "nodeIndex": "F_Asset_Depreciation",
+          "nodeLineageTag": "91150f40-32e4-42ad-8695-f6c4f8cc50bf",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1781.0478962532557,
+            "y": 1368.6846404226467
+          },
+          "nodeIndex": "F_Asset_Meter_Readings",
+          "nodeLineageTag": "c4257d90-09e7-4217-a7b2-16f1d5e221a2",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1891.941497859541,
+            "y": 1009.1051170708573
+          },
+          "nodeIndex": "F_Asset_Meter_Readings_Ltd",
+          "nodeLineageTag": "9bff6596-882f-4c64-95ec-8e991850e40f",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2350.7844515696665,
+            "y": 503.48551306631111
+          },
+          "nodeIndex": "F_Asset_PM_Prediction",
+          "nodeLineageTag": "29b03dcf-beb5-42ee-88aa-910f4a764091",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1198.8170132168539,
+            "y": 1510.6065742485841
+          },
+          "nodeIndex": "F_Asset_SMU_Hours",
+          "nodeLineageTag": "39dad85d-6027-4aa5-a77e-c6c273fce41a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1502.4858049748832,
+            "y": 1492.5471962364518
+          },
+          "nodeIndex": "F_Asset_SMU_Hours_0",
+          "nodeLineageTag": "7e052f52-c42a-478d-92d1-eaf6ac888e0d",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1905.1509638121433,
+            "y": 432.75638671629423
+          },
+          "nodeIndex": "F_ASSET_SMU_HOURS_12_Mon",
+          "nodeLineageTag": "f2979dda-de10-4cc4-88bc-093626194406",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4259.7035086336455,
+            "y": 1896.8513335803459
+          },
+          "nodeIndex": "F_Asset_SMU_Hours_LTD",
+          "nodeLineageTag": "25b8e5c6-58d7-49dd-a3bb-ef0cb980c1ce",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1781.0478962532557,
+            "y": 1718.9891460948916
+          },
+          "nodeIndex": "F_Asset_Status_Detail",
+          "nodeLineageTag": "b3cad5f8-0898-4f51-97b8-cf08a3f2dbaf",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1198.8170132168539,
+            "y": 723.38960829389578
+          },
+          "nodeIndex": "F_Component_Details_Capital_Rebuild",
+          "nodeLineageTag": "cb6057dc-8655-43fa-864b-cf37ebe146c7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1614.524806136189,
+            "y": 562.9838896644834
+          },
+          "nodeIndex": "F_Downtime",
+          "nodeLineageTag": "a4b157d9-96a1-483f-97ef-f94a03b38cb4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1567.8102922463877,
+            "y": 78.3633717307755
+          },
+          "nodeIndex": "F_Failures",
+          "nodeLineageTag": "3b1435e7-2d35-4be3-b486-6481bdad34c5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 63.765522880592926,
+            "y": 854.38853131444853
+          },
+          "nodeIndex": "F_GL_Transactions",
+          "nodeLineageTag": "a59c54b2-d9fb-449c-a7d3-8a4f36228e11",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 210.9709548632618,
+            "y": 1532.9650519481229
+          },
+          "nodeIndex": "F_HP_Forecast",
+          "nodeLineageTag": "edee9a8c-83fe-45f3-bda0-65067ff8b179",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2198.6991819875861,
+            "y": 988.10603100001913
+          },
+          "nodeIndex": "F_Planned_Work_Prediction",
+          "nodeLineageTag": "7820f8e8-db1f-4d36-97bc-bf8651a562b4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1404.3571185875321,
+            "y": 1995.2270921822919
+          },
+          "nodeIndex": "F_Resource_Transaction",
+          "nodeLineageTag": "323920ee-71ba-4620-8ab9-9d93b5fb7952",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 876.8136334488795,
+            "y": 0
+          },
+          "nodeIndex": "F_Service_Accuracy",
+          "nodeLineageTag": "05391cea-12ca-45e9-af2f-5bf3acfb5cd1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2369.5543358378609,
+            "y": 1800.7823817107203
+          },
+          "nodeIndex": "F_Service_Prediction",
+          "nodeLineageTag": "82f516ae-f0cd-45a0-8499-f501e474f7d6",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 482.38604081430094,
+            "y": 969.241035867416
+          },
+          "nodeIndex": "F_WorkOrder_Costs",
+          "nodeLineageTag": "3dd103b1-1ba0-4333-b8c5-fc4c68b6e2c5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 629.59147279696981,
+            "y": 1673.3440094880448
+          },
+          "nodeIndex": "F_WorkOrder_Hours",
+          "nodeLineageTag": "562febb5-80aa-4c8e-99ac-35205875c97d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4667.3015281600674,
+            "y": 1896.8513335803459
+          },
+          "nodeIndex": "Fact Measures",
+          "nodeLineageTag": "3ec7ef4b-8289-4137-a4d7-56e5d68ad738",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9150.8797429507085,
+            "y": 1970.8513335803459
+          },
+          "nodeIndex": "GL Location Fields",
+          "nodeLineageTag": "65a91d98-7669-47e8-83a8-f5eb85306e73",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5890.0955867393332,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "Indicators",
+          "nodeLineageTag": "8eb26d16-e8dd-4abc-b899-87b22e606ca6",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6297.6936062657551,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "KPI Avoidable Help Guide",
+          "nodeLineageTag": "e5c0edcb-3242-425c-b883-8ca8c39b9d58",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6705.291625792177,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "KPI Help Maint Cost / SMU",
+          "nodeLineageTag": "cdd5a031-afe4-4825-ac55-b6992808b437",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7112.8896453185989,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "KPI Help MC",
+          "nodeLineageTag": "68e18312-d5d5-454e-81f0-503a94f94ece",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7520.4876648450208,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "KPI Help SA",
+          "nodeLineageTag": "274dafa8-58ef-4de0-8451-dba999af375b",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5074.8995476864893,
+            "y": 1898.8513335803459
+          },
+          "nodeIndex": "KPI Help Site",
+          "nodeLineageTag": "9e131fc2-2667-42e9-9a89-015b4ec4ade5",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7928.0856843714428,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "KPI Help SMU",
+          "nodeLineageTag": "62f61344-60ec-4c5b-b890-de152bdf1192",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8335.6837038978647,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "KPI Outliers Help",
+          "nodeLineageTag": "80ae24f8-a512-413b-b5e8-a04368dc14d3",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5482.4975672129112,
+            "y": 1946.8513335803459
+          },
+          "nodeIndex": "LKP_Asset_Model",
+          "nodeLineageTag": "7cf93328-e0f4-4705-bcc4-c05f40675f80",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10781.271821056396,
+            "y": 1982.8513335803459
+          },
+          "nodeIndex": "LKP_WO_Status",
+          "nodeLineageTag": "0821c2ab-8411-445b-a3fd-a1f3b0ce7979",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 3044.8039125166461
+          },
+          "nodeIndex": "LKP_WO_Type",
+          "nodeLineageTag": "04a82d25-5e6d-4b2f-90b1-660eeb308fc1",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9558.47776247713,
+            "y": 1970.8513335803459
+          },
+          "nodeIndex": "Maintenance Types",
+          "nodeLineageTag": "7eec0036-8ac1-4a69-9ece-e6cf98494901",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 9966.0757820035524,
+            "y": 1970.8513335803459
+          },
+          "nodeIndex": "Parent Asset Fields",
+          "nodeLineageTag": "1d631816-2ffa-45fe-9d11-0189b12854b0",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11188.869840582818,
+            "y": 1982.8513335803459
+          },
+          "nodeIndex": "Quantity Prompt",
+          "nodeLineageTag": "0821356c-868c-417f-a913-1e50c3f46c8a",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11596.46786010924,
+            "y": 1982.8513335803459
+          },
+          "nodeIndex": "Slicer Table for ACH Measures",
+          "nodeLineageTag": "388da5a0-4681-4d47-bd24-563a71939b53",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8743.2817234242866,
+            "y": 1958.8513335803459
+          },
+          "nodeIndex": "Summary Page help",
+          "nodeLineageTag": "da35079f-bb82-4927-818b-47064c82e63e",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 347.46448598996994,
+            "y": 2157.9645274217528
+          },
+          "nodeIndex": "Workorder_Costs",
+          "nodeLineageTag": "4d9b05ea-9ae1-47ed-9c6a-3c7de1983d9c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 617.65960189154339,
+            "y": 484.620517933708
+          },
+          "nodeIndex": "Workorder_Hours",
+          "nodeLineageTag": "9b73dde9-59d0-4903-832a-1f6f92938eb4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
