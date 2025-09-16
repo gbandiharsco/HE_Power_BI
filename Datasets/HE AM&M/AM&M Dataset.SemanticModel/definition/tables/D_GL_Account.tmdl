@@ -1,0 +1,225 @@
+table D_GL_Account
+	lineageTag: 9263219e-b16c-4524-93a0-f4478a3a0537
+
+	column GL_Entity
+		dataType: string
+		lineageTag: 71e3a3fe-60d3-482c-9d9a-344427de357b
+		summarizeBy: none
+		sourceColumn: GL_Entity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Number'
+		dataType: string
+		lineageTag: 3e2217d5-33bf-4115-b655-388161e0dcbb
+		summarizeBy: none
+		sourceColumn: GL Account Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Business_Unit
+		dataType: string
+		lineageTag: 0df178e1-df53-4f7c-8eb9-d1da14152418
+		summarizeBy: none
+		sourceColumn: GL_Business_Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Object_Account
+		dataType: string
+		lineageTag: 857b220c-aef3-4710-8f31-6e51d06b28cb
+		summarizeBy: none
+		sourceColumn: GL_Object_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Desc
+		dataType: string
+		lineageTag: 671d661f-fed7-4a11-b1d2-3fd1174d88c2
+		summarizeBy: none
+		sourceColumn: GL_Account_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Subsidary'
+		dataType: string
+		lineageTag: fd0c9b17-fe01-4507-8007-25d4c1ba073f
+		summarizeBy: none
+		sourceColumn: GL Subsidary
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Currency Code'
+		dataType: string
+		lineageTag: 3c0dd980-7c7a-4044-9f57-c4e0ddc22f58
+		summarizeBy: none
+		sourceColumn: GL Currency Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'High Level Account Type'
+		dataType: string
+		lineageTag: 914610eb-db0e-4ab7-822f-045904b0b969
+		summarizeBy: none
+		sourceColumn: High Level Account Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Number OneChart'
+		dataType: string
+		lineageTag: eb68d8bd-728e-45bc-915e-3c0c722c9639
+		summarizeBy: none
+		sourceColumn: GL Account Number OneChart
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Number ASLEE'
+		dataType: string
+		lineageTag: 9f9ad63a-4c84-44bd-8427-fcb7062faf4b
+		summarizeBy: none
+		sourceColumn: GL Account Number ASLEE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Group'
+		dataType: string
+		lineageTag: 735d64b0-b9ec-4e87-826c-dd047d703215
+		summarizeBy: none
+		sourceColumn: GL Account Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Group Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 235eb2f6-e804-4b9a-b6ee-fd784ebce1ad
+		summarizeBy: sum
+		sourceColumn: GL Account Group Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Sub Group'
+		dataType: string
+		lineageTag: b99a21ef-7b24-42d7-a580-4f1b27193264
+		summarizeBy: none
+		sourceColumn: GL Account Sub Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Operating_Group
+		dataType: string
+		lineageTag: 34d0e134-d391-4d62-8a9e-d25451f6643c
+		summarizeBy: none
+		sourceColumn: GL_Operating_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT
+		dataType: string
+		lineageTag: 5f491348-9669-4850-a3c2-7a6bb5828f4e
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Group_AMM
+		dataType: string
+		lineageTag: ad1e11de-971d-4f8b-9a0a-a91f58d63ce4
+		summarizeBy: none
+		sourceColumn: GL_Account_Group_AMM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revised_Account_Group_AMM = ```
+			SWITCH(D_GL_Account[GL_Account_Group_AMM1], 
+			"Depr. & Amort.",	"Depreciation",
+			"DEPRECIATION",		"Depreciation",
+			"Diesel",		    "Fuel",
+			"Equip. Maint.",	"Maintenance",
+			"Equip. Rentals",	"Rental",
+			"EXCLUDE",	    	"Exclude",
+			"EXTERNAL LABOUR",	"External Labour",
+			"Fixed Assets",		"Exclude",
+			"FUEL",			    "Fuel",
+			"INTERNAL LABOUR",	"Internal Labour",
+			"LST",			    "Exclude",
+			"MAINTENANCE",		"Maintenance",
+			"N/A",			    "Exclude",
+			"Net Inventory",	"Exclude",
+			"OIL",			    "Oil",
+			"OTHER",		    "Other",
+			"Other COS",		"Other",
+			"RENTAL",	    	"Rental",
+			"Sales",	    	"Exclude",
+			"TYRE",		    	"Tyre",
+			"Tyres",	    	"Tyre",
+			"Exclude"
+			)
+			```
+		lineageTag: efa1ce4d-b465-4e61-86e0-93ce65fd737f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Location
+		dataType: string
+		lineageTag: adda20dd-b839-44bf-aea9-d11ffcabc350
+		summarizeBy: none
+		sourceColumn: GL_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Activity
+		dataType: string
+		lineageTag: c8d31eb9-91eb-4d1b-9344-6a884efef2a2
+		summarizeBy: none
+		sourceColumn: GL_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Long_GL_ACCOUNT_Number = D_GL_Account[GL_Entity] &"-"& D_GL_Account[GL_Location] &"-"& D_GL_Account[GL_Activity] &"-"& D_GL_Account[GL Account Number] &"-00000-00-000-00000"
+		lineageTag: 33b9f3ae-ee64-41eb-ab84-c54108a63cbc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column COA_CAT14
+		dataType: string
+		lineageTag: ff5c5759-b148-41f4-97ca-ae436acb7279
+		summarizeBy: none
+		sourceColumn: COA_CAT14
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Group_AMM1 =
+			D_GL_Account[GL_Account_Group_AMM]
+			
+			/*If(
+			
+			 D_GL_Account[COA_CAT14] = "" && D_GL_Account[GL_Account_Group_AMM]= "OTHER", "EXCLUDE",
+			
+			  If(D_GL_Account[COA_CAT14] = "220" && D_GL_Account[GL_Account_Group_AMM]= "OTHER", "EXCLUDE",D_GL_Account[GL_Account_Group_AMM]))*/
+		lineageTag: dd038e64-0353-4754-ad6c-cc5d4233583e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_GL_Account-079c38ba-e35f-4f38-9c2a-e8a39ea39ee9 = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_D_GL_Account = Source{[Schema="DWH",Item="D_GL_Account"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DWH_D_GL_Account,{"GL_Entity", "GL_Location", "GL_Activity", "GL_Account_Number", "GL_Business_Unit", "GL_Object_Account", "GL_Account_Desc", "GL_Subsidary", "GL_Currency_Code", "High_Level_Account_Type", "GL_Account_Number_OneChart", "GL_Account_Number_ASLEE", "GL_Account_Group", "GL_Account_Group_Sort", "GL_Account_Sub_Group", "GL_Operating_Group", "KEY_GL_ACCOUNT", "GL_Account_Group_AMM", "COA_CAT14"}),
+				    #"Renamed Columns3" = Table.RenameColumns(#"Removed Other Columns",{{"GL_Account_Group_Sort", "GL Account Group Sort"}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Renamed Columns3",{{"GL_Account_Number", "GL Account Number"}, {"GL_Account_Group", "GL Account Group"}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Renamed Columns",{{"GL_Currency_Code", "GL Currency Code"}}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Renamed Columns1",{{"GL_Subsidary", "GL Subsidary"}, {"High_Level_Account_Type", "High Level Account Type"}, {"GL_Account_Number_OneChart", "GL Account Number OneChart"}, {"GL_Account_Number_ASLEE", "GL Account Number ASLEE"}, {"GL_Account_Sub_Group", "GL Account Sub Group"}})
+				in
+				    #"Renamed Columns2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

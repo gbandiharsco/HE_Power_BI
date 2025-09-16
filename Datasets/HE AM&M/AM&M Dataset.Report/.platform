@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "AM&M Dataset"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9a840185-9eb3-4355-8d05-0a844e5ff3d8"
+  }
+}

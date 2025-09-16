@@ -1,0 +1,66 @@
+table D_Employee
+	lineageTag: 4e698543-67f8-4e13-8f36-a5841f9058a7
+
+	column KEY_Employee
+		dataType: string
+		lineageTag: e2a28406-548b-4f57-b6d5-0269d45884b2
+		summarizeBy: none
+		sourceColumn: KEY_Employee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employee_Id
+		dataType: string
+		lineageTag: 4539730c-a22e-4431-89ac-b85ad24a6ee4
+		summarizeBy: none
+		sourceColumn: Employee_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Employee_Number
+		dataType: string
+		lineageTag: dd52ba44-af43-4eef-9d24-bcdb9e186864
+		summarizeBy: none
+		sourceColumn: Employee_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Full_Name
+		dataType: string
+		lineageTag: 95975bc9-6ce0-4cce-8059-a8eac6a0320a
+		summarizeBy: none
+		sourceColumn: Full_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Payroll_Number
+		dataType: string
+		lineageTag: f5fa872c-26b7-4c30-95e6-1494da840fd8
+		summarizeBy: none
+		sourceColumn: Payroll_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: d6ac757b-7df0-4744-8b2e-8b53a774348e
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Employee = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    DWH_D_Employee = Source{[Schema="DWH",Item="D_Employee"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DWH_D_Employee,{"KEY_Employee", "Employee_Id", "Employee_Number", "Full_Name", "Payroll_Number", "SourceSystemID"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

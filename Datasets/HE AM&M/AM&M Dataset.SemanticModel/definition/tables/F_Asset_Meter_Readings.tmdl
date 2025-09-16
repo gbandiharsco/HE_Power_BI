@@ -1,0 +1,222 @@
+/// SELECT * FROM DWH.F_Asset_Meter_Readings
+table F_Asset_Meter_Readings
+	lineageTag: c4257d90-09e7-4217-a7b2-16f1d5e221a2
+
+	measure MAX_Meter_Reading_Date =
+			
+			CALCULATE (
+			    MAX ( F_Asset_Meter_Readings[Meter_Reading_Date] ),
+			    ALLEXCEPT (
+			        F_Asset_Meter_Readings,
+			        F_Asset_Meter_Readings[KEY_Site],
+			        F_Asset_Meter_Readings[KEY_Asset],
+			        F_Asset_Meter_Readings[KEY_Meter],
+			        F_Asset_Meter_Readings[Year_Month]
+			    )
+			)
+		formatString: General Date
+		lineageTag: 5ed8e4c0-ae22-450e-9465-bc785f1df18f
+
+	measure MAX_Meter_Reading =
+			
+			CALCULATE (
+			    MAX ( F_Asset_Meter_Readings[Meter_Reading] ),
+			    ALLEXCEPT (
+			        F_Asset_Meter_Readings,
+			        F_Asset_Meter_Readings[KEY_Site],
+			        F_Asset_Meter_Readings[KEY_Asset],
+			        F_Asset_Meter_Readings[KEY_Meter],
+			        F_Asset_Meter_Readings[Year_Month]
+			    )
+			)
+		formatString: 0
+		lineageTag: 81f2df51-980a-4e19-803f-231da18cd52f
+
+	measure Life_to_Date_Reading =
+			
+			CALCULATE (
+			    MAX ( F_Asset_Meter_Readings[Life_to_Date] ),
+			    ALLEXCEPT (
+			        F_Asset_Meter_Readings,
+			        F_Asset_Meter_Readings[KEY_Site],
+			        F_Asset_Meter_Readings[KEY_Asset],
+			        F_Asset_Meter_Readings[KEY_Meter]
+			    )
+			)
+		formatString: 0
+		lineageTag: c6ced656-35af-4a06-aec8-0dea2aab969d
+
+	measure 'Max Meter reading' =
+			
+			CALCULATE (
+			    SUM ( F_Asset_Meter_Readings[Meter_Reading] ),
+			    F_Asset_Meter_Readings[Meter_Reading_Date]
+			        = MAX ( F_Asset_Meter_Readings[Meter_Reading_Date] ),
+			    F_Asset_Meter_Readings[Used_For_SMU] = "Y"
+			)
+			/*CALCULATE(sum(F_Asset_Meter_Readings[Meter_Reading]),F_Asset_Meter_Readings[Meter_Reading_Date] = max(F_Asset_Meter_Readings[Meter_Reading_Date]))*/
+		formatString: 0
+		lineageTag: 190e6697-44ef-4633-a113-a65bb160cc01
+
+	column Country_Code
+		dataType: string
+		isHidden
+		lineageTag: 2490be95-4d1c-4e4a-ab38-97e80515b048
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		isHidden
+		lineageTag: a074ef0a-73ab-4e57-9963-ff0009ad2e69
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		isHidden
+		lineageTag: 06f7693c-cd8f-498a-9a1c-7b77f526cf5b
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		isHidden
+		lineageTag: 9a61e5c3-960e-4cda-a6ff-c984c5c9593c
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 30e266f0-e6da-4a3e-aa40-79c9652ffea7
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_Reading
+		dataType: int64
+		formatString: 0
+		lineageTag: 2086a8c0-3e2e-498f-bcb5-d0bea4dd72de
+		summarizeBy: max
+		sourceColumn: Meter_Reading
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = User
+
+	column Meter_Reading_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f5eba2e8-a9fc-4a0a-aa4d-2590b5ec626a
+		summarizeBy: none
+		sourceColumn: Meter_Reading_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Current_Reading
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 72a22c48-44e5-48f4-a01f-a72ad827d8e1
+		summarizeBy: max
+		sourceColumn: Current_Reading
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column Current_Reading_Date
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 0b4ee370-e4f9-43ba-98fa-28fdff54651b
+		summarizeBy: none
+		sourceColumn: Current_Reading_Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Life_To_Date
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c285f97-7522-4499-b09c-296a27f55d9c
+		summarizeBy: max
+		sourceColumn: Life_To_Date
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = User
+
+	column Incremental_Reading
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f2a8304-83e4-4a8a-8726-26d60c9e4d63
+		summarizeBy: sum
+		sourceColumn: Incremental_Reading
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Meter
+		dataType: string
+		isHidden
+		lineageTag: 6cfeeedd-db90-46cc-b1a4-f53d6e2ffd62
+		summarizeBy: none
+		sourceColumn: KEY_Meter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Used_For_SMU
+		dataType: string
+		lineageTag: 7d2e58f7-ced5-4fd5-a388-57ca227aae6e
+		summarizeBy: none
+		sourceColumn: Used_For_SMU
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_Meter_Readings-832bfafc-6517-4330-8c63-c077cadf0f63 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    // SELECT * FROM DWH.F_Asset_Meter_Readings
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="SELECT * FROM DWH.F_Asset_Meter_Readings"]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each true),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Country_Code", "KEY_Site", "KEY_Asset", "KEY_Meter", "Asset_Number", "Year_Month", "Meter_Reading", "Meter_Reading_Date", "Current_Reading", "Current_Reading_Date", "Life_To_Date", "Incremental_Reading", "Used_For_SMU"})
+				    //#"Removed Other Columns" = Table.SelectColumns(DWH_F_Asset_Meter_Readings,{"Country_Code", "KEY_Site", "KEY_Asset", "KEY_Meter", "Asset_Number", "Year_Month", "Meter_ID", "Meter_Reading", "Meter_Reading_Date", "Current_Reading", "Current_Reading_Date", "Life_To_Date", "Incremental_Reading", "Used_For_SMU"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

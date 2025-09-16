@@ -1,0 +1,69 @@
+table F_Asset_SMU_Hours_0
+	lineageTag: 7e052f52-c42a-478d-92d1-eaf6ac888e0d
+
+	column KEY_Site
+		dataType: string
+		lineageTag: a44f3618-f667-4502-a7aa-20424b7680f9
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: f2e39c3a-972e-48a3-92c3-a234d7142160
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: c3276c09-eb6a-4066-ac2c-a2aca8098048
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 66f4e473-ac6f-43f3-8afd-7fac89460c68
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_Hours
+		dataType: int64
+		formatString: 0
+		lineageTag: 721c5bc0-5bfe-4f67-9a4f-e568b63889f0
+		summarizeBy: sum
+		sourceColumn: SMU_Hours
+
+		changedProperty = DataType
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Num_Key = F_Asset_SMU_Hours_0[Year_Month] & "01"
+		lineageTag: dce7158e-ddeb-4757-b744-15ffd243eb4c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_SMU_Hours_0-e0ffe0a7-a268-4075-9d4e-7389fe75b837 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName", [Query="select * from DWH.F_Asset_SMU_Hours_0 where Year_Month >= '"&P_YYYYMM_From&"'"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"KEY_Site", "KEY_Asset", "Asset_Number", "Year_Month", "SMU_Hours"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([Year_Month] = "202405") and ([KEY_Site] = "MX~083~45" or [KEY_Site] = "MX~085~45" or [KEY_Site] = "MX~089~45" or [KEY_Site] = "MX~091~45" or [KEY_Site] = "MX~093~45" or [KEY_Site] = "MX~140~45"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

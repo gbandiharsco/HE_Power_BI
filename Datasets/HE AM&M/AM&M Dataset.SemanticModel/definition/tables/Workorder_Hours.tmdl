@@ -1,0 +1,97 @@
+table Workorder_Hours
+	lineageTag: 9b73dde9-59d0-4903-832a-1f6f92938eb4
+
+	column Key_WorkOrder
+		lineageTag: b7b4c830-5946-4032-b2c7-fcd12dc58b46
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_WorkOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Number
+		lineageTag: b2f150b7-a468-4c49-a2bd-5801b733ab26
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WorkOrder_Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Asset
+		lineageTag: c58665b7-4f46-4b2d-8ef6-fb8027a3ec05
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_Asset]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_site
+		lineageTag: aea64b42-a193-4e5a-8bae-354287d5a589
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_site]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workorder_Date
+		formatString: General Date
+		lineageTag: 6f021b41-f2ca-44f1-94fe-44a8f0cdb503
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Workorder_Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workorder_Completion_Date
+		formatString: mm/dd/yyyy
+		lineageTag: 18ee1404-0f2c-45a9-933f-69515e6fe366
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Workorder_Completion_Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Hours
+		lineageTag: 19e26808-52aa-49e4-afd8-8e04d82202e0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Hours]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Year_Month = Format(Workorder_Hours[Workorder_Date],"YYYYMM")
+		lineageTag: 49a567f9-921a-465e-86d6-49143691f77b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Datekey = Format(Workorder_Hours[Workorder_Date],"YYYYMMDD")
+		lineageTag: b7a20e6f-bcdd-420b-a54b-a6e44e41bf55
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Actual_Hours = If(ISBLANK(Workorder_Hours[Hours]),0,Workorder_Hours[Hours])
+		lineageTag: 2fcdcb6a-a7d7-48f6-a477-4a75ae6cc03c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Workorder_Hours-cfecdc52-eec8-4de3-a5a4-150b48970540 = calculated
+		mode: import
+		source =
+				
+				//var d_wo = SELECTCOLUMNS(D_WorkOrder_DWH,"Key_WO",CONVERT(D_WorkOrder_DWH[KEY_WorkOrder],STRING))
+				//var F_wo = SELECTCOLUMNS(F_WorkOrder_Costs,"Key_WO",CONVERT(F_WorkOrder_Costs[KEY_WorkOrder],STRING ),"Costs",F_WorkOrder_Costs[WO Amount Local])
+				var d_wo = SELECTCOLUMNS(D_WorkOrder_DWH,"Key_WorkOrder",Convert(D_WorkOrder_DWH[KEY_WorkOrder],STRING),"WorkOrder_Number",D_WorkOrder_DWH[WorkOrder_Number],"Key_Asset",D_WorkOrder_DWH[KEY_Asset],"Key_site",D_WorkOrder_DWH[KEY_Site],"Workorder_Date",D_WorkOrder_DWH[WorkOrder_Date],"Workorder_Completion_Date",D_WorkOrder_DWH[WorkOrder_Completion_Date])
+				var F_wo = SELECTCOLUMNS(F_WorkOrder_Hours,"Key_WorkOrder",Convert(F_WorkOrder_Hours[KEY_WorkOrder],STRING),"Hours",F_WorkOrder_Hours[Hours])
+				return NATURALLEFTOUTERJOIN(d_wo,f_wo)
+
+	annotation PBI_Id = 60adff5bc4e944058b85f7ff9cf56545
+

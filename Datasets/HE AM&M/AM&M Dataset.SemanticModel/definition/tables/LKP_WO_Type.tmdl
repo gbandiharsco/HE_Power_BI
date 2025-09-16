@@ -1,0 +1,58 @@
+table LKP_WO_Type
+	lineageTag: 04a82d25-5e6d-4b2f-90b1-660eeb308fc1
+
+	column 'Order Type Prompt'
+		dataType: string
+		lineageTag: bfdbe0f0-f731-4900-8bfd-df65d739aa6d
+		summarizeBy: none
+		sourceColumn: Order Type Prompt
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Type'
+		dataType: string
+		lineageTag: 108e9d9a-2f53-4390-a820-441ebe1dad25
+		summarizeBy: none
+		sourceColumn: Order Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Planned/Unplanned
+		dataType: string
+		lineageTag: 27e85431-6655-4bf2-bf5c-0f9ba0d03f61
+		summarizeBy: none
+		sourceColumn: Planned/Unplanned
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Maint or Op'
+		dataType: string
+		lineageTag: e9797fbf-bc27-41a5-b348-ba6a30b0faff
+		summarizeBy: none
+		sourceColumn: Maint or Op
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Order Type Grouping'
+		dataType: string
+		lineageTag: 724db608-8667-4b90-bb8e-dfd589660649
+		summarizeBy: none
+		sourceColumn: Order Type Grouping
+
+		annotation SummarizationSetBy = Automatic
+
+	partition LKP_WO_Type-4108983e-2bd6-4789-ba96-014fb3fe7b56 = m
+		mode: import
+		queryGroup: 'Lookup Files'
+		source =
+				let
+				    Source = SharePoint.Tables("https://hsconline.sharepoint.com/sites/mmbiteam", [Implementation="2.0", ViewMode="Default"]),
+				    #"c9a2b19d-c369-4a76-97a8-ee0520d9ecfc" = Source{[Id="c9a2b19d-c369-4a76-97a8-ee0520d9ecfc"]}[Items],
+				    #"Removed Other Columns" = Table.SelectColumns(#"c9a2b19d-c369-4a76-97a8-ee0520d9ecfc",{"Order Type Prompt", "Order Type", "Planned/Unplanned", "Maint or Op", "Order Type Grouping"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

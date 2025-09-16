@@ -1,0 +1,109 @@
+/// SELECT * FROM DWH.F_Asset_Meter_Readings_Ltd
+table F_Asset_Meter_Readings_Ltd
+	lineageTag: 9bff6596-882f-4c64-95ec-8e991850e40f
+
+	column KEY_Site
+		dataType: string
+		lineageTag: af73bacc-1276-4da1-a399-13eb301b2a69
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: f38cd0d9-fa2a-45c4-b142-53f1c7d4fc63
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Code
+		dataType: string
+		lineageTag: 480eb802-ffff-4897-aa5a-ff5f2292a5a7
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Meter
+		dataType: string
+		lineageTag: e66340e9-9890-4a36-8ca9-152778098ceb
+		summarizeBy: none
+		sourceColumn: KEY_Meter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 2aa890ba-2661-4777-ba3c-7affd9cc49f8
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column LTD_Reading
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c10fbd0-d77b-40b4-9984-af5ebeda9fcb
+		summarizeBy: sum
+		sourceColumn: LTD_Reading
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column LTD_Reading_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 30531457-06a1-4e0a-80a4-75134aa8ee42
+		summarizeBy: none
+		sourceColumn: LTD_Reading_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Used_For_SMU
+		dataType: string
+		lineageTag: 51444c00-6231-4686-b77b-45f4cf29f3ec
+		summarizeBy: none
+		sourceColumn: Used_For_SMU
+
+		annotation SummarizationSetBy = Automatic
+
+	column No_SMU_8Days
+		dataType: string
+		lineageTag: a2812c92-8df0-42b2-bf9f-f0a00d026732
+		summarizeBy: none
+		sourceColumn: No_SMU_8Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Desc
+		dataType: string
+		lineageTag: 3fa6fbee-d907-4054-aaa9-84d7e4e9d28d
+		summarizeBy: none
+		sourceColumn: Status_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_Meter_Readings_Ltd-b77a92cb-7a6f-4536-94b1-fa4b020b2f8d = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				   Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="SELECT * FROM DWH.F_Asset_Meter_Readings_Ltd"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Country_Code", "KEY_Site", "KEY_Asset", "KEY_Meter", "Year_Month", "LTD_Reading", "LTD_Reading_Date", "Used_For_SMU","No_SMU_8Days","Status_Desc"})
+				   // #"Removed Other Columns" = Table.SelectColumns(DWH_F_Asset_Meter_Readings_Ltd,{"Country_Code", "KEY_Site", "KEY_Asset", "KEY_Meter", "Year_Month", "LTD_Reading", "LTD_Reading_Date", "Used_For_SMU"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

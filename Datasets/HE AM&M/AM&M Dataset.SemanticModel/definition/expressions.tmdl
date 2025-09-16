@@ -1,0 +1,76 @@
+expression P_ServerName = "hscusea2sqlD001.database.windows.net" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {"hscusea2sqlD001.database.windows.net", "hscusea2sqlQ001.database.windows.net", "hscusea2sqlP001.database.windows.net"}, DefaultValue = "hscusea2sqlD001.database.windows.net"]
+	lineageTag: 67ad516f-113f-4229-a065-64b84dcfb683
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// Azure SQL DB name
+expression P_DatabaseName = "DWHDEV1" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {"DWHDEV1", "DWHTST1", "DWHPRD1"}, DefaultValue = "DWHDEV1"]
+	lineageTag: ab25cb21-9522-47d4-be20-ef85644d9f7e
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression P_YYYYMM_From = "202101" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6e99d1c1-3c87-4a87-a2cf-a418c95083cc
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression P_Date_From = #date(2021, 1, 6) meta [IsParameterQuery=true, Type="Date", IsParameterQueryRequired=true]
+	lineageTag: 31619a3f-45d3-483b-a1a9-cc8e0337760b
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Date
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// Connection to Digital IT Application data
+expression pAMAXServer = "env-digitalit-prod.database.windows.net" meta [IsParameterQuery=true, List={"env-digitalit-dev.database.windows.net", "env-digitalit-prod.database.windows.net"}, DefaultValue="env-digitalit-dev.database.windows.net", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: f730949c-e994-45dd-bc58-7f0f2a968e1c
+	queryGroup: 'Scheduled Compliance'
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+/// AMAX DB
+expression pAMAXDb = "db_ENV_AMAX_Prod" meta [IsParameterQuery=true, List={"db_ENV_AMAX_Dev", "db_ENV_AMAX_Test", "db_ENV_AMAX_Prod"}, DefaultValue="db_ENV_AMAX_Dev", Type="Text", IsParameterQueryRequired=true]
+	lineageTag: a03ae305-391f-4473-ad22-736085bf8ba4
+	queryGroup: 'Scheduled Compliance'
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression Months = 1 meta [IsParameterQuery=true, List={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, DefaultValue=1, Type="Number", IsParameterQueryRequired=true]
+	lineageTag: a99779e0-0dee-4663-a8c5-1c986d1deffd
+
+	annotation PBI_ResultType = Number
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'Deleted Tasks' = ```
+		let
+		Source = Sql.Database(pAMAXServer, pAMAXDb),
+		  #"Navigation 1" = Source{[Schema = "dbo", Item = "tbl_WorkOrderInfo_Audit"]}[Data],
+		   
+		    #"Renamed Columns1" = Table.RenameColumns(#"Navigation 1",{{"Date", "Schedule Date"}}),
+		    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns1",{{"Schedule Date", DateTime.Date, type date}}),
+		    #"Inserted Merged Column" = Table.AddColumn(#"Extracted Date", "WO_TaskKey", each Text.Combine({[WORefNumber], Text.From([Schedule Date], "en-US"),  [Resources]}, ":"), type text),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Inserted Merged Column",{"WO_TaskKey", "TranType"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each ([TranType] = "Delete"))
+		in
+		    #"Filtered Rows"
+		```
+	lineageTag: eb1e6f24-32cd-4e47-929a-dbef809bb0d9
+	queryGroup: 'Scheduled Compliance'
+
+	annotation PBI_ResultType = Table
+

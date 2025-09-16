@@ -1,0 +1,100 @@
+table D_Activity
+	lineageTag: 3d4e944d-5182-427b-a4d3-490328930276
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: ae1a7d68-4d77-4ad0-877c-ac8e57c8c03a
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Code'
+		dataType: string
+		lineageTag: 97cae595-2d56-4448-9646-d1fcdd4490a7
+		summarizeBy: none
+		sourceColumn: Activity Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Name'
+		dataType: string
+		lineageTag: 9a5050dd-82e2-4aa1-828e-5f2c6ed92c35
+		summarizeBy: none
+		sourceColumn: Activity Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Category Code'
+		dataType: string
+		lineageTag: 2f7787fc-b009-4520-89d8-8d8370cc06cf
+		summarizeBy: none
+		sourceColumn: Activity Category Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Category Desc'
+		dataType: string
+		lineageTag: 242cbbef-04ff-4f2b-ab81-07bcf1b557ca
+		summarizeBy: none
+		sourceColumn: Activity Category Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Type
+		dataType: string
+		lineageTag: 9e5feddb-9d8d-418a-9f75-b57df6c022f2
+		summarizeBy: none
+		sourceColumn: Activity_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column HP_Activity_Code
+		dataType: string
+		lineageTag: d30c3f6d-ff31-480b-ab4d-c431708fa9dc
+		summarizeBy: none
+		sourceColumn: HP_Activity_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_code
+		dataType: string
+		lineageTag: 2d5d38a1-e765-43d4-a209-3a5b92d4095a
+		summarizeBy: none
+		sourceColumn: Country_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 907832be-e0a8-4dce-8f3a-625ab52d6e36
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: a881835c-7019-411a-b690-5f223f1b5724
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Activity-7ff65e1b-ddaa-4db6-81be-b77af57d9502 = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_D_Activity = Source{[Schema="DWH",Item="D_Activity"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(DWH_D_Activity,{{"Activity_Category_Code", "Activity Category Code"}, {"Activity_Category_Desc", "Activity Category Desc"}, {"Activity_Code", "Activity Code"}, {"Activity_Name", "Activity Name"}} ),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"SourceSystemID"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

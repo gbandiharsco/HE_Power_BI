@@ -1,0 +1,52 @@
+table 'Parent Asset Fields'
+	lineageTag: 1d631816-2ffa-45fe-9d11-0189b12854b0
+
+	column 'Parent Asset Fields'
+		lineageTag: 8f32f6e3-a69c-4f49-afe8-c8e8bc675513
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parent Asset Fields Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parent Asset Fields Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parent Asset Fields Fields'
+		isHidden
+		lineageTag: c08d18a1-157a-4a09-8415-1a78164f3b71
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parent Asset Fields Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parent Asset Fields Order'
+		isHidden
+		formatString: 0
+		lineageTag: df294e6c-0953-481e-86c1-1e61a62e1e87
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Parent Asset Fields-713e09b5-bf14-46a7-970d-52f8fe218b5b' = calculated
+		mode: import
+		source =
+				{
+				    ("P_Asset_Group", NAMEOF('D_Asset'[P_Asset_Group]), 0),
+				    ("Parent Asset Category Code", NAMEOF('D_Asset'[Parent Asset Category Code]), 1),
+				    ("Parent Asset Category Desc", NAMEOF('D_Asset'[Parent Asset Category Desc]), 2),
+				    ("Parent Asset Desc", NAMEOF('D_Asset'[Parent Asset Desc]), 3),
+				    ("Parent Asset Number", NAMEOF('D_Asset'[Parent Asset Number]), 4),
+				    ("Parent Asset ID", NAMEOF('D_Asset'[Parent Asset ID]), 5)
+				}
+
+	annotation PBI_Id = 36f735fad94845c9bd6224720bf12631
+

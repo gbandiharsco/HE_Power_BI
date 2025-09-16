@@ -1,0 +1,50 @@
+table Indicators
+	lineageTag: 8eb26d16-e8dd-4abc-b899-87b22e606ca6
+
+	/// minx('Indicators',min(Indicators[Indicator]))
+	measure Ind =
+			
+			MINX ( 'Indicators', MIN ( Indicators[Indicator] ) )
+		formatString: 0
+		lineageTag: 4a31446c-a0e4-41ce-928f-293c70c3ea7a
+
+	column KPI
+		dataType: string
+		lineageTag: 17cf05bc-34b6-4608-933f-19b3a829739d
+		summarizeBy: none
+		sourceColumn: KPI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rules
+		dataType: string
+		lineageTag: 4068e086-185a-498a-beae-0d70284a7625
+		summarizeBy: none
+		sourceColumn: Rules
+
+		annotation SummarizationSetBy = Automatic
+
+	column Indicator
+		dataType: int64
+		formatString: 0
+		lineageTag: aa5d6e9d-fe4a-4305-9d01-d7debb24f474
+		summarizeBy: sum
+		sourceColumn: Indicator
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Indicators-e07e94bd-e563-407a-a2b1-11283388decd = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("xZNNboMwEIWvMkLtLlIpNKm6RKxZpVmlWRgyTZCIXRlD1NvkLDlZDVT8GAwKEWSDLNu8+TzvzXZrrB1jYayRp2GA4ARBwknwC+wb5IojFXBiVBwhjOHAkQjkII6Eyg/CD8c0ZEn8f4XQPXQJZVfdhtj1IuV8jNg5P/wk/IAiu/q+fJY0r8ZuMQeYqwr5KM6ItA0FgsFHzrZ8FBvxWYoKWYFk3YgUYRxPb6I9B9UYB1cPAdPb91bweJsMyNsov1bVlcp+ImqHNVGzNkIa0UYoO3Qb56q0dZe0Htke34de3qK/TsrCPfEjlDvlevTENhRaXrcUKiSrMqeb6HqZhqmZYgXIurFFgyNxX3/seXF6W1OkxyMhFUgJlWPusljAV2Ka1gryfXh6gSK2wy/tgNO2o0zKlNV17y9TMbb4oCl9SShDMGl13cOl57s/", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [KPI = _t, Rules = _t, Indicator = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"KPI", type text}, {"Rules", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

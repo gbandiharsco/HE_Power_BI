@@ -1,0 +1,50 @@
+table 'KPI Outliers Help'
+	lineageTag: 80ae24f8-a512-413b-b5e8-a04368dc14d3
+
+	column KPI
+		dataType: string
+		lineageTag: 0890b919-4f37-41a0-a38e-7394705a67e5
+		summarizeBy: none
+		sourceColumn: KPI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Measure
+		dataType: string
+		lineageTag: 14fc7721-0e13-4e31-b7ca-7521015a9f7d
+		summarizeBy: none
+		sourceColumn: Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Description'
+		dataType: string
+		lineageTag: 5f131cf9-1c21-4446-8b34-1c0b5355d9da
+		summarizeBy: none
+		sourceColumn: Measure Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Calculation'
+		dataType: string
+		lineageTag: e6548289-fe15-47d0-bfc1-aa2e195f1003
+		summarizeBy: none
+		sourceColumn: Measure Calculation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'KPI Outliers Help-278f0a00-e44d-44d4-9807-91e08d92e6d0' = m
+		mode: import
+		queryGroup: 'Lookup Files'
+		source =
+				let
+				    Source = SharePoint.Tables("https://hsconline.sharepoint.com/sites/mmbiteam", [Implementation="2.0", ViewMode="All"]),
+				    #"a4362c68-5fae-4282-b3b2-bd07c8bb4d12" = Source{[Id="a4362c68-5fae-4282-b3b2-bd07c8bb4d12"]}[Items],
+				    #"Removed Other Columns" = Table.SelectColumns(#"a4362c68-5fae-4282-b3b2-bd07c8bb4d12",{"KPI", "Measure", "Measure Description", "Measure Calculation"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

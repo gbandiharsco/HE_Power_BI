@@ -1,0 +1,48 @@
+table 'KPI Avoidable Help Guide'
+	lineageTag: e5c0edcb-3242-425c-b883-8ca8c39b9d58
+
+	column KPI
+		dataType: string
+		lineageTag: 6f836400-6c62-4713-bfc3-c832c4336a5d
+		summarizeBy: none
+		sourceColumn: KPI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Measure
+		dataType: string
+		lineageTag: 6e641f68-b13b-4171-9547-5fd9f942c0e0
+		summarizeBy: none
+		sourceColumn: Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Calculation'
+		dataType: string
+		lineageTag: 7aab9ae8-9e0f-4170-bb22-f150e170fbeb
+		summarizeBy: none
+		sourceColumn: Measure Calculation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Description'
+		dataType: string
+		lineageTag: 358bbf0d-d5e8-48b6-ab31-161133308179
+		summarizeBy: none
+		sourceColumn: Measure Description
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'KPI Avoidable Help Guide-597aaec4-a277-49e1-ac2b-80c38937bb67' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("tVTBahsxEP2VwRCwwdShh96dmpQEhxoc6CHNYbw7awtrJSNp7e7fd0bKemvZuA2hB8N6VvPemzdP+/IymO6tKnGlaTDun+Gr9YELy6YGW8EP67bWleSg4DpgbRsTwJHGQCUEC2FDUGKNawI0Jawc4ba0BwOpK7Q7Amt0+4kxBex7D/YHyqxHuOsQBq/jU43z5xn8d51QOVuDVhUJbNhggMMRW3CU1gwUoqAHPsU1+Zsry8UvHO2VbTw8WRM2sERNvpf/bQ7TJFlVUaoUiiJW1s42O1AevPRE9fj2KqrmN4ufze3t5y9zqKyL7buOrRY24Ym9mR/ZqVxyP9HN4ml5FhKYwOIE4DjUTO2VV9bIZFkPM1904go3MDn/LhS7aRf5tJmurO8KWdQosM/o1iT5umsh4FaZdWQqGueIjY8bRzG0ImcKAvoVHBahO3d0tiWU2ATUgEeWIkV3elI4311qE4ThvYTyEU28K1SMzkZI+32vcvpH6b5La0pgSurHBJ8OP/GZfri5theO3oWBL8eu9za1sqCeLNX+EohJ4uqEwb0yqOWUacErtvOwsZ5g+B65I7m2K41mO4SRuGje7OTvzQ5dUEWj2f4Ir4wPhKWM1XWM4/13LYeKnHzTGI2XzSgf8+H1Nw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [KPI = _t, Measure = _t, #"Measure Calculation" = _t, #"Measure Description" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"KPI", type text}, {"Measure", type text}, {"Measure Calculation", type text}, {"Measure Description", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,128 @@
+table F_WorkOrder_Hours
+	lineageTag: 562febb5-80aa-4c8e-99ac-35205875c97d
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 05d06456-ab6e-44e5-9bf8-a8d408a0bfef
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: 71c86df3-dc4d-4364-b865-3f725273b73a
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: a9da1a9e-ef82-4853-9322-627f2a80ac9c
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WorkOrder
+		dataType: string
+		lineageTag: ff6e9f46-7b8c-4788-9ee4-b6b382a44abb
+		summarizeBy: none
+		sourceColumn: KEY_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_Account
+		dataType: string
+		lineageTag: c1caf743-a5e5-44e3-aa3e-d93e1e52092d
+		summarizeBy: none
+		sourceColumn: KEY_GL_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subsidiary
+		dataType: string
+		lineageTag: 15b91eab-7a76-46d8-bdc2-a5672ea90d2b
+		summarizeBy: none
+		sourceColumn: Subsidiary
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month'
+		dataType: string
+		lineageTag: 967b269b-0726-45b0-879e-ca9fb103a05f
+		summarizeBy: none
+		sourceColumn: Year Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hours
+		dataType: double
+		lineageTag: 4d74f2fd-1ca9-4c1c-955b-7bfac35fbb8d
+		summarizeBy: sum
+		sourceColumn: Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Planned_Hours
+		dataType: double
+		lineageTag: c6c543ca-e7be-43bf-bfee-16d526aea408
+		summarizeBy: sum
+		sourceColumn: Planned_Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Unplanned_Hours
+		dataType: double
+		lineageTag: 7ea2bb95-d031-40a7-8e8f-78b6d884e68a
+		summarizeBy: sum
+		sourceColumn: Unplanned_Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Month_Num_Key = F_WorkOrder_Hours[Year Month] & "01"
+		lineageTag: b27c01da-88d6-424a-87a5-50e28a1b3c3f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Completion date' = LOOKUPVALUE(D_WorkOrder[WorkOrder_Completion_Date],D_WorkOrder[KEY_WorkOrder],F_WorkOrder_Hours[KEY_WorkOrder])
+		formatString: General Date
+		lineageTag: 49721eac-6597-44c0-a0d5-133630b35ab8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Date' = LOOKUPVALUE(D_WorkOrder[WorkOrder_Date],D_WorkOrder[KEY_WorkOrder],F_WorkOrder_Hours[KEY_WorkOrder])
+		formatString: General Date
+		lineageTag: a2e0413a-a61d-4c74-9431-6bf1755842a3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_WorkOrder_Hours-6460fcd9-7b6c-439b-a181-eb9c6055254e = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source = ```
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_WorkOrder_Hours = Source{[Schema="DWH",Item="F_WorkOrder_Hours"]}[Data],
+				    // date from P_YYYYMM_From - Parameter values 
+				    #"Filtered Rows" = Table.SelectRows(DWH_F_WorkOrder_Hours, each [Year_Month] >= P_YYYYMM_From),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"KEY_Site", "KEY_Activity", "KEY_Asset", "KEY_WorkOrder", "KEY_GL_Account", "Subsidiary", "Year_Month", "Hours", "Planned_Hours", "Unplanned_Hours"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Year_Month", "Year Month"}})
+				in
+				    #"Renamed Columns"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

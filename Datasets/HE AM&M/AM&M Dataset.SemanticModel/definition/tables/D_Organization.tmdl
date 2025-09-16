@@ -1,0 +1,263 @@
+table D_Organization
+	lineageTag: 0fb3d02e-c746-4677-894e-43f5d87a1f05
+
+	column Division
+		dataType: string
+		lineageTag: 3e9d2a9a-7445-4aa5-918c-8e51cc55071b
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Finance_Location
+		dataType: string
+		lineageTag: 4add6e0d-b376-4c0f-8e70-262888da5c55
+		summarizeBy: none
+		sourceColumn: KEY_Finance_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		lineageTag: dbe8976d-866e-43e7-9854-97afe6cec8c6
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Code
+		dataType: string
+		lineageTag: b0637ac7-8261-48e8-9fca-adfb6646882a
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: b0a2e58a-6c2b-4938-9daf-f00d0443671b
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Finance Location Code'
+		dataType: string
+		lineageTag: 159ca6ae-d1c9-44b6-8932-94f52d799440
+		summarizeBy: none
+		sourceColumn: Finance Location Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Finance Location Name'
+		dataType: string
+		lineageTag: acf48dd6-8086-42bc-88ce-362396aa758d
+		summarizeBy: none
+		sourceColumn: Finance Location Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site Code'
+		dataType: string
+		lineageTag: 3291d0f2-f8fb-464d-b82b-d61dc0e97aa5
+		summarizeBy: none
+		sourceColumn: Site Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site Name'
+		dataType: string
+		lineageTag: ac1ac569-b364-4953-a3b1-a4b209d67a7b
+		summarizeBy: none
+		sourceColumn: Site Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsEnabled
+		dataType: string
+		lineageTag: 56763ac3-e22a-4b49-be63-c8063ffddcd2
+		summarizeBy: none
+		sourceColumn: IsEnabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column Process_Enabled_Flag
+		dataType: string
+		lineageTag: 23fee413-7918-4a8d-a7e6-65cdbbc258c9
+		summarizeBy: none
+		sourceColumn: Process_Enabled_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_SA = D_Organization[Region code]
+		lineageTag: c8f11a2c-e191-4e65-87d5-32cdb70735b3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_MC = D_Organization[Region code]
+		lineageTag: ebe0a197-5f0b-4815-bf4c-39a25fc8cf99
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_Avoidable = D_Organization[Region code]
+		lineageTag: fa4cb690-8915-4aad-945b-92b5b1a6254f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_SA = D_Organization[Country]
+		lineageTag: 804b959d-5725-4354-97bb-3e32151424b0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_SMU = [Region Code]
+		lineageTag: f0bd29f4-4919-4e7d-8a6d-069d4e47861c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_SMU = [Country]
+		lineageTag: 944456c7-4fb2-4d1d-926c-4d414a7d26a6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_MC = D_Organization[Country]
+		lineageTag: e45defa1-a761-40ae-b495-84982fb1f9ae
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_SA = D_Organization[Site Name]
+		lineageTag: e5937e23-a493-4ccb-a687-8865260bdd0a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_MC/SMU = D_Organization[Region code]
+		lineageTag: 912ee5f0-70da-408f-8fd9-4b033bef264b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_MC/SMU = [Country]
+		lineageTag: d471926d-cf93-4a92-88a5-a75e4e1c01ac
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_MC/SMU = D_Organization[Site Name]
+		lineageTag: ece41600-2c39-414a-8ffa-e84fe8a0f5df
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_MC = D_Organization[Site Name]
+		lineageTag: 5bb21f83-a991-427c-8b0b-0f06dd8b1855
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_Avoidable = D_Organization[Site Name]
+		lineageTag: 85bb9bc6-350b-4a5c-9c85-f62905a735ff
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_Code_SA = D_Organization[Region Code]
+		lineageTag: 52521fa8-ca2e-4ba1-84cf-062144214c29
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_SMU = D_Organization[Site Name]
+		lineageTag: 12341445-2511-4603-96f5-20ebaa4aae3d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Avoidable = [Country]
+		lineageTag: d055b8b3-4f0c-49ea-acf5-22dbfd70027e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region Code'
+		dataType: string
+		lineageTag: a4d0215e-5d22-45eb-8132-d206a5270711
+		summarizeBy: none
+		sourceColumn: Region Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: df5291df-20b4-4e83-aafa-47b8ef33b076
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORGANIZATION_ID
+		dataType: string
+		lineageTag: 8c27ab7f-bb28-41a9-bae5-61a614f10ae5
+		summarizeBy: none
+		sourceColumn: ORGANIZATION_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site & Code' = CONCATENATE(CONCATENATE(D_Organization[Site Code], "-"),D_Organization[Site Name])
+		lineageTag: 7d0261a9-65f3-4af8-b360-674676805244
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Final Draft Sales V O&M'
+		dataType: double
+		lineageTag: 6938b871-19be-406a-9ece-99039ddcda2d
+		summarizeBy: sum
+		sourceColumn: Final Draft Sales V O&M
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Finance Location' = CONCATENATE(D_Organization[Finance Location Code] , CONCATENATE( " - " , D_Organization[Finance Location Name]))
+		lineageTag: 0f42c020-460e-4564-9b9c-bf5790025ccf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Region Hierarchy'
+		lineageTag: 70b7fe03-03b9-4c36-951b-23e9e939a120
+
+		level Country
+			lineageTag: 16336910-7855-44c8-adc9-91763cb646cd
+			column: Country
+
+	partition D_Organization-e0b09205-fd6d-4459-9241-722c6731d06b = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let // select * from PBI.V_D_Organization_AMM
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="Select * from PBI.V_D_Organization_AMM#(lf)/*Select distinct org.*,exl.[Final Draft Sales V O&M] from PBI.V_D_Organization_AMM org#(lf)#(tab)LEFT JOIN [StagingFiles].[AOP_Maincost_sales_forecast_AMM] exl #(lf)    ON org.Site_Name = exl.Site*/"]),
+				    #"Removed Duplicates" = Table.Distinct(Source, {"KEY_Finance_Location"}),
+				  #"Removed Columns" = Table.RemoveColumns(#"Removed Duplicates",{"Company_Code", "Company_Name", "Country_Currency", "Division_Code", "Entity_Code", "Entity_Name", "Region_Code", "Region_Name", "SourceSystemID", "VAT"}),
+				  #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Division_Name", "Division"}, {"Country_Name", "Country"}, {"Finance_Location_Code", "Finance Location Code"}, {"Site_Code", "Site Code"}, {"Site_Name", "Site Name"}, {"AM_Region_Name", "Region"},
+				  { "AM_Region_Code",
+				  "Region Code" },
+				  { "Finance_Location_Name",
+				  "Finance Location Name" } }
+				),
+				#"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"KEY_Finance_Location", "KEY_Site", "Division", "Region Code", "Region", "Country_Code", "Country", "Finance Location Code", "Finance Location Name", "Site Code", "Site Name", "ORGANIZATION_ID", "IsEnabled", "Process_Enabled_Flag", "Final Draft Sales V O&M"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Final Draft Sales V O&M", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

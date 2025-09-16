@@ -1,0 +1,49 @@
+table 'KPI Help Maint Cost / SMU'
+	lineageTag: cdd5a031-afe4-4825-ac55-b6992808b437
+
+	column KPI
+		dataType: string
+		lineageTag: 32e35a91-a0de-4e35-af2e-fbf6ab1f3c33
+		summarizeBy: none
+		sourceColumn: KPI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Measure
+		dataType: string
+		lineageTag: cc3226f0-4976-46d6-9b5e-684f8fb6ab48
+		summarizeBy: none
+		sourceColumn: Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Description'
+		dataType: string
+		lineageTag: b83c2966-0142-4ca6-9d89-540e382ea6b1
+		summarizeBy: none
+		sourceColumn: Measure Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Calculation'
+		dataType: string
+		lineageTag: 03cabb79-a349-4521-9703-f122d08f5e6e
+		summarizeBy: none
+		sourceColumn: Measure Calculation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'KPI Help Maint Cost / SMU-f0f37966-10c5-40c6-a735-3c88bd2a7fec' = m
+		mode: import
+		queryGroup: Parameters
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("pVRda8JAEPwrQ6CgIOkv6INoawsKhcSHEoOscROPJrn07iL473v5qFqbWEtfjtzc7Ozs3l6CwFmQyA0mUhvcw1ssnZEzm6/HmSxzY7+9MoOMMZvDV5RrioyQOag+xoY0b2H3k1IpzqMDzKFgG/USnyDfQhAaS28Ks+McreTT2uY5E9VBk7QihuBU86/MuYwoDZ1w1FnGCWoc2RrGUVQHzpQsi8rUynn8KEXhoia7K6exqL+qPjXCCgSXCiEe+hSs9UFwjA+H6HMJj1LW/3aIqxbrHH+2dgbdHW1OxV5sGd/p7VkHeLM0XhXvhSw1FjI3O3STYqkuiDfzepy0a9NOu8GzLJVuocERGN5QSQ3hrq9JnfSbZX1SCZse9apUF29MCr40lLYxP2A7T7TRbMPIwBOGMec9p6NmMOwCTVn9Wo3EhkFJojghY185VansvKhDE+NWNyTiwVUbPT6GVYZNSvn7ZWb7nqMypfonc3RRsLL3mXWZcMLwEw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [KPI = _t, Measure = _t, #"Measure Description" = _t, #"Measure Calculation" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"KPI", type text}, {"Measure", type text}, {"Measure Description", type text}, {"Measure Calculation", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,188 @@
+table D_Asset_Activity
+	lineageTag: db90611e-460d-420e-8bbf-f20a95476571
+
+	column KEY_Site
+		dataType: string
+		lineageTag: cbb5818e-1183-4624-ae05-cc8e2e944cea
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 97a08c6e-0c52-4906-bc23-6394655cf789
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset_Activity
+		dataType: string
+		lineageTag: 1206363a-dd8f-4b0c-a503-8e4844c8fd18
+		summarizeBy: none
+		sourceColumn: KEY_Asset_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Association_Id
+		dataType: string
+		lineageTag: b07cfb1b-1970-4c1b-b9d1-c3506dbf43f2
+		summarizeBy: none
+		sourceColumn: Activity_Association_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Activity_Id
+		dataType: string
+		lineageTag: 82883e51-d770-4d08-b0f7-78d0b6463296
+		summarizeBy: none
+		sourceColumn: Asset_Activity_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Activity_Name
+		dataType: string
+		lineageTag: ee4eda9d-ddcf-489a-9739-23b06d65c649
+		summarizeBy: none
+		sourceColumn: Asset_Activity_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Activity_Desc
+		dataType: string
+		lineageTag: 70dcc01a-48e1-4d36-8aa5-bd0f2cb3f525
+		summarizeBy: none
+		sourceColumn: Asset_Activity_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Number
+		dataType: string
+		lineageTag: d2bc33e6-2430-4af3-9e12-0b07416a1cf7
+		summarizeBy: none
+		sourceColumn: Activity_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Id
+		dataType: string
+		lineageTag: 3745fda5-7e89-4e57-8f8b-f6646496a3a7
+		summarizeBy: none
+		sourceColumn: Activity_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Type
+		dataType: string
+		lineageTag: e03abd83-09dc-48e4-afdc-f3be1945f08c
+		summarizeBy: none
+		sourceColumn: Activity_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Cause
+		dataType: string
+		lineageTag: 3b1bcb87-73b5-4c0e-9a52-aff026e13ad7
+		summarizeBy: none
+		sourceColumn: Activity_Cause
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority
+		dataType: string
+		lineageTag: dc1e891b-091b-417f-be69-e3df52f507bd
+		summarizeBy: none
+		sourceColumn: Priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Service_Start_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 26400b40-fa39-453e-a356-f583e78c790d
+		summarizeBy: none
+		sourceColumn: Last_Service_Start_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Service_End_Date
+		dataType: dateTime
+		formatString: dddd\, dd mmmm yyyy
+		lineageTag: 2fc6e053-3197-46ed-a47b-b50f69e6ebfd
+		summarizeBy: none
+		sourceColumn: Last_Service_End_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Asset_Rebuild_Group
+		dataType: string
+		lineageTag: 940a96e7-0b64-469a-b97f-74abf15b5042
+		summarizeBy: none
+		sourceColumn: Asset_Rebuild_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Eam_Item_Type
+		dataType: int64
+		formatString: 0
+		lineageTag: d06eb7cd-75e3-47de-b908-981d830fcb63
+		summarizeBy: sum
+		sourceColumn: Eam_Item_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Object_Type
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a30e072-fb40-4f95-bc15-55b6a5524c4a
+		summarizeBy: sum
+		sourceColumn: Object_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 9b4ead55-4f1f-4a33-907f-d091161a37eb
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 729281b6-2465-4a95-beb7-52d1f72ec7c4
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: c61620c9-2583-4d45-a8e7-dace4ced2cae
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Asset_Activity = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Meter_Readings = Source{[Schema="DWH",Item="D_Asset_Activity"]}[Data]
+				in
+				    DWH_F_Asset_Meter_Readings
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,396 @@
+relationship 492b00b3-a114-4b91-8a37-a70deb0a355f
+	fromColumn: F_Asset_SMU_Hours.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship a67dc546-643a-4be3-b14a-21e1eff7403d
+	fromColumn: F_WorkOrder_Costs.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 7152c338-fe6a-4153-b936-53942ec04a4f
+	fromColumn: F_WorkOrder_Hours.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 29531704-c0bf-425c-9685-a8f654a8d910
+	fromColumn: F_Asset_SMU_Hours.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 0ba4c69d-558b-4dac-91d7-a0b5a2611860
+	fromColumn: F_Downtime.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 45a21f42-9b41-4836-a35f-8cff4f9f7924
+	fromColumn: F_WorkOrder_Hours.KEY_WorkOrder
+	toColumn: D_WorkOrder.KEY_WorkOrder
+
+relationship 0a6ea0c6-bd0d-4242-994f-2503025f6b59
+	fromColumn: F_Service_Accuracy.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 3d1286d3-0b53-4755-8feb-0df02a7bcfe1
+	fromColumn: F_Service_Accuracy.KEY_WorkOrder
+	toColumn: D_WorkOrder.KEY_WorkOrder
+
+relationship 14575aa2-f280-414a-95f7-dfecf96439d4
+	fromColumn: F_WorkOrder_Hours.KEY_GL_Account
+	toColumn: D_GL_Account.KEY_GL_ACCOUNT
+
+relationship 1b66a7f3-7534-4ebc-903b-72b072129fb0
+	fromColumn: F_WorkOrder_Costs.KEY_GL_Account
+	toColumn: D_GL_Account.KEY_GL_ACCOUNT
+
+relationship cee41855-8230-4016-9cdc-fff6e3e9d658
+	fromColumn: F_WorkOrder_Costs.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 9f13688b-8e00-4ac7-8251-e92fc52e5445
+	fromColumn: F_WorkOrder_Hours.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 035a365c-5739-4e4e-b2b9-6feed257564e
+	fromColumn: F_Service_Accuracy.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 36e85101-4849-49a3-a4fc-77a98309a5d2
+	fromColumn: F_WorkOrder_Hours.KEY_Activity
+	toColumn: D_Activity.KEY_Activity
+
+relationship 2767166a-0383-48f8-962d-def850ddfdd4
+	isActive: false
+	fromColumn: D_Asset.KEY_Activity
+	toColumn: D_Activity.KEY_Activity
+
+relationship 5d94f8cc-7972-453e-ba58-207eebec79d0
+	isActive: false
+	fromColumn: D_WorkOrder.KEY_Activity
+	toColumn: D_Activity.KEY_Activity
+
+relationship 492a3af0-4853-442a-a1e1-069716e32cf9
+	fromColumn: F_Downtime.KEY_Activity
+	toColumn: D_Activity.KEY_Activity
+
+relationship 74a384e4-2f84-452a-ab57-41017650d711
+	toCardinality: many
+	fromColumn: F_HP_Forecast.'Activity Code'
+	toColumn: D_Activity.HP_Activity_Code
+
+relationship 09b67b27-a71a-4498-af48-35d148db8f2c
+	fromColumn: F_HP_Forecast.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship f2008a6e-64d9-45c7-8b08-1ac6fe19d52c
+	fromColumn: F_WorkOrder_Hours.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship 31b18881-0aa9-4c78-bdee-3ab554d614ff
+	fromColumn: F_Asset_SMU_Hours.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship a6ed0330-292a-4900-9de7-457aab9dbd0f
+	toCardinality: many
+	fromColumn: F_HP_Forecast.Entity
+	toColumn: D_Organization.'Finance Location Code'
+
+relationship 72c79c6d-204c-479c-af60-94fe09cc43f6
+	toCardinality: many
+	fromColumn: F_HP_Forecast.'GL Account Group'
+	toColumn: D_GL_Account.'GL Account Group'
+
+relationship 629849b2-b4f0-4108-b306-d51780297743
+	fromColumn: D_WorkOrder.Order_Type_Prompt
+	toColumn: LKP_WO_Type.'Order Type Prompt'
+
+relationship d949346d-5995-4950-a47f-f6f27d958b30
+	fromColumn: F_Service_Accuracy.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship adacb257-5f7d-42f5-8cfd-81adfbd76e57
+	fromColumn: F_GL_Transactions.'GL Date'
+	toColumn: D_Date.FullDate
+
+relationship 085ccfb2-80f9-4aa4-a29e-d42ecc93695d
+	fromColumn: F_GL_Transactions.KEY_Activity
+	toColumn: D_Activity.KEY_Activity
+
+relationship f5d15838-3b9b-4d68-a890-28f0ac8ca590
+	fromColumn: F_GL_Transactions.KEY_GL_Account
+	toColumn: D_GL_Account.KEY_GL_ACCOUNT
+
+relationship a49a4cc2-f602-4e03-bb0a-582f6c495717
+	fromColumn: F_GL_Transactions.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 840b20e5-c3d7-45c1-8003-c4d46016dcfb
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: D_WorkOrder.WorkOrder_Date
+	toColumn: D_Date.FullDate
+
+relationship e9fdffde-965b-465a-b488-2edf1f4cbde1
+	isActive: false
+	fromColumn: D_WorkOrder.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 13ac4e0a-7236-4f65-b7d5-7c432c4377e4
+	fromColumn: F_WorkOrder_Costs.Month_Num_Key
+	toColumn: D_DateCopy.DateKey
+
+relationship d5a013f1-77a3-407b-b984-83272af7abb2
+	fromColumn: F_GL_Transactions.'GL Date'
+	toColumn: D_DateCopy.FullDate
+
+relationship 9bda6f9a-a982-4aa6-9e6e-0d69b677017d
+	fromColumn: F_GL_Transactions.KEY_Finance_Location_Org
+	toColumn: D_Organization.KEY_Finance_Location
+
+relationship 715a2b24-9907-4a80-bed5-71115b5731bf
+	fromColumn: F_Service_Accuracy.Month_Num_Key
+	toColumn: D_DateCopy.DateKey
+
+relationship f74fad5b-7fde-4c3e-8a83-2a014abb5210
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: D_Date.DateKey
+	toColumn: D_DateCopy.DateKey
+
+relationship 0f30a62e-7244-4687-8233-c33a0fd8acba
+	fromColumn: F_HP_Forecast.Month_Num_Key
+	toColumn: D_DateCopy.DateKey
+
+relationship 76da486d-5ac9-47a3-9b28-ab8647f52095
+	fromColumn: F_Downtime.Month_Num_Key
+	toColumn: D_DateCopy.DateKey
+
+relationship a31b38d0-a582-49f4-8a1a-808c352364cf
+	fromColumn: F_WorkOrder_Hours.Month_Num_Key
+	toColumn: D_DateCopy.DateKey
+
+relationship 7c5093f8-5171-412a-8856-45d2bb5afeb2
+	fromColumn: F_WorkOrder_Costs.KEY_Activity
+	toColumn: D_Activity.KEY_Activity
+
+relationship 6c0e8e9a-8494-4242-a165-7af1f41b3813
+	fromColumn: F_WorkOrder_Costs.KEY_WorkOrder
+	toColumn: D_WorkOrder.KEY_WorkOrder
+
+relationship 1c2bd98d-0744-4335-9c22-84341041a145
+	fromColumn: F_Asset_Costs_SMU.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship de19c9df-12ce-4000-96e2-fa68da45845d
+	fromColumn: F_Asset_Costs_SMU.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 30d4f84a-5204-42ba-a50e-8a3c9277f7e6
+	fromColumn: F_Asset_Costs_SMU.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship fe6a468c-a86d-4ff7-ba23-8e5dba4c067e
+	fromColumn: F_Asset_Meter_Readings_Ltd.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship c4a27f4d-1550-4b00-9c4c-9e382b0e4e4c
+	fromColumn: F_Asset_Meter_Readings_Ltd.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 6f3c5351-116e-4934-940d-7091f7ba715a
+	fromColumn: F_Asset_Depreciation.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 587f49ad-1dcd-44e3-bc7d-1b87c939b73c
+	fromColumn: F_Asset_Depreciation.KEY_FA_Asset
+	toColumn: D_FA_Asset.KEY_FA_Asset
+
+relationship e2a37035-dca2-4f59-9c18-b5f6c982d2f4
+	fromColumn: F_Asset_Meter_Readings.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 409e9d52-11d5-4cad-a46d-dc4eb631f0fa
+	fromColumn: F_Asset_Meter_Readings.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 4ca363db-3545-4f1d-9208-f352542f6620
+	toCardinality: many
+	fromColumn: F_Asset_Meter_Readings.Year_Month
+	toColumn: D_Date.YearMonth
+
+relationship d385bc36-8c0e-44c3-8c95-0224ac6020f6
+	fromColumn: F_ASSET_SMU_HOURS_12_Mon.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 71bc10ac-94df-4aa4-b33e-7b7f8c475475
+	fromColumn: D_FA_Asset.KEY_Activity
+	toColumn: D_Activity.KEY_Activity
+
+relationship 2acdae54-b2fd-4ee4-9bd2-f4acf482f718
+	fromColumn: F_Failures.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship a1768b06-b8b2-4f18-a9ad-736c68eda000
+	fromColumn: F_Failures.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 9aa1607f-a509-4fdd-ac18-710ab47b8648
+	fromColumn: F_Asset_SMU_Hours.Month_Num_Key
+	toColumn: D_DateCopy.DateKey
+
+relationship 3707e052-7d16-4dbc-ae94-0c7b15ff4aae
+	fromColumn: F_Asset_Depreciation.Month_Number_YYYYMMDD
+	toColumn: D_Date.DateKey
+
+relationship 3b45c43a-6ec2-4f5c-be48-3ee2617d3f88
+	toCardinality: many
+	fromColumn: F_Asset_Depreciation.KEY_P_FA_Asset
+	toColumn: D_Asset.KEY_FA_Asset
+
+relationship 3f3f0413-caf6-411a-9edc-b00a50337f4d
+	fromColumn: F_WorkOrder_Hours.'WO Completion date'
+	toColumn: 'D_Date WO Completion'.FullDate
+
+relationship a943e3a1-1e1e-4dfc-b233-0728771c9ecd
+	fromColumn: F_WorkOrder_Costs.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship 58287627-37da-4518-a6da-d717c10d1ce7
+	fromColumn: F_WorkOrder_Costs.'WO Completion date'
+	toColumn: 'D_Date WO Completion'.FullDate
+
+relationship c9e92e8e-d038-4f01-a3c1-eec23311cdae
+	fromColumn: F_Asset_SMU_Hours_0.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 91389ffc-903b-4c78-ab5e-2f58d89f007e
+	fromColumn: F_Asset_SMU_Hours_0.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 23cfc532-cb58-43cf-8430-1a0acd8968c7
+	fromColumn: F_Asset_SMU_Hours_0.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship 6f71fdb3-e96f-4707-863c-b5a24dd283fe
+	fromColumn: F_Asset_Status_Detail.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 62a08102-6d3c-4164-b9f9-5a59a5ca6ea4
+	fromColumn: Workorder_Hours.Key_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship ffce04a8-1614-42d3-98ab-8d1fb66e50ee
+	fromColumn: Workorder_Costs.Datekey
+	toColumn: D_Date.DateKey
+
+relationship 909005ee-54ec-4741-b2f2-ef85cd6ea359
+	fromColumn: Workorder_Hours.Datekey
+	toColumn: D_Date.DateKey
+
+relationship 9af8cee3-f1af-47df-9672-d30dac84a4c0
+	fromColumn: Workorder_Hours.Workorder_Completion_Date
+	toColumn: 'D_Date WO Completion'.FullDate
+
+relationship a4b1fd2f-cc09-4802-b11f-053effa9662d
+	fromColumn: Workorder_Hours.Key_site
+	toColumn: D_Organization.KEY_Site
+
+relationship b716f15b-c3ed-4a51-8566-343b7bd4eefd
+	fromColumn: Workorder_Hours.Key_WorkOrder
+	toColumn: D_WorkOrder_DWH.KEY_WorkOrder
+
+relationship 32a18170-169d-4c47-b58e-0f09e7282ebb
+	fromColumn: Workorder_Costs.Key_WorkOrder
+	toColumn: D_WorkOrder_DWH.KEY_WorkOrder
+
+relationship 0cf23559-1406-4fca-905f-608930dd8a20
+	fromColumn: Workorder_Costs.Key_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 7159c287-873c-413e-b3bc-d44eecebda25
+	fromColumn: Workorder_Costs.Key_site
+	toColumn: D_Organization.KEY_Site
+
+relationship 1b2f06eb-92cc-41da-8979-e35eb3892326
+	fromColumn: Workorder_Costs.Workorder_Completion_Date
+	toColumn: 'D_Date WO Completion'.FullDate
+
+relationship 3790c226-19cd-4c86-8360-88343d08af1a
+	fromColumn: F_Resource_Transaction.Key_Workorder
+	toColumn: D_WorkOrder_DWH.KEY_WorkOrder
+
+relationship 0d8cca0e-5fe4-4646-8ce4-dee412919785
+	fromColumn: F_Resource_Transaction.Key_Resource
+	toColumn: D_Resource.KEY_Resource
+
+relationship 929fd1a3-31dc-4a79-8574-88cdae102e02
+	fromColumn: F_Resource_Transaction.Key_date
+	toColumn: D_Date.DateKey
+
+relationship 9cc85f45-f873-47be-b8b9-572b86bdf735
+	fromColumn: F_Resource_Transaction.Key_site
+	toColumn: D_Organization.KEY_Site
+
+relationship e8dbbafb-4372-4aea-949d-3e4ad1b555e9
+	fromColumn: F_Resource_Transaction.Key_Employee
+	toColumn: D_Employee.KEY_Employee
+
+relationship c05e0cbd-4b4c-4ecb-a07d-6fbd5b2a9211
+	crossFilteringBehavior: bothDirections
+	fromColumn: F_Resource_Transaction.Key_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship cd61b3be-e95f-4830-8a77-616b91db48f7
+	fromColumn: F_Asset_PM_Prediction.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship a938c189-6410-468f-9e4f-2e68542730fd
+	toCardinality: many
+	fromColumn: F_Asset_PM_Prediction.KEY_PM_Schedule
+	toColumn: D_PM_Schedule.KEY_PM_Schedule
+
+relationship 23c66f60-1930-4a34-a0bd-b33ca558129c
+	fromColumn: F_Asset_PM_Prediction.KEY_Meter
+	toColumn: D_Asset_Meter.KEY_Meter
+
+relationship 411e16eb-e9e9-4961-a1fe-cde7d56e0765
+	toCardinality: many
+	fromColumn: F_Asset_PM_Prediction.KEY_Asset_Activity
+	toColumn: D_Asset_Activity.KEY_Asset_Activity
+
+relationship 0d10ac24-6f55-4048-b9dd-f27d059743d3
+	fromColumn: F_Service_Prediction.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship d4ab75b4-f589-4a30-93f0-488b7886e22d
+	fromColumn: F_Service_Prediction.KEY_Meter
+	toColumn: D_Asset_Meter.KEY_Meter
+
+relationship 458129b8-76e8-448b-af14-828d11ddda9e
+	fromColumn: F_Planned_Work_Prediction.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship 9a1752a5-e3d4-4b04-8e06-ba3803ab9375
+	fromColumn: F_Component_Details_Capital_Rebuild.KEY_Asset
+	toColumn: D_Asset.KEY_ASSET
+
+relationship c0479b8f-5754-4846-af5b-41102471920b
+	fromColumn: F_Component_Details_Capital_Rebuild.Inception_Date
+	toColumn: D_Date.FullDate
+
+relationship 2dd3b5ef-f43e-4869-8318-4378e6e93776
+	fromColumn: F_Component_Details_Capital_Rebuild.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 010783b9-32b7-40b0-aa53-4bece86bf80c
+	fromColumn: F_Failures.Month_Num_Key
+	toColumn: D_DateCopy.DateKey
+
+relationship 2ff3ee18-4e88-4944-9957-86d83af1418a
+	fromColumn: F_Downtime.KEY_Site
+	toColumn: D_Organization.KEY_Site
+
+relationship 8b265c63-0755-4eca-828d-9fdf1884a4b9
+	fromColumn: F_Downtime.Month_Num_Key
+	toColumn: D_Date.DateKey
+
+relationship 9ac16af7-7678-402b-8909-354c835a05c2
+	fromColumn: F_Planned_Work_Prediction.KEY_Meter
+	toColumn: D_Asset_Meter.KEY_Meter
+

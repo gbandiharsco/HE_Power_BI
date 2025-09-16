@@ -1,0 +1,230 @@
+table F_Planned_Work_Prediction
+	lineageTag: 7820f8e8-db1f-4d36-97bc-bf8651a562b4
+
+	column Country_Code
+		dataType: string
+		lineageTag: a1cf279c-a135-4d8d-b553-327dfca82cb6
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 60603488-3327-4651-86a9-e9b2bf79045b
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 1500ff0e-8b45-4423-847d-534bcd6a2a85
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WorkOrder
+		dataType: string
+		lineageTag: 14b41c8c-bb4d-4e86-8334-a71de8d5ab8f
+		summarizeBy: none
+		sourceColumn: KEY_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Meter
+		dataType: string
+		lineageTag: 09a627a0-2666-49d0-9c24-b8b730a9a856
+		summarizeBy: none
+		sourceColumn: KEY_Meter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 15fed630-dfbc-4c05-a5a9-834204cd181c
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Number
+		dataType: string
+		lineageTag: 6a955779-1938-4bf8-a3f2-4c1a1026703c
+		summarizeBy: none
+		sourceColumn: WorkOrder_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Service_Type
+		dataType: string
+		lineageTag: 34cf611e-c6ef-4f8b-9072-552031fc2985
+		summarizeBy: none
+		sourceColumn: Service_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Completed_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: db0bdc54-97c6-4e11-bac3-00cd39642cba
+		summarizeBy: none
+		sourceColumn: Last_Completed_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Last_Completed_Meter
+		dataType: int64
+		formatString: 0
+		lineageTag: f2c68ec8-8cfd-43a9-a1d5-f24688829b34
+		summarizeBy: none
+		sourceColumn: Last_Completed_Meter
+
+		annotation SummarizationSetBy = User
+
+	column Last_Completed_Hours
+		dataType: int64
+		formatString: 0
+		lineageTag: 61021db4-9087-43fe-8d21-fe9f6fca6810
+		summarizeBy: none
+		sourceColumn: Last_Completed_Hours
+
+		annotation SummarizationSetBy = User
+
+	column Completed_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: eb4da594-5e69-4195-8ec1-effbce110eb6
+		summarizeBy: none
+		sourceColumn: Completed_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Completed_Meter
+		dataType: int64
+		formatString: 0
+		lineageTag: 635d8492-819c-4f38-aca9-a55625700a2f
+		summarizeBy: none
+		sourceColumn: Completed_Meter
+
+		annotation SummarizationSetBy = User
+
+	column Completed_Hours
+		dataType: int64
+		formatString: 0
+		lineageTag: a2a4a41d-f446-4f0d-b718-89b94ffbc92c
+		summarizeBy: none
+		sourceColumn: Completed_Hours
+
+		annotation SummarizationSetBy = User
+
+	column Days_Service_Interval
+		dataType: int64
+		formatString: 0
+		lineageTag: de716882-05dd-489a-9a91-14ee28ce7587
+		summarizeBy: none
+		sourceColumn: Days_Service_Interval
+
+		annotation SummarizationSetBy = User
+
+	column Days_to_Service
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a454e7e-599b-4966-aed1-1b2c7800d6c0
+		summarizeBy: none
+		sourceColumn: Days_to_Service
+
+		annotation SummarizationSetBy = User
+
+	column Projected_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 1b4439a9-a5e5-4157-ad95-666941887f3a
+		summarizeBy: none
+		sourceColumn: Projected_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Part_Number
+		dataType: string
+		lineageTag: cebfa1b5-3e69-431f-8b51-7c37e4a7c572
+		summarizeBy: none
+		sourceColumn: Part_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Standard_Procedure
+		dataType: string
+		lineageTag: cc6db05d-89f4-48ee-b9e5-d86b1df33847
+		summarizeBy: none
+		sourceColumn: Standard_Procedure
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 440425bd-bf7e-415c-b973-31af4ebf1d92
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Assigned_WorkOrder
+		dataType: string
+		lineageTag: 3df6ece4-36f0-4505-8b39-452e4204378f
+		summarizeBy: none
+		sourceColumn: Assigned_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Current_Hours
+		dataType: int64
+		formatString: 0
+		lineageTag: d659367d-7720-4dd7-8275-270c4cede2c0
+		summarizeBy: none
+		sourceColumn: Current_Hours
+
+		annotation SummarizationSetBy = User
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7af15a81-0779-4df8-9304-e82e8b6e9d2b
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: 7b0b7b77-3005-4295-b250-bca50dc9a59e
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Planned_Work_Prediction = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Meter_Readings = Source{[Schema="DWH",Item="F_Planned_Work_Prediction"]}[Data]
+				in
+				    DWH_F_Asset_Meter_Readings
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

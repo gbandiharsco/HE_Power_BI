@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "AM&M Dataset"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ce813fc1-b75a-4829-a2e3-9ca2a6abf5f7"
+  }
+}

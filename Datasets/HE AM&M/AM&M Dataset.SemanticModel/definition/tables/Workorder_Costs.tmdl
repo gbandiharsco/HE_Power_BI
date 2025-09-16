@@ -1,0 +1,126 @@
+table Workorder_Costs
+	lineageTag: 4d9b05ea-9ae1-47ed-9c6a-3c7de1983d9c
+
+	measure 'WO Amount Chiklet' =
+			
+			IF (
+			    '_Currency Prompt'[CurrencyPrompt] = "USD",
+			    SUM ( Workorder_Costs[Amount USD] ),
+			    SUM ( Workorder_Costs[Amount Local] )
+			)
+		lineageTag: 27f25d3a-99e7-42d8-b09d-c620917f8043
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Key_WorkOrder
+		lineageTag: b88b857a-aded-4f63-9e2c-6e933674804b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_WorkOrder]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Number
+		lineageTag: fb64447e-f78e-475a-bf31-feb947e9ec4e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WorkOrder_Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Asset
+		lineageTag: d157ffbb-20ce-4335-b2ff-6139ceb7beb2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_Asset]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_site
+		lineageTag: a6868d58-c61a-48ce-8abb-94982f0b2e40
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_site]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workorder_Date
+		formatString: General Date
+		lineageTag: a0a0816d-8a86-4053-81df-77698cc7c33a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Workorder_Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workorder_Completion_Date
+		formatString: mm/dd/yyyy
+		lineageTag: 23bfd0e0-2277-4935-8fcc-e35fdedfd3c3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Workorder_Completion_Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Amount_local
+		lineageTag: 3f20d318-6d63-46cd-a06f-c18a31a6fe2c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Amount_local]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Amount_USD
+		lineageTag: 6963a788-7019-4bd1-b6d9-30178b54f0d6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Amount_USD]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Amount Local' = If(ISBLANK(Workorder_Costs[Amount_local]),0,Workorder_Costs[Amount_local])
+		lineageTag: 929561c7-babb-48bd-9fd6-17997c0865a3
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Amount USD' = If(ISBLANK(Workorder_Costs[Amount_USD]),0,Workorder_Costs[Amount_USD])
+		lineageTag: 861be58d-f778-457a-b4fa-9d88163ec925
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Datekey = Format(Workorder_Costs[Workorder_Date],"YYYYMMDD")
+		lineageTag: fb3540cc-524f-489f-a87e-3352e180a370
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month = Format(Workorder_Costs[Workorder_Date],"YYYYMM")
+		lineageTag: 36de5deb-4cde-47f2-b7f9-ec6cd1f097cb
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Workorder_Costs-bfaccb67-65f0-4ac6-a649-23daaa340101 = calculated
+		mode: import
+		source =
+				
+				//var d_wo = SELECTCOLUMNS(D_WorkOrder_DWH,"Key_WO",CONVERT(D_WorkOrder_DWH[KEY_WorkOrder],STRING))
+				//var F_wo = SELECTCOLUMNS(F_WorkOrder_Costs,"Key_WO",CONVERT(F_WorkOrder_Costs[KEY_WorkOrder],STRING ),"Costs",F_WorkOrder_Costs[WO Amount Local])
+				var d_wo = SELECTCOLUMNS(D_WorkOrder_DWH,"Key_WorkOrder",Convert(D_WorkOrder_DWH[KEY_WorkOrder],STRING),"WorkOrder_Number",D_WorkOrder_DWH[WorkOrder_Number],"Key_Asset",D_WorkOrder_DWH[KEY_Asset],"Key_site",D_WorkOrder_DWH[KEY_Site],"Workorder_Date",D_WorkOrder_DWH[WorkOrder_Date],"Workorder_Completion_Date",D_WorkOrder_DWH[WorkOrder_Completion_Date])
+				var F_wo = SELECTCOLUMNS(F_WorkOrder_Costs,"Key_WorkOrder",Convert(F_WorkOrder_Costs[KEY_WorkOrder],STRING),"Amount_local",F_WorkOrder_Costs[WO Amount Local],"Amount_USD",F_WorkOrder_Costs[WO Amount USD])
+				return NATURALLEFTOUTERJOIN(d_wo,f_wo)
+
+	annotation PBI_Id = 923f5c01efc24549a7a689c1ba120878
+

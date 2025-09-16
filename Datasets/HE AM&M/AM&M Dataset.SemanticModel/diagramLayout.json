@@ -1,0 +1,2300 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1,
+        "y": 1
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 783.5
+          },
+          "nodeIndex": "_Currency Prompt",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 411.6,
+            "y": 697.5
+          },
+          "nodeIndex": "AMAX Work Order Master",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2301.3,
+            "y": 623.3
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1889.6,
+            "y": 851.9
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1854.9,
+            "y": 1279.9
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2712.9,
+            "y": 834.9
+          },
+          "nodeIndex": "D_GL_Account",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1478,
+            "y": 802.2
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 954.4,
+            "y": 124.8
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2266.6,
+            "y": 1710
+          },
+          "nodeIndex": "F_Asset_SMU_Hours",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1620.3,
+            "y": 1142.1
+          },
+          "nodeIndex": "F_Downtime",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2712.9,
+            "y": 390.3
+          },
+          "nodeIndex": "F_GL_Transactions",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1801,
+            "y": 413.6
+          },
+          "nodeIndex": "F_HP_Forecast",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1066.4,
+            "y": 1192.6
+          },
+          "nodeIndex": "F_Service_Accuracy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1654,
+            "y": 0
+          },
+          "nodeIndex": "F_WorkOrder_Costs",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1366,
+            "y": 477.6
+          },
+          "nodeIndex": "F_WorkOrder_Hours",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3536.1,
+            "y": 759.5
+          },
+          "nodeIndex": "KPI Avoidable Help Guide",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3947.8,
+            "y": 759.5
+          },
+          "nodeIndex": "KPI Help MC",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4359.4,
+            "y": 759.5
+          },
+          "nodeIndex": "KPI Help SA",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4771,
+            "y": 759.5
+          },
+          "nodeIndex": "KPI Help SMU",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5182.6,
+            "y": 759.5
+          },
+          "nodeIndex": "KPI Outliers Help",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5594.2,
+            "y": 747.5
+          },
+          "nodeIndex": "LKP_Asset_Model",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6005.9,
+            "y": 783.5
+          },
+          "nodeIndex": "LKP_WO_Status",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 823.2,
+            "y": 665.4
+          },
+          "nodeIndex": "LKP_WO_Type",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6417.5,
+            "y": 771.5
+          },
+          "nodeIndex": "Maintenance Types",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6829.1,
+            "y": 759.5
+          },
+          "nodeIndex": "Summary Page help",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7261.8,
+            "y": 0
+          },
+          "nodeIndex": "D_DateCopy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 7671.3,
+            "y": 62
+          },
+          "nodeIndex": "KPI Help Maint Cost / SMU",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3124.5,
+            "y": 697.5
+          },
+          "nodeIndex": "Fact Measures",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8080.7,
+            "y": 0
+          },
+          "nodeIndex": "KPI Help Site",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8444.5,
+            "y": 0
+          },
+          "nodeIndex": "Indicators",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 8877.2,
+            "y": 0
+          },
+          "nodeIndex": "F_Asset_Costs_SMU",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10151.9,
+            "y": 50
+          },
+          "nodeIndex": "F_Asset_SMU_Hours_LTD",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10576.8,
+            "y": 0
+          },
+          "nodeIndex": "Current Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11426.6,
+            "y": 0
+          },
+          "nodeIndex": "D_Asset_Meter",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11851.5,
+            "y": 0
+          },
+          "nodeIndex": "D_FA_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 12276.4,
+            "y": 278.5
+          },
+          "nodeIndex": "F_Asset_Depreciation",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 12701.3,
+            "y": 0
+          },
+          "nodeIndex": "F_Asset_Meter_Readings",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 13126.2,
+            "y": 74
+          },
+          "nodeIndex": "F_ASSET_SMU_HOURS_12_Mon",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 13551.1,
+            "y": 0
+          },
+          "nodeIndex": "F_Failures",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Quantity Prompt",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "GL Location Fields",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Parent Asset Fields",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Slicer Table for ACH Measures",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "D_Date WO Completion",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11001.7,
+            "y": 0
+          },
+          "nodeIndex": "F_Asset_Meter_Readings_Ltd",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "F_Asset_SMU_Hours_0",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "D_Asset_Activity",
+          "nodeLineageTag": "db90611e-460d-420e-8bbf-f20a95476571",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "D_Employee",
+          "nodeLineageTag": "4e698543-67f8-4e13-8f36-a5841f9058a7",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "D_PM_Schedule",
+          "nodeLineageTag": "7c7cb8ea-3ea5-499b-9988-f61c137b702c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "D_Resource",
+          "nodeLineageTag": "a964a394-1bed-431c-b368-109d544e78c3",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "D_WorkOrder_DWH",
+          "nodeLineageTag": "748f4de5-95db-4378-b45d-d6c3f155b8b0",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "F_Asset_PM_Prediction",
+          "nodeLineageTag": "29b03dcf-beb5-42ee-88aa-910f4a764091",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "F_Asset_Status_Detail",
+          "nodeLineageTag": "b3cad5f8-0898-4f51-97b8-cf08a3f2dbaf",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "F_Component_Details_Capital_Rebuild",
+          "nodeLineageTag": "cb6057dc-8655-43fa-864b-cf37ebe146c7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "F_Planned_Work_Prediction",
+          "nodeLineageTag": "7820f8e8-db1f-4d36-97bc-bf8651a562b4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "F_Resource_Transaction",
+          "nodeLineageTag": "323920ee-71ba-4620-8ab9-9d93b5fb7952",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "F_Service_Prediction",
+          "nodeLineageTag": "82f516ae-f0cd-45a0-8499-f501e474f7d6",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Workorder_Costs",
+          "nodeLineageTag": "4d9b05ea-9ae1-47ed-9c6a-3c7de1983d9c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Workorder_Hours",
+          "nodeLineageTag": "9b73dde9-59d0-4903-832a-1f6f92938eb4",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 56.999999999999993,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 111.46653543307087
+          },
+          "nodeIndex": "F_Downtime",
+          "size": {
+            "height": 288,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 851,
+            "y": 140.5
+          },
+          "nodeIndex": "F_Asset_SMU_Hours",
+          "size": {
+            "height": 383.69291338582684,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 407.871062992126,
+            "y": 6.7647637795275557
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 295.0462598425197,
+            "y": 502.27362204724409
+          },
+          "nodeIndex": "F_Asset_SMU_Hours_0",
+          "size": {
+            "height": 280.20570866141736,
+            "width": 422.30905511811034
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Asset_SMU",
+      "zoomValue": 86.028789161727346,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 352,
+        "y": 611.25006103515625
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 262.4,
+            "y": 0
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 972.7,
+            "y": 623.3
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 708.1,
+            "y": 842.8
+          },
+          "nodeIndex": "F_WorkOrder_Hours",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 851.8
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 713.1,
+            "y": 1155.6
+          },
+          "nodeIndex": "D_GL_Account",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 694.9,
+            "y": 344.3
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 432.5,
+            "y": 636.7
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1134.4,
+            "y": 1121.9
+          },
+          "nodeIndex": "D_DateCopy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 14",
+      "zoomValue": 88,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 602,
+            "y": 494.5
+          },
+          "nodeIndex": "F_WorkOrder_Costs",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 674.3,
+            "y": 0
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 918,
+            "y": 971.5
+          },
+          "nodeIndex": "D_GL_Account",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 993
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1105.6,
+            "y": 292.9
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 959.1,
+            "y": 610.9
+          },
+          "nodeIndex": "D_DateCopy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 590,
+            "y": 948.5
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 113,
+            "y": 42.5
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 4,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 810,
+            "y": 14.5
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 884,
+            "y": 499.5
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 197,
+            "y": 524.5
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 588,
+            "y": 482.5
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 16,
+            "y": 21.5
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 2",
+      "zoomValue": 52.129297075423295,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 5,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 431.4,
+            "y": 497.4
+          },
+          "nodeIndex": "F_GL_Transactions",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 565.9,
+            "y": 0
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 32.1,
+            "y": 28
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 448.1,
+            "y": 994.7
+          },
+          "nodeIndex": "D_GL_Account",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 126.4,
+            "y": 424.9
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 726,
+            "y": 390.6
+          },
+          "nodeIndex": "D_DateCopy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 847.2
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 3",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 6,
+      "scrollPosition": {
+        "x": 0,
+        "y": 7
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 715.33703703703691,
+            "y": 85.019753086419755
+          },
+          "nodeIndex": "F_Asset_SMU_Hours",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1092.2,
+            "y": 567.4
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1109.2,
+            "y": 0
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 344.4444444444444,
+            "y": 44.448148148148107
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 509.87654320987656,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "D_DateCopy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 356.91913094196559,
+            "y": 667.32921162632442
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 768.21526007004718,
+            "y": 581.91975308641963
+          },
+          "nodeIndex": "F_Asset_SMU_Hours_0",
+          "size": {
+            "height": 259.25925925925924,
+            "width": 234
+          },
+          "zIndex": 5
+        }
+      ],
+      "name": "Asset_SMU_Hours",
+      "zoomValue": 81,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 7,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 14,
+            "y": 124.5
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 379,
+            "y": 389.5
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 812,
+            "y": 409.5
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 643,
+            "y": 48.5
+          },
+          "nodeIndex": "F_Asset_Costs_SMU",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 5",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 8,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 534.85587567493974,
+            "y": 185.77168448524762
+          },
+          "nodeIndex": "F_WorkOrder_Costs",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1604.2676270248191,
+            "y": 264.87055145340014
+          },
+          "nodeIndex": "LKP_WO_Type",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 669.9
+          },
+          "nodeIndex": "D_GL_Account",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 855.2,
+            "y": 517.2
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 863.3,
+            "y": 1010.8
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 452.42642712834004,
+            "y": 830.82756016018743
+          },
+          "nodeIndex": "D_DateCopy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 849.1,
+            "y": 233.7
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1654.0924031002278,
+            "y": 1108.1247760754081
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 6",
+      "zoomValue": 50.346892102823084,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 9,
+      "scrollPosition": {
+        "x": 0,
+        "y": 67
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": -3,
+            "y": 64.4375
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 969,
+            "y": 0
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 15,
+            "y": 462.4375
+          },
+          "nodeIndex": "F_Asset_SMU_Hours_LTD",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 907,
+            "y": 543.4375
+          },
+          "nodeIndex": "F_Asset_SMU_Hours",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 495,
+            "y": 626.4375
+          },
+          "nodeIndex": "F_ASSET_SMU_HOURS_12_Mon",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 214,
+            "y": 609.4375
+          },
+          "nodeIndex": "F_Asset_Meter_Readings_Ltd",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 7",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 10,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 94.4375
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 629,
+            "y": 287.4375
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 315,
+            "y": 265.4375
+          },
+          "nodeIndex": "F_Asset_Meter_Readings_Ltd",
+          "size": {
+            "height": 363,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Asset_Meter_Readings_Ltd",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 11,
+      "scrollPosition": {
+        "x": 0,
+        "y": 366.75003051757813
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 196.7,
+            "y": 422.7
+          },
+          "nodeIndex": "F_Service_Accuracy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 301,
+            "y": 0
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 815.6
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 61.4,
+            "y": 1314.3
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 597.8,
+            "y": 997.4
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 718.1,
+            "y": 514.7
+          },
+          "nodeIndex": "D_DateCopy",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Service_Accuracy",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 12,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 687,
+            "y": 391.4375
+          },
+          "nodeIndex": "F_Asset_Depreciation",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1085,
+            "y": 98.4375
+          },
+          "nodeIndex": "D_FA_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 52,
+            "y": 90.4375
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 69,
+            "y": 584.4375
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 521,
+            "y": 0.4375
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 10",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 13,
+      "scrollPosition": {
+        "x": 404,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 679,
+            "y": 93.4375
+          },
+          "nodeIndex": "F_Asset_Meter_Readings",
+          "size": {
+            "height": 523,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1079,
+            "y": 45.4375
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 334,
+            "y": 105.4375
+          },
+          "nodeIndex": "D_Asset_Meter",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 894,
+            "y": 694.4375
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 416,
+            "y": 687.4375
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        }
+      ],
+      "name": "Layout 11",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 14,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 38,
+            "y": 92.4375
+          },
+          "nodeIndex": "D_Activity",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 527,
+            "y": 116.4375
+          },
+          "nodeIndex": "D_FA_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        }
+      ],
+      "name": "Layout 12",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 15,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 338,
+            "y": 695
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 331,
+            "y": 362
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 42,
+            "y": 0
+          },
+          "nodeIndex": "F_Downtime",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 710,
+            "y": 14.4375
+          },
+          "nodeIndex": "F_Failures",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 453.4375
+          },
+          "nodeIndex": "F_Asset_SMU_Hours",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 354,
+            "y": 10
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        }
+      ],
+      "name": "MQR",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 16,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 402.4375
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 595,
+            "y": 0
+          },
+          "nodeIndex": "D_GL_Account",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 593.85796076789279,
+            "y": 388.3069115183921
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 304.61145558203958,
+            "y": 753.20148328287053
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 16",
+      "zoomValue": 69.9799669214709,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 17,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 6,
+            "y": -8.5
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 361,
+            "y": -6.5
+          },
+          "nodeIndex": "F_Asset_Depreciation",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 701,
+            "y": 0
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 17",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 18,
+      "scrollPosition": {
+        "x": 149,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 265.677304964539
+          },
+          "nodeIndex": "D_WorkOrder",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 984.47222222222217,
+            "y": 423.69444444444446
+          },
+          "nodeIndex": "D_Organization",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 560.41666666666663,
+            "y": 0
+          },
+          "nodeIndex": "D_Date",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 249.8055555555556,
+            "y": 2.5
+          },
+          "nodeIndex": "D_Asset",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 358.33333333333337,
+            "y": 452.83333333333337
+          },
+          "nodeIndex": "F_WorkOrder_Hours",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 644.1111111111112,
+            "y": 471.72222222222223
+          },
+          "nodeIndex": "F_WorkOrder_Costs",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 864.25,
+            "y": 6.75
+          },
+          "nodeIndex": "D_Date WO Completion",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "EQUIPMENT HISTORY",
+      "zoomValue": 90,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 19,
+      "scrollPosition": {
+        "x": 213,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 425.7,
+            "y": 0
+          },
+          "nodeIndex": "D_Date WO Completion",
+          "size": {
+            "height": 300,
+            "width": 248
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 828.4,
+            "y": 0
+          },
+          "nodeIndex": "F_WorkOrder_Hours",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "F_WorkOrder_Costs",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 18",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 20,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 397.28677850232094,
+            "y": 342.85288221787005
+          },
+          "nodeIndex": "F_HP_Forecast",
+          "nodeLineageTag": "edee9a8c-83fe-45f3-bda0-65067ff8b179",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 683.5305849337301,
+            "y": 323.62176238230836
+          },
+          "nodeIndex": "D_Activity",
+          "nodeLineageTag": "3d4e944d-5182-427b-a4d3-490328930276",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 58.719574195123641,
+            "y": 343.76881036954552
+          },
+          "nodeIndex": "D_Date",
+          "nodeLineageTag": "b637f3a3-69fc-44f2-94b7-fbca104b9024",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 10,
+            "y": 697.42406820510587
+          },
+          "nodeIndex": "D_Organization",
+          "nodeLineageTag": "0fb3d02e-c746-4677-894e-43f5d87a1f05",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 323.27474292553609,
+            "y": -10
+          },
+          "nodeIndex": "D_GL_Account",
+          "nodeLineageTag": "9263219e-b16c-4524-93a0-f4478a3a0537",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 359.28921524921,
+            "y": 696.529452146456
+          },
+          "nodeIndex": "D_DateCopy",
+          "nodeLineageTag": "e25a1a00-c107-4c96-9cd1-d8742df39354",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 4",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": true,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 4",
+  "defaultDiagram": "All tables"
+}

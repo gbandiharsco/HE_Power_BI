@@ -1,0 +1,157 @@
+table F_Failures
+	lineageTag: 3b1435e7-2d35-4be3-b486-6481bdad34c5
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 8f77352d-5df9-47d2-92dd-e14973ba6981
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 55060aa9-582f-44d3-b830-667a9ef0332e
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WorkOrder
+		dataType: string
+		lineageTag: 340f204d-2588-448c-b4d5-489b91336bdc
+		summarizeBy: none
+		sourceColumn: KEY_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Code
+		dataType: string
+		lineageTag: 424b320f-a6c8-4cca-bbdd-f94b87d4f66f
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Id
+		dataType: string
+		lineageTag: c300bfdf-a159-444d-8f91-a1c947cceb30
+		summarizeBy: none
+		sourceColumn: Asset_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 8b5c2eae-32d8-448a-8b84-b966ea56b5b2
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Id
+		dataType: string
+		lineageTag: d15cadfc-4423-4559-a2ac-60d6f27154c3
+		summarizeBy: none
+		sourceColumn: WorkOrder_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Number
+		dataType: string
+		lineageTag: 3ee9c51b-9897-41a5-a600-01b05d27c156
+		summarizeBy: none
+		sourceColumn: WorkOrder_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scheduled_Start_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f405edfa-b107-4427-8f82-32a3a6ef2d84
+		summarizeBy: none
+		sourceColumn: Scheduled_Start_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Failure_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 223a6f80-a350-4c0a-9a3c-4e83267311e1
+		summarizeBy: none
+		sourceColumn: Failure_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Failure_Id
+		dataType: string
+		lineageTag: 798c2651-75a4-4c3c-b1b0-dcc86645255d
+		summarizeBy: none
+		sourceColumn: Failure_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Failures
+		dataType: int64
+		formatString: 0
+		lineageTag: fa261495-8175-4577-be9c-fa08abf5300f
+		summarizeBy: sum
+		sourceColumn: Failures
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 9afa82e0-a32c-40f1-901b-53b02475e981
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: cffbbbdb-44e5-4206-befc-e41f7bf0b8cb
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Num_Key = ```
+			F_Failures[Year_Month] & "01" 
+			```
+		lineageTag: 9007b9e7-7fa5-4218-8388-52053a4caaf9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6de566dd-be4d-419c-94f3-fa2aa5042e8e
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: 2587fdac-da88-40f3-b71a-c1ad8acff8f1
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Failures-afecae8b-119b-42b9-bb70-91834ded08f7 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Failures = Source{[Schema="DWH",Item="F_Failures"]}[Data]
+				in
+				    DWH_F_Failures
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

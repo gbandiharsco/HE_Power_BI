@@ -1,0 +1,295 @@
+table D_FA_Asset
+	lineageTag: 5b257a1e-d749-4ffa-bb89-e7505ea48048
+
+	column KEY_Finance_Location
+		dataType: string
+		lineageTag: 8f914f4a-045a-466f-b5ec-bcefc67ebb1f
+		summarizeBy: none
+		sourceColumn: KEY_Finance_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_FA_Asset
+		dataType: string
+		lineageTag: cdf5f66c-bb0c-43ae-b2cc-c0fa38e36bf5
+		summarizeBy: none
+		sourceColumn: KEY_FA_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: 3daccbf1-917f-4509-a08e-750c647ee81e
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Asset_ID
+		dataType: string
+		lineageTag: eff53186-588e-4964-a7f6-3b9a7412c57a
+		summarizeBy: none
+		sourceColumn: FA_Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Asset_Description
+		dataType: string
+		lineageTag: 9199fa76-6eb1-4f47-b805-fd25446fb9fb
+		summarizeBy: none
+		sourceColumn: FA_Asset_Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column EAM_Asset_Number
+		dataType: string
+		lineageTag: ab22fc6a-f898-49a5-a9d2-380511f61fdb
+		summarizeBy: none
+		sourceColumn: EAM_Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_FA_Asset_ID
+		dataType: string
+		lineageTag: 4d4af30e-7b64-4e0e-8e1f-c8ae4b497f01
+		summarizeBy: none
+		sourceColumn: P_FA_Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_FA_Asset_Description
+		dataType: string
+		lineageTag: 4a95a343-e3fd-4f38-886e-60896bf87302
+		summarizeBy: none
+		sourceColumn: P_FA_Asset_Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_EAM_Asset_Number
+		dataType: string
+		lineageTag: 20d9223b-4ed4-463f-9c58-57a2e091a551
+		summarizeBy: none
+		sourceColumn: P_EAM_Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Asset_Type
+		dataType: string
+		lineageTag: 21ac740e-4781-4459-9be6-1cd9f5b99ffb
+		summarizeBy: none
+		sourceColumn: FA_Asset_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Asset_Category_ID
+		dataType: string
+		lineageTag: 85224411-5a7d-4886-8c8c-3191134d0028
+		summarizeBy: none
+		sourceColumn: FA_Asset_Category_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_In_Service
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 29bb9ac0-bc39-4da5-8e26-7db1c17d645a
+		summarizeBy: none
+		sourceColumn: Date_In_Service
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_Acquired
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6a9b89df-3a94-42da-9cbe-3adff22d4732
+		summarizeBy: none
+		sourceColumn: Date_Acquired
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_Ineffective
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 218cad97-bc52-4304-a83c-f389eac393a3
+		summarizeBy: none
+		sourceColumn: Date_Ineffective
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_Retired
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8f91bb1f-f89c-4acc-a4d8-5a5d1222fdc7
+		summarizeBy: none
+		sourceColumn: Date_Retired
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Retired
+		dataType: string
+		lineageTag: 557efe9c-392e-4e3e-a6a7-5fc89ef4e6e5
+		summarizeBy: none
+		sourceColumn: Status_Retired
+
+		annotation SummarizationSetBy = Automatic
+
+	column Serial_Number
+		dataType: string
+		lineageTag: 6c340231-2b8f-4f67-a545-ef0070693500
+		summarizeBy: none
+		sourceColumn: Serial_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Equipment_Status
+		dataType: string
+		lineageTag: c506509c-c80a-4ceb-b9ca-446b5aa4b7c2
+		summarizeBy: none
+		sourceColumn: FA_Equipment_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Disposed
+		dataType: string
+		lineageTag: 7c25034e-e11a-4040-a2b3-cd4d642620c6
+		summarizeBy: none
+		sourceColumn: Is_Disposed
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Parent
+		dataType: string
+		lineageTag: 6d36924e-a5ee-4f71-b01e-66ca8987fc7a
+		summarizeBy: none
+		sourceColumn: Is_Parent
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Category
+		dataType: string
+		lineageTag: 118d746c-53a7-4ca6-a2ca-8e1054c6ad5f
+		summarizeBy: none
+		sourceColumn: Asset_Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Status_Group
+		dataType: string
+		lineageTag: 520f9b95-e321-4bfc-adf2-2c7bc248e454
+		summarizeBy: none
+		sourceColumn: FA_Status_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 13933687-6386-43c8-81f6-aeca5792746e
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Warranty_End_Date
+		dataType: string
+		lineageTag: 4278ccf2-08de-4681-8a74-cdbf3a803563
+		summarizeBy: none
+		sourceColumn: Warranty_End_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column EAM_Serial_Number
+		dataType: string
+		lineageTag: e7f5ad16-8117-48c8-807e-4ae3bdf04296
+		summarizeBy: none
+		sourceColumn: EAM_Serial_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Active
+		dataType: string
+		lineageTag: 642c3aec-0b63-4bb6-9fed-49abcd12d312
+		summarizeBy: none
+		sourceColumn: Is_Active
+
+		annotation SummarizationSetBy = Automatic
+
+	column Maintainable_Flag
+		dataType: string
+		lineageTag: ecaef38a-ff77-461e-a294-8e0e32937255
+		summarizeBy: none
+		sourceColumn: Maintainable_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Maintainable_Flag
+		dataType: string
+		lineageTag: 728e2528-b234-48aa-bc9a-559dffff608b
+		summarizeBy: none
+		sourceColumn: P_Maintainable_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Equipment_Type
+		dataType: string
+		lineageTag: 8291a67b-5674-4e35-8470-3dfeb79b4a96
+		summarizeBy: none
+		sourceColumn: Asset_Equipment_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Equipment_Type
+		dataType: string
+		lineageTag: e29972c9-a9b1-46a1-8018-3a0e54e5bce7
+		summarizeBy: none
+		sourceColumn: P_Asset_Equipment_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Built
+		dataType: string
+		lineageTag: 39e3508e-fffd-4e89-8e2b-0323f07e1097
+		summarizeBy: none
+		sourceColumn: Year_Built
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Group_Description
+		dataType: string
+		lineageTag: 6234f1f4-52ee-4639-97f7-4f2ba67236d3
+		summarizeBy: none
+		sourceColumn: Asset_Group_Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fc2bf88b-3cef-44f5-8924-b6501254668b
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: 90d427ce-e4a6-434f-95f3-43e9031d9634
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_FA_Asset-6c92e3ef-2e4e-4d0b-8c73-717c1dbb160c = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Meter_Readings = Source{[Schema="DWH",Item="D_FA_Asset"]}[Data],
+				    #"Removed Duplicates" = Table.Distinct(DWH_F_Asset_Meter_Readings, {"KEY_FA_Asset"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

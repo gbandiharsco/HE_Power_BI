@@ -1,0 +1,138 @@
+table F_Asset_SMU_Hours_LTD
+	lineageTag: 25b8e5c6-58d7-49dd-a3bb-ef0cb980c1ce
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 72d68580-d583-4d61-a940-b6fdfde7769b
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: c0ad8f09-dc4c-4882-a161-24672daf759f
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 9ce64607-8389-4fb0-b0d1-bfb692a8546f
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Code
+		dataType: string
+		lineageTag: a1252a7a-c261-4645-a132-1c43ac6a16f9
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Id
+		dataType: string
+		lineageTag: 4665901c-db1e-461c-b829-afbaf3386cf8
+		summarizeBy: none
+		sourceColumn: Asset_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 3b1b329c-597b-48fe-97f4-80b7eb744d38
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 2d1584ba-8b90-438d-8c86-972d11bc01bd
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_Hours
+		dataType: double
+		lineageTag: 60f27df7-d54a-4ce7-a56c-52d3af68539a
+		summarizeBy: sum
+		sourceColumn: SMU_Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SMU_Hours_LTD
+		dataType: double
+		lineageTag: bf131fb5-2187-418d-9ad5-729b0ce2c60c
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_LTD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SMU_Hours_12
+		dataType: double
+		lineageTag: 4f2cdc51-0586-42a0-8ff5-eb7b6f2540ea
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_12
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SMU_Hours_13
+		dataType: double
+		lineageTag: 632f0495-3355-4f1a-b00b-14313cfca748
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_13
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 56e8612a-2622-4af0-a373-c7e262276793
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e5516f33-19e7-4fbc-838a-0ad529c04499
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: 5242d166-df63-4b04-b3d4-6660ac8a1f5b
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_SMU_Hours_LTD-a615e656-2763-4d6d-9a71-773a0d0bf136 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    DWH_F_Asset_SMU_Hours_LTD = Source{[Schema="DWH",Item="F_Asset_SMU_Hours_LTD"]}[Data]
+				in
+				    DWH_F_Asset_SMU_Hours_LTD
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

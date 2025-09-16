@@ -1,0 +1,124 @@
+table F_GL_Transactions
+	lineageTag: a59c54b2-d9fb-449c-a7d3-8a4f36228e11
+
+	/// [Maint Cost % Sales] - 'Fact Measures'[Maint Cost % Sales Forecast]
+	measure 'Maint Sales Vs AOP' =
+			//Maint Sales Vs AOP - change to AOP  Maint Sales Vs Forecast
+			VAR old = [Maint Cost % Sales] - 'Fact Measures'[Maint Cost % Sales AOP] //'Fact Measures'[Maint Cost % Sales Forecast]
+			VAR new_org = MAX(D_Organization[Final Draft Sales V O&M])
+			RETURN old
+			//COALESCE(new_org,old)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 87244a12-f081-41e2-ba64-aedef9fd52c8
+
+	/// 'Fact Measures'[COSTS/SMU %] - 'Fact Measures'[Maint Cost / SMU Target %]
+	measure 'Costs/SMU Vs Target' =
+			
+			'Fact Measures'[COSTS/SMU %] - 'Fact Measures'[Maint Cost / SMU Target %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: efa0d6ac-4af1-450b-b4d6-7d8629e9232a
+
+	/// 'Fact Measures'[Avoidable Cost % PMS] - 'Fact Measures'[Avoidable Cost/Sales Target % Final]
+	measure Test_Avd =
+			
+			'Fact Measures'[Avoidable Cost % PMS] - 'Fact Measures'[Avoidable Cost/Sales Target % Final]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 27d845a0-b767-4a48-9bb5-c6b3d22fb20c
+
+		changedProperty = FormatString
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: b9efc497-0ffb-474c-86d3-7e8ed3ae166b
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_Account
+		dataType: string
+		lineageTag: 0de50829-9bad-4603-9201-c7bd4505dd7e
+		summarizeBy: none
+		sourceColumn: KEY_GL_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 0ab9ecb0-d180-4448-b8ec-f5dfa92bc6b3
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 51a82eb8-07f1-4faf-a8c0-c21522394f51
+		summarizeBy: none
+		sourceColumn: GL Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Local_Currency
+		dataType: string
+		lineageTag: 7e5ba32e-d8de-41ff-afc8-b83040e4ce5e
+		summarizeBy: none
+		sourceColumn: Local_Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Amount Local'
+		dataType: double
+		lineageTag: 3ed9aed2-cb35-48dd-89da-e6324b05ee07
+		summarizeBy: sum
+		sourceColumn: Amount Local
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Amount USD'
+		dataType: double
+		lineageTag: 00f1c4e4-4f46-4966-be3f-38bda04ba8ff
+		summarizeBy: sum
+		sourceColumn: Amount USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column KEY_Finance_Location_Org
+		dataType: string
+		lineageTag: a3093b54-f9d1-4d58-abc3-70eb72c3a38e
+		summarizeBy: none
+		sourceColumn: KEY_Finance_Location_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_GL_Transactions-6f7a0119-e8bc-4b9d-a0aa-1b417272f0e6 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source = ```
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    // from DWH.F_GL_XLA_Transactions
+				    DWH_F_GL_Transactions = Source{[Schema="DWH",Item="F_GL_XLA_Transactions"]}[Data],
+				    // parameter date values
+				    // 
+				    #"Filtered Rows" = Table.SelectRows(DWH_F_GL_Transactions, each [GL_Date] >= P_Date_From),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each ([Primary_Ledger] = "Y")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows1",{"KEY_Company", "KEY_Activity", "KEY_GL_Account", "KEY_Finance_Location", "KEY_Finance_Location_Org", "KEY_Ledger", "KEY_Asset", "Ledger_Name", "Primary_Ledger", "GL_Date", "Document_Number", "Document_Name", "Document_Type", "JE_Header_ID", "JE_Line_Number", "Explanation1", "Explanation2", "Quantity", "Local_Currency", "Amount_Local", "Amount_USD"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Ledger_Name", "Ledger Name"}, {"GL_Date", "GL Date"}, {"Amount_USD", "Amount USD"}, {"Amount_Local", "Amount Local"}, {"Primary_Ledger", "Primary Ledger"}, {"Quantity", "GL Quantity"}}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Renamed Columns", each [Amount Local] <> 0),
+				    #"Grouped Rows" = Table.Group(#"Filtered Rows2", {"KEY_Activity", "KEY_GL_Account", "KEY_Finance_Location_Org", "KEY_Asset", "GL Date", "Local_Currency"}, {{"Amount Local", each List.Sum([Amount Local]), type nullable number}, {"Amount USD", each List.Sum([Amount USD]), type nullable number}})
+				in
+				    #"Grouped Rows"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

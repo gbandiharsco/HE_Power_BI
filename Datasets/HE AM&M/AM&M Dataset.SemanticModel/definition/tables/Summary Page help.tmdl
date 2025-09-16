@@ -1,0 +1,48 @@
+table 'Summary Page help'
+	lineageTag: da35079f-bb82-4927-818b-47064c82e63e
+
+	column Measure
+		dataType: string
+		lineageTag: 3784fe74-a489-431e-8736-1709ed1fb08f
+		summarizeBy: none
+		sourceColumn: Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Calculation'
+		dataType: string
+		lineageTag: 64808736-25f5-4c80-ac01-c41c7d46182e
+		summarizeBy: none
+		sourceColumn: Measure Calculation
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Description'
+		dataType: string
+		lineageTag: f5502177-075b-4a45-957f-eb2bde64cc3a
+		summarizeBy: none
+		sourceColumn: Measure Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column KPI
+		dataType: string
+		lineageTag: e77f173e-af61-48b2-a400-4ab030b00ed1
+		summarizeBy: none
+		sourceColumn: KPI
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Summary Page help-bc55f226-5d21-49d7-a225-63d5808dabe6' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("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", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Measure = _t, #"Measure Calculation" = _t, #"Measure Description" = _t, KPI = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Measure", type text}, {"Measure Calculation", type text}, {"Measure Description", type text}, {"KPI", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

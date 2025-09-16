@@ -1,0 +1,37 @@
+table F_ASSET_SMU_HOURS_12_Mon
+	lineageTag: f2979dda-de10-4cc4-88bc-093626194406
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: ee837640-67a9-497e-922c-47623cde3ea7
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_Hours_12
+		dataType: double
+		lineageTag: 2761a612-5f74-4aba-ba9e-07fd52ce40d7
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_12
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition F_ASSET_SMU_HOURS_12_Mon-ae3b1583-5666-49ae-beb9-0a98e1d0803e = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source = ```
+				let
+				    // DWH.F_ASSET_SMU_HOURS
+				    // 
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="SELECT KEY_Asset,SUM(SMU_Hours) SMU_Hours_12 FROM DWH.F_ASSET_SMU_HOURS#(lf) WHERE YEAR_MONTH >= CONVERT(CHAR(6),dateadd(month,datediff(month,0,getdate())-12,0),112)#(lf) AND YEAR_MONTH < CONVERT(CHAR(6),dateadd(month,datediff(month,0,getdate())-0,0),112)#(lf) GROUP BY KEY_Asset"])
+				in
+				    Source
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

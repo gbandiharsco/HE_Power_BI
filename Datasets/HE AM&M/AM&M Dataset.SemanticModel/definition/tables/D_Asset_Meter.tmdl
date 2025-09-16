@@ -1,0 +1,204 @@
+table D_Asset_Meter
+	lineageTag: da85b08a-f09f-4d49-ad23-b40c8d26e1d9
+
+	column KEY_Site
+		dataType: string
+		lineageTag: c8d81509-5f71-4317-980f-8c0044be2d45
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: bbec17ce-bcec-4c85-9c45-f2b17c14038c
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_ID
+		dataType: string
+		lineageTag: f23752f0-114f-4680-ab7b-63f87d7fef62
+		summarizeBy: none
+		sourceColumn: Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 140fa8cd-72c6-4ae8-bd8c-5e4343d44da1
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Meter
+		dataType: string
+		lineageTag: 1c8df1ed-771a-4059-b735-cc1c478c2f74
+		summarizeBy: none
+		sourceColumn: KEY_Meter
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_ID
+		dataType: string
+		lineageTag: da172284-a86f-45f6-a3ce-e8c14261cab4
+		summarizeBy: none
+		sourceColumn: Meter_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_Name
+		dataType: string
+		lineageTag: 8d93cc25-63f6-418e-86f6-783ff6619e8c
+		summarizeBy: none
+		sourceColumn: Meter_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_Description
+		dataType: string
+		lineageTag: 8783e2cb-d385-4bd8-8b65-9cfc178c7e7f
+		summarizeBy: none
+		sourceColumn: Meter_Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_UOM
+		dataType: string
+		lineageTag: 83bb7dfa-56e9-4a4e-b7bb-66e24ccb016b
+		summarizeBy: none
+		sourceColumn: Meter_UOM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_Type
+		dataType: string
+		lineageTag: a001166b-9239-480e-8744-4f1ca98c08de
+		summarizeBy: none
+		sourceColumn: Meter_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Primary_Reporting_Flag
+		dataType: string
+		lineageTag: 3d4806f0-32fa-4f67-8b19-586794e8dbb5
+		summarizeBy: none
+		sourceColumn: Primary_Reporting_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initial_Reading
+		dataType: int64
+		formatString: 0
+		lineageTag: db87e8b6-80e1-4d36-affd-a24e9aaa6eb1
+		summarizeBy: sum
+		sourceColumn: Initial_Reading
+
+		annotation SummarizationSetBy = Automatic
+
+	column Initial_Reading_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a9dd5683-7320-4f92-ba9a-f6f85af09db0
+		summarizeBy: none
+		sourceColumn: Initial_Reading_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column From_Effective_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c25c122e-17d1-46c0-85f2-359bc45966d2
+		summarizeBy: none
+		sourceColumn: From_Effective_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column To_Effective_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3d88264c-dae4-4f4c-8912-7d7a82e260ee
+		summarizeBy: none
+		sourceColumn: To_Effective_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_Tolerance
+		dataType: string
+		lineageTag: 28407575-9332-4503-9940-58e399587310
+		summarizeBy: none
+		sourceColumn: Meter_Tolerance
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 09fcfab4-0a71-436c-810c-4e485df51d5f
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Used_For_SMU
+		dataType: string
+		lineageTag: dd834953-9011-49a9-a4e4-ae6578864339
+		summarizeBy: none
+		sourceColumn: Used_For_SMU
+
+		annotation SummarizationSetBy = Automatic
+
+	column User_Defined_Rate
+		dataType: double
+		lineageTag: c4564325-a429-45f1-af8a-cc4a32f9b7a3
+		summarizeBy: sum
+		sourceColumn: User_Defined_Rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Use_Past_Reading
+		dataType: double
+		lineageTag: 8ece4812-da69-47a4-b2bd-aaae26eb34d9
+		summarizeBy: sum
+		sourceColumn: Use_Past_Reading
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 56938984-5db1-4d79-9939-dd6377f4bffd
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: eef38dfb-660d-4566-ad14-17097c8ef6d1
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Asset_Meter-2dcd3971-0c47-4f06-84ba-37bdefb0984a = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Meter_Readings = Source{[Schema="DWH",Item="D_Asset_Meter"]}[Data],
+				    // Only Oracle Source =27 data
+				    #"Filtered Rows" = Table.SelectRows(DWH_F_Asset_Meter_Readings, each ([SourceSystemID] = ("27")))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,254 @@
+table F_Service_Prediction
+	lineageTag: 82f516ae-f0cd-45a0-8499-f501e474f7d6
+
+	column Country_Code
+		dataType: string
+		lineageTag: ad98c460-b35f-4eaa-bb71-eb08742d462c
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		isHidden
+		lineageTag: 5263ba0a-6343-4906-873c-8befea0421d4
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		isHidden
+		lineageTag: 9907641a-3409-4756-93bd-e7e80ac10ee1
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WorkOrder
+		dataType: string
+		isHidden
+		lineageTag: cd39f9e8-b16e-4608-bebe-ed731479975a
+		summarizeBy: none
+		sourceColumn: KEY_WorkOrder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Meter
+		dataType: string
+		isHidden
+		lineageTag: b5a72600-9ec7-4d5c-af57-a435ac932579
+		summarizeBy: none
+		sourceColumn: KEY_Meter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 88c08bea-ac3f-4d1c-b48a-095d1229d1cb
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Number
+		dataType: string
+		lineageTag: ab718023-3e9d-4ac5-bd86-26c7ec488fb6
+		summarizeBy: none
+		sourceColumn: WorkOrder_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Service_Type
+		dataType: string
+		lineageTag: d1811b0b-6b78-47a2-afae-99ea06434659
+		summarizeBy: none
+		sourceColumn: Service_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Completed_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: c7f822e0-67bd-4f87-9283-7da4816f124f
+		summarizeBy: none
+		sourceColumn: Last_Completed_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Last_Completed_Hours
+		dataType: int64
+		formatString: 0
+		lineageTag: dc7f9add-5585-4e7a-b416-282c17875daa
+		summarizeBy: none
+		sourceColumn: Last_Completed_Hours
+
+		annotation SummarizationSetBy = User
+
+	column Completed_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0005cd5a-f365-4fb6-b78f-0bdfb01c3b07
+		summarizeBy: none
+		sourceColumn: Completed_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Completed_Hours
+		dataType: int64
+		formatString: 0
+		lineageTag: 14e02e57-9fbb-4f1f-a328-76c2436c4f0f
+		summarizeBy: none
+		sourceColumn: Completed_Hours
+
+		annotation SummarizationSetBy = User
+
+	column Part_Number
+		dataType: string
+		lineageTag: 0208ef56-aaf9-4055-8941-d24783e44de8
+		summarizeBy: none
+		sourceColumn: Part_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Standard_Procedure
+		dataType: string
+		lineageTag: 908e8b89-8bd0-45fc-ab4b-df561a8aaab0
+		summarizeBy: none
+		sourceColumn: Standard_Procedure
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		isHidden
+		lineageTag: 7b37dea7-e540-43c5-a1b1-0e876e019edd
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Completed_Meter
+		dataType: int64
+		formatString: 0
+		lineageTag: 238a4356-8329-49f7-9c50-c21e29f3ae29
+		summarizeBy: none
+		sourceColumn: Last_Completed_Meter
+
+		annotation SummarizationSetBy = User
+
+	column Completed_Meter
+		dataType: int64
+		formatString: 0
+		lineageTag: 05266cda-4cbd-49f4-be9e-093fb704fb72
+		summarizeBy: none
+		sourceColumn: Completed_Meter
+
+		annotation SummarizationSetBy = User
+
+	column Meter_Service_Interval
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b45c9a3-8771-4787-87d7-993a02f85aef
+		summarizeBy: none
+		sourceColumn: Meter_Service_Interval
+
+		annotation SummarizationSetBy = User
+
+	column Due_at_Meter
+		dataType: int64
+		formatString: 0
+		lineageTag: cca9acd4-6b0e-4fa3-9851-0b614a4ae84a
+		summarizeBy: none
+		sourceColumn: Due_at_Meter
+
+		annotation SummarizationSetBy = User
+
+	column Meter_to_Service
+		dataType: int64
+		formatString: 0
+		lineageTag: db4ec118-dbd7-4476-8516-cfa6a37df444
+		summarizeBy: none
+		sourceColumn: Meter_to_Service
+
+		annotation SummarizationSetBy = User
+
+	column Projected_Date
+		dataType: dateTime
+		formatString: dd-mmm-yyyy
+		lineageTag: 8749365e-4ab3-4379-920e-828c56a8fc59
+		summarizeBy: none
+		sourceColumn: Projected_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Assigned_WorkOrder
+		dataType: string
+		lineageTag: 5a1c510a-d906-4ea0-87e6-8f2c883082d2
+		summarizeBy: none
+		sourceColumn: Assigned_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Current_Hours
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ae1e540-dca2-4743-af86-0a84ce5ecebc
+		summarizeBy: none
+		sourceColumn: Current_Hours
+
+		annotation SummarizationSetBy = User
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cd060df1-8285-4866-b6a0-191b08da342a
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: ff2f549b-156d-43a5-8e3d-407659e77221
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Service_Prediction = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Meter_Readings = Source{[Schema="DWH",Item="F_Service_Prediction"]}[Data]
+				in
+				    DWH_F_Asset_Meter_Readings
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

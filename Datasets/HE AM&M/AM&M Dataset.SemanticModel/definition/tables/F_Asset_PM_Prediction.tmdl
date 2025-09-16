@@ -1,0 +1,409 @@
+table F_Asset_PM_Prediction
+	lineageTag: 29b03dcf-beb5-42ee-88aa-910f4a764091
+
+	column Country_Code
+		dataType: string
+		lineageTag: 978c75b5-ed60-42d1-948a-77496ff536c7
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		isHidden
+		lineageTag: 19b405f3-a639-4f2d-b850-bb26392a6f3d
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		isHidden
+		lineageTag: c9cb0a03-ebcf-4037-8145-a398e3aa317e
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Id
+		dataType: string
+		lineageTag: 9c2f5dd9-b545-4818-a0e4-a89f7128c878
+		summarizeBy: none
+		sourceColumn: Asset_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 96e9c2cf-6aa1-4172-a63c-4e0f01061048
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PM_Schedule
+		dataType: string
+		lineageTag: 9de4cc3f-2bb9-4c3e-a69d-7aa143834538
+		summarizeBy: none
+		sourceColumn: KEY_PM_Schedule
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Meter
+		dataType: string
+		isHidden
+		lineageTag: 7694adda-0da4-4702-bad8-faf51f610655
+		summarizeBy: none
+		sourceColumn: KEY_Meter
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rule_Type_Name
+		dataType: string
+		lineageTag: 93c45700-8f00-4339-a2dc-cc7849b88ede
+		summarizeBy: none
+		sourceColumn: Rule_Type_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column PM_Schedule_Id
+		dataType: string
+		lineageTag: 8abfa530-a351-47a9-8970-0bff06fbec35
+		summarizeBy: none
+		sourceColumn: PM_Schedule_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PM_Schedule_Name
+		dataType: string
+		lineageTag: 5050fac1-a88d-4772-8711-f5d4e0f39c83
+		summarizeBy: none
+		sourceColumn: PM_Schedule_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 51fc29cd-3b4c-4cf1-83bc-1b5826fc576a
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WorkOrder
+		dataType: string
+		lineageTag: d9b4729c-0ae5-4ea3-8adb-4d80059b33d8
+		summarizeBy: none
+		sourceColumn: KEY_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Number
+		dataType: string
+		lineageTag: 744e0308-828f-42e8-8dd1-36e0b8c5ea8c
+		summarizeBy: none
+		sourceColumn: WorkOrder_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset_Activity
+		dataType: string
+		isHidden
+		lineageTag: 26ff6bd1-8519-4bf4-b47a-d895a550b775
+		summarizeBy: none
+		sourceColumn: KEY_Asset_Activity
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Activity_Name
+		dataType: string
+		lineageTag: 30f64289-42c0-43ad-abfc-8ad9aea00a63
+		summarizeBy: none
+		sourceColumn: Asset_Activity_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Schedule_Start_Date
+		dataType: dateTime
+		formatString: DD-MMM-YYYY
+		lineageTag: a173feb3-3136-4b5c-b7eb-9774c897d38c
+		summarizeBy: none
+		sourceColumn: Schedule_Start_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Schedule_Completion_Date
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 236c33c5-2a09-4e78-9244-af6a56a756b7
+		summarizeBy: none
+		sourceColumn: Schedule_Completion_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Last_Service_Reading
+		dataType: double
+		formatString: 0
+		lineageTag: f66723c4-4453-41a9-b8d4-49614662c298
+		summarizeBy: none
+		sourceColumn: Last_Service_Reading
+
+		annotation SummarizationSetBy = User
+
+	column Current_Reading
+		dataType: int64
+		formatString: 0
+		lineageTag: 6c32b90c-2373-46cf-a894-ed8e53d2533a
+		summarizeBy: none
+		sourceColumn: Current_Reading
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = User
+
+	column Current_Reading_Date
+		dataType: dateTime
+		formatString: DD-MMM-YYYY
+		lineageTag: 67b7e48b-d545-4a11-ba08-e408bf504e99
+		summarizeBy: none
+		sourceColumn: Current_Reading_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Set_Name
+		dataType: string
+		lineageTag: 189fbb1f-ee1b-4142-8924-187ccbe359c8
+		summarizeBy: none
+		sourceColumn: Set_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Runtime_Interval
+		dataType: int64
+		formatString: 0
+		lineageTag: ca33c6a2-9339-46c5-b312-2736972b38c7
+		summarizeBy: none
+		sourceColumn: Runtime_Interval
+
+		annotation SummarizationSetBy = User
+
+	column Day_Service_Interval
+		dataType: int64
+		formatString: 0
+		lineageTag: b18d1c75-1d86-406e-b56c-97adb65a2eaa
+		summarizeBy: none
+		sourceColumn: Day_Service_Interval
+
+		annotation SummarizationSetBy = User
+
+	column Rule_Type_Id
+		dataType: string
+		lineageTag: f2cba22a-01f1-47d3-bf6f-fc427766b7c1
+		summarizeBy: none
+		sourceColumn: Rule_Type_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_to_Service
+		dataType: int64
+		formatString: 0
+		lineageTag: 20702637-08b4-433d-8a90-667b1069ac27
+		summarizeBy: none
+		sourceColumn: Meter_to_Service
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = User
+
+	column Due_at_Meter
+		dataType: double
+		formatString: 0
+		lineageTag: 72095fa7-4a81-4959-9694-d064338713f0
+		summarizeBy: none
+		sourceColumn: Due_at_Meter
+
+		annotation SummarizationSetBy = User
+
+	column Usage_Rate
+		dataType: double
+		formatString: 0.00
+		lineageTag: 34ab50a3-1603-4bc8-ab09-1d59c39528c1
+		summarizeBy: none
+		sourceColumn: Usage_Rate
+
+		annotation SummarizationSetBy = User
+
+	column Meter_Id
+		dataType: string
+		lineageTag: d371640c-bb79-4bee-b7d6-bf37084c8b55
+		summarizeBy: none
+		sourceColumn: Meter_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meter_to_Service_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f827859-5e84-47d7-907e-9239284b7069
+		summarizeBy: none
+		sourceColumn: Meter_to_Service_Flag
+
+		annotation SummarizationSetBy = User
+
+	column WorkOrder_Created_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 34447a61-139e-40e3-8464-f7afab9be8f6
+		summarizeBy: none
+		sourceColumn: WorkOrder_Created_Flag
+
+		annotation SummarizationSetBy = User
+
+	column Meter_UOM
+		dataType: string
+		lineageTag: c6ceec23-91bf-421c-ad95-7c2aefc57bd9
+		summarizeBy: none
+		sourceColumn: Meter_UOM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projected_Date_Variance
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b42406f-cd5a-4bac-8a3d-20f2bb72da73
+		summarizeBy: none
+		sourceColumn: Projected_Date_Variance
+
+		annotation SummarizationSetBy = User
+
+	column Last_Service_End_Date
+		dataType: dateTime
+		formatString: DD-MMM-YYYY
+		lineageTag: aa13eda0-5a56-4f07-9187-a22453d22d4a
+		summarizeBy: none
+		sourceColumn: Last_Service_End_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Due_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ccf777df-00ff-4741-96f9-8d92f956a22c
+		summarizeBy: none
+		sourceColumn: Due_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Updated_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 30e6775e-0639-4446-9e85-1c2248805969
+		summarizeBy: none
+		sourceColumn: Last_Updated_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Projected_Date_Variance_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d6f9c97-e4fb-498b-8c24-7649642128e5
+		summarizeBy: none
+		sourceColumn: Projected_Date_Variance_Flag
+
+		annotation SummarizationSetBy = User
+
+	column Meter_Name
+		dataType: string
+		lineageTag: 2e7b337e-ad31-4b06-b81e-9cc7ce5ba5aa
+		summarizeBy: none
+		sourceColumn: Meter_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column LTD_Reading
+		dataType: double
+		lineageTag: f66f31d4-3fae-420c-8f1f-8fdbc56971d3
+		summarizeBy: sum
+		sourceColumn: LTD_Reading
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WorkOrder_Start_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 20d478ad-797b-49ea-b805-a3c980db04a2
+		summarizeBy: none
+		sourceColumn: WorkOrder_Start_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Days_to_Service
+		dataType: int64
+		formatString: 0
+		lineageTag: 91944720-36f8-4f59-a507-1b01b0b3699b
+		summarizeBy: none
+		sourceColumn: Days_to_Service
+
+		annotation SummarizationSetBy = User
+
+	column Status_Desc
+		dataType: string
+		lineageTag: b140c9b7-8387-4a89-bd18-0abb5c6884b9
+		summarizeBy: none
+		sourceColumn: Status_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_PM_Prediction = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    // PBI.V_F_Asset_PM_Prediction
+				    DWH_F_Asset_Meter_Readings = Source{[Schema="PBI",Item="V_F_Asset_PM_Prediction"]}[Data]
+				in
+				    DWH_F_Asset_Meter_Readings
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

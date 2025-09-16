@@ -1,0 +1,438 @@
+table D_WorkOrder
+	lineageTag: 0362ca36-609b-4356-b1a7-93b7b347f0c4
+
+	/// selectedvalue(D_Organization[Region]) & " " &  selectedvalue(D_Organization[Country]) & " " & selectedvalue(D_Organization[Site Name])
+	measure 'Drilled Site' =
+			
+			SELECTEDVALUE ( D_Organization[Region] ) & " "
+			    & SELECTEDVALUE ( D_Organization[Country] ) & " "
+			    & SELECTEDVALUE ( D_Organization[Site Name] )
+		lineageTag: 930757f3-f506-4e3f-b852-ab23ccc367ff
+
+	column KEY_Site
+		dataType: string
+		lineageTag: e83acdbe-db27-4076-9d64-3daa359a4521
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: b9917db1-77d4-4b9e-8b29-5be3b5c04984
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: a065792f-ee0c-4e2d-a7e1-5621ffc90c2e
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WorkOrder
+		dataType: string
+		lineageTag: d06b1c01-110e-488d-be85-a835b59818dd
+		summarizeBy: none
+		sourceColumn: KEY_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_ID
+		dataType: string
+		lineageTag: 0ba1633f-b816-4523-a44d-12551de7798a
+		summarizeBy: none
+		sourceColumn: WorkOrder_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Number
+		dataType: string
+		lineageTag: c1bb1a69-b75e-4388-97c4-4b7cd375c13f
+		summarizeBy: none
+		sourceColumn: WorkOrder_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Type
+		dataType: string
+		lineageTag: bd3abc48-f9e7-4fdd-b41f-67676e63cd14
+		summarizeBy: none
+		sourceColumn: WorkOrder_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Desc
+		dataType: string
+		lineageTag: 4f924e34-70e5-46d0-b120-916e4a631d8c
+		summarizeBy: none
+		sourceColumn: WorkOrder_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_Type_Code
+		dataType: string
+		lineageTag: e76edd5e-b226-4593-8b8f-8852ed380632
+		summarizeBy: none
+		sourceColumn: Order_Type_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_Type_Desc
+		dataType: string
+		lineageTag: e8fd25d4-8bb7-4cfe-abc4-669d4bcb790a
+		summarizeBy: none
+		sourceColumn: Order_Type_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_Type_Prompt
+		dataType: string
+		lineageTag: e84d86ad-1def-4fff-aa7a-e8691abb183e
+		summarizeBy: none
+		sourceColumn: Order_Type_Prompt
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMCS_Code
+		dataType: string
+		lineageTag: a86283b6-15d3-4a51-839b-b6b6adca7afc
+		summarizeBy: none
+		sourceColumn: SMCS_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMCS_Desc
+		dataType: string
+		lineageTag: 5e0cb4f0-1284-4747-b3f3-3fc98257c4cd
+		summarizeBy: none
+		sourceColumn: SMCS_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMCS_Prompt
+		dataType: string
+		lineageTag: 6a821821-c2dd-49d3-bf7a-b0bd64e7fb01
+		summarizeBy: none
+		sourceColumn: SMCS_Prompt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Action_Code
+		dataType: string
+		lineageTag: d8731bde-5fed-44d9-a748-0e9211911842
+		summarizeBy: none
+		sourceColumn: Action_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Action_Desc
+		dataType: string
+		lineageTag: 3fbb83e5-ff9d-4b1b-a5e8-151cac566ad4
+		summarizeBy: none
+		sourceColumn: Action_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Action_Prompt
+		dataType: string
+		lineageTag: ae4396cf-555e-4277-b289-7f31cadb1855
+		summarizeBy: none
+		sourceColumn: Action_Prompt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Failure_Cause_Code
+		dataType: string
+		lineageTag: 790c3acd-dd8e-4275-86a2-b71b4adc6d9f
+		summarizeBy: none
+		sourceColumn: Failure_Cause_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Failure_Cause_Desc
+		dataType: string
+		lineageTag: 498b636d-f0eb-4353-a0d1-ac95328a4d98
+		summarizeBy: none
+		sourceColumn: Failure_Cause_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Failure_Cause_Prompt
+		dataType: string
+		lineageTag: f8aa7d28-b410-443a-a457-65e35e0ca0d9
+		summarizeBy: none
+		sourceColumn: Failure_Cause_Prompt
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7632ac7f-ab3e-4c50-9963-5d83a507bef7
+		summarizeBy: none
+		sourceColumn: WorkOrder_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column WorkOrder_Start_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 47649d15-b2e8-4e6a-9597-f511de67f42b
+		summarizeBy: none
+		sourceColumn: WorkOrder_Start_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Requested_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1fa13e7f-39a1-4d49-bbe4-ab9f09cbe4cf
+		summarizeBy: none
+		sourceColumn: WorkOrder_Requested_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Plan_Completion_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 96df6198-bac9-4296-8acd-d646e797fd01
+		summarizeBy: none
+		sourceColumn: WorkOrder_Plan_Completion_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkOrder_Completion_Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: efa6fe74-c383-4293-97b8-4f29b8313ba5
+		summarizeBy: none
+		sourceColumn: WorkOrder_Completion_Date
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column WorkOrder_Released_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6850823c-9296-4a1b-998c-1c8b64f89edd
+		summarizeBy: none
+		sourceColumn: WorkOrder_Released_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Code
+		dataType: string
+		lineageTag: 336293c9-875f-43bc-b084-146e968118d0
+		summarizeBy: none
+		sourceColumn: Status_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Desc
+		dataType: string
+		lineageTag: 00496857-626b-4804-8634-87e8028c2a59
+		summarizeBy: none
+		sourceColumn: Status_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_ID
+		dataType: string
+		lineageTag: 35200245-94b4-4bfb-8b2c-8134e3400392
+		summarizeBy: none
+		sourceColumn: Activity_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Name
+		dataType: string
+		lineageTag: 6a0c9605-ad09-468b-ac78-93dd6be4f9b9
+		summarizeBy: none
+		sourceColumn: Activity_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Type_ID
+		dataType: string
+		lineageTag: 56f151ea-416e-434a-91b6-d5ee4ff2721a
+		summarizeBy: none
+		sourceColumn: Activity_Type_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activity_Type_Name
+		dataType: string
+		lineageTag: 4d02b7c9-7ebf-4555-9c1c-c8e45fcfec2d
+		summarizeBy: none
+		sourceColumn: Activity_Type_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Costs_Estimate
+		dataType: double
+		lineageTag: a94b37f7-7786-4738-8b69-0a27a77c147b
+		summarizeBy: sum
+		sourceColumn: Costs_Estimate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Hours_Estimate
+		dataType: double
+		lineageTag: 1dfcf60c-84ce-4395-a61d-67a6de41bf75
+		summarizeBy: sum
+		sourceColumn: Hours_Estimate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Priority_Code
+		dataType: string
+		lineageTag: b5eeecae-d1d0-436e-8395-71704c67ed56
+		summarizeBy: none
+		sourceColumn: Priority_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority_Desc
+		dataType: string
+		lineageTag: 3f9c8d2c-2feb-498a-868f-56387045d545
+		summarizeBy: none
+		sourceColumn: Priority_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Priority_Prompt
+		dataType: string
+		lineageTag: 881215da-7c54-48a1-bb14-1d4d1a901371
+		summarizeBy: none
+		sourceColumn: Priority_Prompt
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Damage Flag'
+		dataType: string
+		lineageTag: 5b23b831-b3e7-47f5-92be-18c2dd0e04c8
+		summarizeBy: none
+		sourceColumn: Damage Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Planned_Unplanned
+		dataType: string
+		lineageTag: 993938c1-8d6a-4131-ad9e-d1516312fd17
+		summarizeBy: none
+		sourceColumn: Planned_Unplanned
+
+		annotation SummarizationSetBy = Automatic
+
+	column Reported_By
+		dataType: string
+		lineageTag: 177a7bf1-7fc6-4af6-9ffd-6ca4a9fc4f6a
+		summarizeBy: none
+		sourceColumn: Reported_By
+
+		annotation SummarizationSetBy = Automatic
+
+	column Assigned_To
+		dataType: string
+		lineageTag: d213ec0b-5527-4085-bd56-5d08e223da41
+		summarizeBy: none
+		sourceColumn: Assigned_To
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Type Category' = LOOKUPVALUE('LKP_WO_Type'[Maint or Op],'LKP_WO_Type'[Order Type Prompt],D_WorkOrder[Order_Type_Prompt])
+		lineageTag: 6399a2f2-2437-4611-b898-2bb214b0353c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Status' = LOOKUPVALUE('LKP_WO_Status'[Status],'LKP_WO_Status'[Work Order Status Description] ,D_WorkOrder[Status_Desc])
+		lineageTag: c7578fa6-d2f1-43e5-8686-594ac67da346
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Order Type Grouping' = LOOKUPVALUE('LKP_WO_Type'[Order Type Grouping],'LKP_WO_Type'[Order Type Prompt],D_WorkOrder[Order_Type_Prompt])
+		lineageTag: a25ba608-8220-443b-bed1-47fba9b511c6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 81473e78-d1d2-441f-bd0a-7dbf4d77f04f
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Date_Format' = format([WorkOrder_Date],"DD-MMM-YYYY")
+		lineageTag: f458f944-2861-443b-b4f6-780332a63649
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Completion Date_Format' = format([WorkOrder_Completion_Date],"DD-MMM-YYYY")
+		lineageTag: e474c899-b0a9-46e5-a005-706553700274
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'S.NO'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b31b885-2cd1-4459-847f-8fd9a9835ce8
+		summarizeBy: sum
+		sourceColumn: S.NO
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'YearMonth WorkOrderDate' = format([WorkOrder_Date],"YYYYMM")
+		lineageTag: 08509423-0a77-40cf-8d5d-386e4a53b1e6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Date_MMM-YY' = format([WorkOrder_Date],"MMM-YY")
+		lineageTag: 287d4889-d163-41c2-bf1b-58f94fddef71
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Date_YYYY' = format([WorkOrder_Date],"YYYY")
+		lineageTag: ae80a5f6-6030-4f90-94a4-1ffed8fb254b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_WorkOrder-d12936bb-3989-4a32-a8a8-f8601bbe39a5 = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    // from PBI.V_D_Workorder
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="select row_number() over (partition by Asset_number order by workorder_start_date) as 'S.NO', *#(lf)from PBI.V_D_Workorder "]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each true),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"S.NO", "KEY_Site", "KEY_Asset", "KEY_Activity", "KEY_WorkOrder", "Asset_Number", "WorkOrder_ID", "WorkOrder_Number", "WorkOrder_Type", "WorkOrder_Desc", "Order_Type_Code", "Order_Type_Desc", "Order_Type_Prompt", "SMCS_Code", "SMCS_Desc", "SMCS_Prompt", "Action_Code", "Action_Desc", "Action_Prompt", "Failure_Cause_Code", "Failure_Cause_Desc", "Failure_Cause_Prompt", "WorkOrder_Date", "WorkOrder_Start_Date", "WorkOrder_Requested_Date", "WorkOrder_Plan_Completion_Date", "WorkOrder_Completion_Date", "WorkOrder_Released_Date", "Status_Code", "Status_Desc", "Activity_ID", "Activity_Name", "Activity_Type_ID", "Activity_Type_Name", "Costs_Estimate", "Hours_Estimate", "Priority_Code", "Priority_Desc", "Priority_Prompt", "Damage_Flag", "Planned_Unplanned", "Reported_By", "Assigned_To"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"WorkOrder_Date", type date}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Damage_Flag", "Damage Flag"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

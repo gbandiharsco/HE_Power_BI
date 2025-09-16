@@ -1,0 +1,194 @@
+table F_Downtime
+	lineageTag: a4b157d9-96a1-483f-97ef-f94a03b38cb4
+
+	/// 
+	/// CALCULATE(F_Downtime[Date based Service Accuracy Overview %], all(D_Date),(DATESINPERIOD(D_Date[FullDate],max(D_Date[FullDate]),-3,MONTH))) 
+	measure 'Date based Service Accuracy % 3 Mth' =
+			
+			CALCULATE (
+			    F_Downtime[Date based Service Accuracy Overview %],
+			    ALL ( D_Date ),
+			    ( DATESINPERIOD ( D_Date[FullDate], MAX ( D_Date[FullDate] ), -3, MONTH ) )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: dec4f2aa-e32f-4979-b9a6-ea47de689d86
+
+	/// 
+	/// VAR varMeterCompliantWOCount = CALCULATE (
+	///     COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+	///     'F_Service_Accuracy'[Date Compliant Flag]  = 1,
+	///     'F_Service_Accuracy'[date Based Flag] = 1, F_Service_Accuracy[Set Name] ="SERVICING")
+	/// VAR varMeterWOCount = calculate(count(F_Service_Accuracy[KEY_WorkOrder]), F_Service_Accuracy[date Based Flag]=1, F_Service_Accuracy[Set Name] ="SERVICING")
+	/// RETURN
+	/// divide(varMeterCompliantWOCount, varMeterWOCount, 0)
+	measure 'Date based Service Accuracy Overview %' =
+			
+			VAR varMeterCompliantWOCount =
+			    CALCULATE (
+			        COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			        'F_Service_Accuracy'[Date Compliant Flag] = 1,
+			        'F_Service_Accuracy'[date Based Flag] = 1,
+			        F_Service_Accuracy[Set Name] = "SERVICING"
+			    )
+			VAR varMeterWOCount =
+			    CALCULATE (
+			        COUNT ( F_Service_Accuracy[KEY_WorkOrder] ),
+			        F_Service_Accuracy[date Based Flag] = 1,
+			        F_Service_Accuracy[Set Name] = "SERVICING"
+			    )
+			RETURN
+			    DIVIDE ( varMeterCompliantWOCount, varMeterWOCount, 0 )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7249aa92-7f2a-44fa-8e82-944e219917d5
+
+	/// 
+	/// IF (
+	///    [Date based Service Accuracy Overview %] >= [Date based Service Accuracy % Target], // GREEN
+	///     IF (
+	///         [Date based Service Accuracy Overview %]= [Date based Service Accuracy % 3 Mth],
+	///         5, // Flag
+	///         IF (  [Date based Service Accuracy Overview %] > F_Downtime[Date based Service Accuracy % 3 Mth], 
+	///                 1 /* UP */,
+	///                 2 /* DOWN */ 
+	///         )
+	///     ),
+	///     IF ( // RED
+	///         [Date based Service Accuracy Overview %] = F_Downtime[Date based Service Accuracy % 3 Mth],
+	///         4, // DOWN ?
+	///         IF (  [Date based Service Accuracy Overview %] > [Date based Service Accuracy % 3 Mth], 
+	///                 3 /* UP */,
+	///                 4 /* DOWN */)
+	/// 
+	///     )
+	/// )
+	measure 'Date based Service Accuracy % KPI Flag' =
+			
+			IF (
+			    [Date based Service Accuracy Overview %] >= [Date based Service Accuracy % Target],
+			    // GREEN
+			    IF (
+			        [Date based Service Accuracy Overview %] = [Date based Service Accuracy % 3 Mth],
+			        5,
+			        // Flag
+			        IF (
+			            [Date based Service Accuracy Overview %] > F_Downtime[Date based Service Accuracy % 3 Mth],
+			            1 /* UP */
+			            ,
+			            2 /* DOWN */
+			        )
+			    ),
+			    IF (
+			        // RED
+			        [Date based Service Accuracy Overview %] = F_Downtime[Date based Service Accuracy % 3 Mth],
+			        4,
+			        // DOWN ?
+			        IF (
+			            [Date based Service Accuracy Overview %] > [Date based Service Accuracy % 3 Mth],
+			            3 /* UP */
+			            ,
+			            4 /* DOWN */
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 2f2a3dbd-80dd-4448-b8f5-10476ae616ac
+
+	/// .95
+	measure 'Date based Service Accuracy % Target' =
+			
+			.95
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3dba9d53-17d8-412a-ac17-f33ffbc2a717
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 98bb7143-8302-44a8-aa5c-83f77491b8dd
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: a67b14e2-8631-4668-af53-0c7648cf2b5c
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: e1a08f07-7a6e-42f5-97a9-105c4b2365be
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 175b8187-c72b-4d0d-8550-a80df094ae14
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Downtime
+		dataType: double
+		formatString: 0.00
+		lineageTag: 6f9f1451-3b33-40ed-ba30-389a0df7ff87
+		summarizeBy: sum
+		sourceColumn: Total_Downtime
+
+		annotation SummarizationSetBy = Automatic
+
+	column Work_Type
+		dataType: string
+		lineageTag: e3c5647d-6fec-47b3-953d-9c2f53fb2eb7
+		summarizeBy: none
+		sourceColumn: Work_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Num_Key = ```
+			F_Downtime[Year_Month] & "01" 
+			```
+		lineageTag: caaa4023-67b2-4cfc-ae94-e54feac4307c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Planned_Downtime
+		dataType: double
+		lineageTag: 5e9ccf2b-031c-4f48-8ab6-9a7bf7ade4ba
+		summarizeBy: sum
+		sourceColumn: Planned_Downtime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Unplanned_Downtime
+		dataType: double
+		lineageTag: fd7a4fec-1562-4586-8314-a37753e9c393
+		summarizeBy: sum
+		sourceColumn: Unplanned_Downtime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition F_Downtime-4aa4c6f4-e31f-4b15-916b-5eae61d573e0 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Downtime = Source{[Schema="DWH",Item="F_Downtime"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DWH_F_Downtime,{"KEY_Site", "KEY_Activity", "KEY_Asset", "Year_Month", "Total_Downtime", "Planned_Downtime", "Unplanned_Downtime", "Work_Type"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

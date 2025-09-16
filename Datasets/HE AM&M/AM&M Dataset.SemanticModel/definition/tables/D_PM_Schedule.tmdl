@@ -1,0 +1,125 @@
+table D_PM_Schedule
+	lineageTag: 7c7cb8ea-3ea5-499b-9988-f61c137b702c
+
+	column KEY_Site
+		dataType: string
+		lineageTag: fdd29797-10b9-4e7a-bf6e-e2ab8c7e0bd0
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 89dd0ba9-9a74-4971-9197-d978c00b87a7
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PM_Schedule
+		dataType: string
+		lineageTag: 53c23e6f-4dcf-43cf-837e-a7695e22f0f1
+		summarizeBy: none
+		sourceColumn: KEY_PM_Schedule
+
+		annotation SummarizationSetBy = Automatic
+
+	column PM_Schedule_Id
+		dataType: string
+		lineageTag: 0a2709c2-b775-409d-b0d2-525cb504c0f0
+		summarizeBy: none
+		sourceColumn: PM_Schedule_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column PM_Schedule_Name
+		dataType: string
+		lineageTag: e460585b-1688-4965-b23e-a5fd3279d6dd
+		summarizeBy: none
+		sourceColumn: PM_Schedule_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column PM_Schedule_Type
+		dataType: string
+		lineageTag: 4a3fd4a0-5548-4bb3-840d-1b70064b04aa
+		summarizeBy: none
+		sourceColumn: PM_Schedule_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Set_Name
+		dataType: string
+		lineageTag: d40231e4-cbf7-4f64-9265-43c3945b0e85
+		summarizeBy: none
+		sourceColumn: Set_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scheduled_Flag
+		dataType: string
+		lineageTag: 03a2bc6e-bff2-4037-b273-8ed814718e05
+		summarizeBy: none
+		sourceColumn: Scheduled_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column From_Effective_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f34d492b-8600-4844-92c4-5a168fb371d0
+		summarizeBy: none
+		sourceColumn: From_Effective_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column To_Effective_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6ff4ea4b-b868-4750-831e-ae3e949c6f4a
+		summarizeBy: none
+		sourceColumn: To_Effective_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Lead_Time
+		dataType: int64
+		formatString: 0
+		lineageTag: ec566dcd-9c00-48d0-b6d8-17ef8aa3df28
+		summarizeBy: sum
+		sourceColumn: Lead_Time
+
+		annotation SummarizationSetBy = Automatic
+
+	column Default_Implement
+		dataType: string
+		lineageTag: 39e5867a-6452-4060-8461-f82deec2154c
+		summarizeBy: none
+		sourceColumn: Default_Implement
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: cf916068-b245-403a-a974-362c7a396485
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_PM_Schedule = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    // from PBI.V_D_PM_Schedule
+				    PBI_V_D_PM_Schedule = Source{[Schema="PBI",Item="V_D_PM_Schedule"]}[Data]
+				in
+				    PBI_V_D_PM_Schedule
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

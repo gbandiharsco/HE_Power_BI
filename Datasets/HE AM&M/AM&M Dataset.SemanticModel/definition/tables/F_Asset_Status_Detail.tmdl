@@ -1,0 +1,240 @@
+table F_Asset_Status_Detail
+	lineageTag: b3cad5f8-0898-4f51-97b8-cf08a3f2dbaf
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 6ed79d3d-8344-41a8-b509-9ca31c8f2540
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column Organization_Id
+		dataType: double
+		lineageTag: 94e1ec1f-03c2-4139-b017-253cf0b5134c
+		summarizeBy: count
+		sourceColumn: Organization_Id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Organization_Code
+		dataType: string
+		lineageTag: 276ee0e4-fec0-4a21-a58f-742dda1394c6
+		summarizeBy: none
+		sourceColumn: Organization_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: d8d86853-6a95-4d71-868b-1c72cc318577
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Id
+		dataType: string
+		lineageTag: faf6de7a-bd9b-447f-bb5c-de0fb11f28dd
+		summarizeBy: none
+		sourceColumn: Asset_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 39127c1b-acb3-466f-88cf-3722113bf04c
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Serial_Number
+		dataType: string
+		lineageTag: d82d60e1-396b-4bc8-9f1a-c8e67dc5477e
+		summarizeBy: none
+		sourceColumn: Serial_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: 3297e341-79e5-4ae7-bd03-23d6117639d1
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transaction_Id
+		dataType: string
+		lineageTag: b483ff8b-2ae8-4292-b26f-1844095f94c0
+		summarizeBy: none
+		sourceColumn: Transaction_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transaction_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3b3c65d2-0f3c-4a97-af89-d18f13040bd4
+		summarizeBy: none
+		sourceColumn: Transaction_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Creation_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6bfedeb3-3362-4a2a-860a-2aa389bca363
+		summarizeBy: none
+		sourceColumn: Creation_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transaction_Type
+		dataType: double
+		lineageTag: 231b5b34-c53b-4756-83b2-627a7d32fa9e
+		summarizeBy: sum
+		sourceColumn: Transaction_Type
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Transaction_Type_Desc
+		dataType: string
+		lineageTag: 613b3a07-eb9c-471c-92f2-ab0319c269ac
+		summarizeBy: none
+		sourceColumn: Transaction_Type_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Comments
+		dataType: string
+		lineageTag: 71f1e437-0f88-4fe1-ace2-0444d73c45b6
+		summarizeBy: none
+		sourceColumn: Comments
+
+		annotation SummarizationSetBy = Automatic
+
+	column User_Id
+		dataType: double
+		lineageTag: 2fa45acc-e386-460b-82e9-d06b489f47a4
+		summarizeBy: count
+		sourceColumn: User_Id
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column User_Name
+		dataType: string
+		lineageTag: d1692f8b-0465-4d62-a06a-9630e2cd4b36
+		summarizeBy: none
+		sourceColumn: User_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Created_By
+		dataType: string
+		lineageTag: 5abf676c-d111-4e5b-93a0-7bf6fbd9f02e
+		summarizeBy: none
+		sourceColumn: Created_By
+
+		annotation SummarizationSetBy = Automatic
+
+	column Work_Type
+		dataType: string
+		lineageTag: 60f85974-50dd-43a8-8470-6b6cb3cea6a2
+		summarizeBy: none
+		sourceColumn: Work_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Work_Type_Desc
+		dataType: string
+		lineageTag: 961a99fb-5b1a-487b-ab89-bb6e59c7f27b
+		summarizeBy: none
+		sourceColumn: Work_Type_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Today
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 86563fb6-0d62-49bf-ae50-0b9b2566e68b
+		summarizeBy: none
+		sourceColumn: Today
+
+		annotation SummarizationSetBy = Automatic
+
+	column Start_Date_Active
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6de64909-5253-42a0-bf93-6575ebce8eaf
+		summarizeBy: none
+		sourceColumn: Start_Date_Active
+
+		annotation SummarizationSetBy = Automatic
+
+	column End_Date_Active
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8bb51d73-1483-4e38-b665-9105d16da8ac
+		summarizeBy: none
+		sourceColumn: End_Date_Active
+
+		annotation SummarizationSetBy = Automatic
+
+	column Planned_Flag
+		dataType: int64
+		formatString: 0
+		lineageTag: adf9ecec-29f0-4079-934f-afbc26b2a2e6
+		summarizeBy: sum
+		sourceColumn: Planned_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: double
+		lineageTag: 547b6e97-b29a-46b3-89cc-92e59f891057
+		summarizeBy: count
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column elt_inserted_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8a948194-27ea-41a9-9c91-964bbbbff98d
+		summarizeBy: none
+		sourceColumn: elt_inserted_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column elt_run_id
+		dataType: string
+		lineageTag: 48f02654-7a11-4044-8539-ba670d848dac
+		summarizeBy: none
+		sourceColumn: elt_run_id
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_Status_Detail-36a862aa-7b30-4489-84d4-a11f5f5ae202 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Meter_Readings_Ltd = Source{[Schema="DWH",Item="F_Asset_Status_Detail"]}[Data]
+				in
+				    DWH_F_Asset_Meter_Readings_Ltd
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

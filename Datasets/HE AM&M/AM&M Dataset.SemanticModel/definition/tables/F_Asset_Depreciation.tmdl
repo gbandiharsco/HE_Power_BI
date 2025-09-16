@@ -1,0 +1,210 @@
+/// PBi.V_F_Asset_Depreciation
+table F_Asset_Depreciation
+	lineageTag: 91150f40-32e4-42ad-8695-f6c4f8cc50bf
+
+	column KEY_FA_Asset
+		dataType: string
+		lineageTag: e45bf3b2-0e3b-4cc4-a8b9-74e404c68f63
+		summarizeBy: none
+		sourceColumn: KEY_FA_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Asset_ID
+		dataType: string
+		lineageTag: 311fd309-ed9c-4828-a478-73979169c3bf
+		summarizeBy: none
+		sourceColumn: FA_Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: d3e9b5ca-7827-4562-8a21-07d25c7cdc7e
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_FA_Asset_ID
+		dataType: string
+		lineageTag: 6c175103-79d0-4f78-9119-70ad416de37f
+		summarizeBy: none
+		sourceColumn: P_FA_Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Number
+		dataType: string
+		lineageTag: 41e86657-6b69-4b34-b4c6-ca333de8d262
+		summarizeBy: none
+		sourceColumn: P_Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_P_FA_Asset
+		dataType: string
+		lineageTag: 29b231d0-fab1-4ece-bead-46f84a1eea23
+		summarizeBy: none
+		sourceColumn: KEY_P_FA_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_Number
+		dataType: string
+		lineageTag: 85bb6402-505f-479a-8a81-04531c432c8a
+		summarizeBy: none
+		sourceColumn: Month_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 32b032c9-7fd8-42a2-b49f-3d9646f3fffe
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_P_Asset
+		dataType: string
+		lineageTag: 462f5b3e-4991-4058-9d5b-738dc8e93ce8
+		summarizeBy: none
+		sourceColumn: KEY_P_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 1d95255b-6d41-4f39-9172-eaa7c84c7156
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column Accumulated_Depreciation
+		dataType: double
+		lineageTag: 657db954-98a4-4ed0-9f7d-de2ec9e38ffd
+		summarizeBy: sum
+		sourceColumn: Accumulated_Depreciation
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Monthly_Depreciation_Expense
+		dataType: double
+		lineageTag: 5f0597f1-7171-4a49-b924-7875b085f13e
+		summarizeBy: sum
+		sourceColumn: Monthly_Depreciation_Expense
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_Depreciation
+		dataType: double
+		lineageTag: 725b23eb-9e26-46bb-ade2-f9cf08533907
+		summarizeBy: sum
+		sourceColumn: YTD_Depreciation
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Exch_Rate
+		dataType: double
+		lineageTag: 60b7d840-cecf-49d7-b7dc-316c32ff6a98
+		summarizeBy: sum
+		sourceColumn: Exch_Rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Depreciation_LIfe
+		dataType: int64
+		formatString: 0
+		lineageTag: c4161844-4d46-4a6c-9b0f-0b1f7d915571
+		summarizeBy: sum
+		sourceColumn: Depreciation_LIfe
+
+		annotation SummarizationSetBy = Automatic
+
+	column Remaining_Depreciation_LIfe
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a716fab-69a6-43f3-bf28-d128d62e43be
+		summarizeBy: sum
+		sourceColumn: Remaining_Depreciation_LIfe
+
+		annotation SummarizationSetBy = Automatic
+
+	column Original_Cost
+		dataType: double
+		lineageTag: a6a9ab99-3b19-49a6-9836-ef412e9b0791
+		summarizeBy: sum
+		sourceColumn: Original_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NBV
+		dataType: double
+		lineageTag: cc8d0e61-8e3d-4e10-a1e3-d61ba24fcceb
+		summarizeBy: sum
+		sourceColumn: NBV
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NBV_Cost
+		dataType: double
+		lineageTag: 06d9100f-1752-4323-ac53-96a54a039857
+		summarizeBy: sum
+		sourceColumn: NBV_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Month_Number_YYYYMMDD = F_Asset_Depreciation[Month_Number]&"01"
+		lineageTag: d295257d-179a-4580-a273-41a6a5b5fc84
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_Code
+		dataType: string
+		lineageTag: f2806503-79e5-4a57-9eaf-a17712da2493
+		summarizeBy: none
+		sourceColumn: Site_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_Hours_LTD
+		dataType: double
+		lineageTag: 195cfe9b-fd83-4b35-a6b0-a86990f152ff
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_LTD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition F_Asset_Depreciation-eb5d5064-ad16-4ec2-b5fe-d56bee2827ff = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Meter_Readings = Source{[Schema="PBI",Item="V_F_Asset_Depreciation"]}[Data]
+				in
+				    DWH_F_Asset_Meter_Readings
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

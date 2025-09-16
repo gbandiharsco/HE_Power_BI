@@ -1,0 +1,50 @@
+table 'GL Location Fields'
+	lineageTag: 65a91d98-7669-47e8-83a8-f5eb85306e73
+
+	column 'GL Location Fields'
+		lineageTag: 8cfb42ee-7d6f-4a72-9152-8a396817aff4
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'GL Location Fields Order'
+
+		relatedColumnDetails
+			groupByColumn: 'GL Location Fields Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Location Fields Fields'
+		isHidden
+		lineageTag: 92cc2d2e-23a4-4cf4-8a30-7b70d2772c3e
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'GL Location Fields Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Location Fields Order'
+		isHidden
+		formatString: 0
+		lineageTag: ac2e83df-b0fb-4506-80a0-c46cbda4ace2
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'GL Location Fields-8c69f8fb-01a7-444a-b9bd-f8587bd6206d' = calculated
+		mode: import
+		source =
+				{
+				    ("Finance Location Code", NAMEOF('D_Organization'[Finance Location Code]), 0),
+				    ("Finance Location Name", NAMEOF('D_Organization'[Finance Location Name]), 1),
+				    ("Site Code", NAMEOF('D_Organization'[Site Code]), 2),
+				    ("Site Name", NAMEOF('D_Organization'[Site Name]), 3)
+				}
+
+	annotation PBI_Id = fa404c8be60e49c2a6c222615e9f84c9
+

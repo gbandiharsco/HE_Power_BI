@@ -1,0 +1,140 @@
+table F_Asset_SMU_Hours
+	lineageTag: 39dad85d-6027-4aa5-a77e-c6c273fce41a
+
+	/// [Asset Count]+[Asset Total]
+	measure 'Total Assets' =
+			
+			[Asset Count] + [Asset Total]
+		formatString: 0
+		lineageTag: b155f6e1-a992-4be9-b884-42957089be89
+
+	measure 'Previous Month SMU' =
+			
+			CALCULATE (
+			    SUM ( F_Asset_SMU_Hours[SMU Hours] ),
+			    DATEADD ( 'D_Date'[FullDate], -1, MONTH )
+			)
+		lineageTag: 47b3d73a-e009-48ef-8012-83f4ce9a9333
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Deviation SMU' =
+			
+			VAR DEV =
+			    IF (
+			        [Previous Month SMU] = 0,
+			        1,
+			        DIVIDE (
+			            SUM ( F_Asset_SMU_Hours[SMU Hours] ) - [Previous Month SMU],
+			            [Previous Month SMU]
+			        )
+			    )
+			RETURN
+			    SWITCH ( TRUE (), Dev >= 0.2, 1, Dev <= -0.2, 1, 2 )
+			/*
+			var DEV = Divide(Sum(F_Asset_SMU_Hours[SMU Hours]) - [Previous Month SMU],[Previous Month SMU])
+			Return
+			Switch(True(),Dev > 0.2,1,2) */
+		formatString: 0
+		lineageTag: e8ee721a-ad87-4a35-8ad5-3135142625da
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 8ca687d4-b901-43e7-8ff9-d333c9bc0f66
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 99b76b4b-ccf0-4786-b054-f30dcf7dac29
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year_Month
+		dataType: string
+		lineageTag: bfd30d68-caf6-48b8-8b8f-49cd6b9d2d11
+		summarizeBy: none
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_Hours
+		dataType: double
+		formatString: 0
+		lineageTag: eb1e47b1-d1b4-4d8f-8c84-649c697cdae2
+		summarizeBy: sum
+		sourceColumn: SMU_Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column Month_Num_Key = F_Asset_SMU_Hours[Year_Month] & "01"
+		lineageTag: e0139479-4810-4dac-8a00-fa9f3d7a8c54
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: ba7d8b66-270b-4bda-b925-f6553381e9f4
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: cc1d24f9-2c12-4364-8108-60b8d971f5cb
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Missing_SMU_Flag
+		dataType: string
+		lineageTag: 09c9c35c-56fd-45e4-a839-c67fecc2ff1d
+		summarizeBy: none
+		sourceColumn: Missing_SMU_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SMU Hours'
+		dataType: double
+		formatString: 0
+		lineageTag: e8b8aabd-b9c1-40a5-967e-7466da642788
+		summarizeBy: sum
+		sourceColumn: SMU Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: 2eba943e-5372-4088-b28f-1ab691cfcb7e
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_SMU_Hours-19bf8642-9637-4b96-9562-17a1dd25d625 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    // select * from DWH.F_Asset_SMU_Hours_0 where Year_Month >= '"&P_YYYYMM_From&
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="select * from DWH.F_Asset_SMU_Hours_0 where Year_Month >= '"&P_YYYYMM_From&"'"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"KEY_Site", "KEY_Activity", "KEY_Asset", "Asset_Number", "Year_Month", "SMU_Hours", "SMU_Hours_Decimal", "Missing_SMU_Flag", "SourceSystemID"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"SMU_Hours_Decimal", "SMU Hours"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

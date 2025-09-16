@@ -1,0 +1,124 @@
+table F_Resource_Transaction
+	lineageTag: 323920ee-71ba-4620-8ab9-9d93b5fb7952
+
+	column Key_Workorder
+		dataType: string
+		lineageTag: 5aceb37c-ed7e-4386-ab22-af59a33a4c4b
+		summarizeBy: none
+		sourceColumn: Key_Workorder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Asset
+		dataType: string
+		lineageTag: 1042f381-ce4b-4e86-b790-e06e7430e3bc
+		summarizeBy: none
+		sourceColumn: Key_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Employee
+		dataType: string
+		lineageTag: 73b3bda1-e7cc-444c-8ec2-b6bd41b26f04
+		summarizeBy: none
+		sourceColumn: Key_Employee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Resource
+		dataType: string
+		lineageTag: 08c9f9b5-bc40-4d86-9fb4-7ced42ecbca5
+		summarizeBy: none
+		sourceColumn: Key_Resource
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_site
+		dataType: string
+		lineageTag: 4a7121cc-eb29-44e7-a427-66a4b52cc626
+		summarizeBy: none
+		sourceColumn: Key_site
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_date
+		dataType: string
+		lineageTag: 31b84837-20f8-4eac-9266-c6ea54346d9f
+		summarizeBy: none
+		sourceColumn: Key_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_quantity
+		dataType: double
+		lineageTag: 07bc8329-3f2e-49fb-87c8-916bd540d189
+		summarizeBy: sum
+		sourceColumn: transaction_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column transaction_uom
+		dataType: string
+		lineageTag: 48d4a989-1129-4fc7-8e21-12b7ba771fb8
+		summarizeBy: none
+		sourceColumn: transaction_uom
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transaction_Value
+		dataType: double
+		lineageTag: 8f415022-1f4e-463e-b904-4387723d5848
+		summarizeBy: sum
+		sourceColumn: Transaction_Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Year_Month
+		dataType: int64
+		formatString: 0
+		lineageTag: ab535185-6aba-437e-aaf3-7e6f8c0efc29
+		summarizeBy: sum
+		sourceColumn: Year_Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 554f0729-d05d-4f99-b389-90972bf9cb9c
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_dt
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 38fb07d0-034f-4ae1-b339-d812d87065b5
+		summarizeBy: none
+		sourceColumn: transaction_dt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	partition F_Resource_Transaction = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    DWH_F_Resource_Transaction = Source{[Schema="DWH",Item="F_Resource_Transaction"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DWH_F_Resource_Transaction,{"Key_Workorder", "Key_Asset", "Key_Employee", "Key_Resource", "Key_site", "Key_date", "transaction_quantity", "transaction_uom", "Transaction_Value", "transaction_dt", "Year_Month", "SourceSystemID"}),
+				    // from 202001
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [Year_Month] >= 202001)
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

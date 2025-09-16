@@ -1,0 +1,64 @@
+table LKP_Asset_Model
+	lineageTag: 7cf93328-e0f4-4705-bcc4-c05f40675f80
+
+	column Manufacturer
+		dataType: string
+		lineageTag: d32b56c3-11f7-4b18-9097-99cc1db3363d
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: edd1cb58-40ed-4650-964e-66a94db1f074
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column Grouping
+		dataType: string
+		lineageTag: b1098185-7991-4e7a-b342-aefca99def15
+		summarizeBy: none
+		sourceColumn: Grouping
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CPH PAR/CIM'
+		dataType: double
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: c6abdc98-b0e1-45d8-94cb-e2d4a5427fd7
+		summarizeBy: sum
+		sourceColumn: CPH PAR/CIM
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Baseline
+		dataType: double
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 92e4db73-1a89-4775-bd0a-cc93ce1182b5
+		summarizeBy: sum
+		sourceColumn: Baseline
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	partition LKP_Asset_Model-ff134b6d-252e-4338-b5e8-c46a737d7dee = m
+		mode: import
+		queryGroup: 'Lookup Files'
+		source =
+				let
+				    Source = SharePoint.Tables("https://hsconline.sharepoint.com/sites/mmbiteam", [Implementation="2.0", ViewMode="Default"]),
+				    #"cfb72031-844d-4f37-8a14-5036651094f8" = Source{[Id="cfb72031-844d-4f37-8a14-5036651094f8"]}[Items],
+				    #"Removed Columns" = Table.RemoveColumns(#"cfb72031-844d-4f37-8a14-5036651094f8",{"ID"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

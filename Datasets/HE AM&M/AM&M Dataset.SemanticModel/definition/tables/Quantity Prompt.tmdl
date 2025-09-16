@@ -1,0 +1,33 @@
+table 'Quantity Prompt'
+	lineageTag: 0821356c-868c-417f-a913-1e50c3f46c8a
+
+	measure 'Qty Prompt' =
+			
+			IF (
+			    HASONEVALUE ( 'Quantity Prompt'[Unit of Measure] ),
+			    VALUES ( 'Quantity Prompt'[Unit of Measure] ),
+			    "LT"
+			)
+		lineageTag: 49dd1beb-d530-458c-8c82-5ca883ebf946
+
+	column 'Unit of Measure'
+		dataType: string
+		lineageTag: 21f218fd-719e-43fb-bc00-5c75a63721c0
+		summarizeBy: none
+		sourceColumn: Unit of Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Quantity Prompt-9cb7898f-41a2-40bb-ac5f-c0bc7b7129ff' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8glRitWJVnJ3VIqNBQA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Unit of Measure" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Unit of Measure", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,100 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'DWH Dimensions'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'DWH Facts'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 'Lookup Files'
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup Parameters
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup 'Scheduled Compliance'
+
+	annotation PBI_QueryGroupOrder = 4
+
+annotation PBIDesktopVersion = 2.146.1026.0 (25.08)+fb98ab832373de81dccd5c01cd96306a48477556
+
+annotation PBI_QueryOrder = ["P_ServerName","P_DatabaseName","F_WorkOrder_Costs","D_Organization","F_WorkOrder_Hours","P_YYYYMM_From","F_Asset_SMU_Hours","F_Asset_SMU_Hours_0","F_Component_Details_Capital_Rebuild","F_Downtime","F_Failures","D_Asset","D_WorkOrder","D_GL_Account","F_GL_Transactions","P_Date_From","F_Service_Accuracy","_Currency Prompt","F_HP_Forecast","F_Asset_Costs_SMU","D_Activity","D_Date","LKP_Asset_Model","Fact Measures","pAMAXServer","pAMAXDb","AMAX Work Order Master","Maintenance Types","Deleted Tasks","KPI Outliers Help","LKP_WO_Status","LKP_WO_Type","KPI Help SA","Months","KPI Help SMU","KPI Help MC","KPI Avoidable Help Guide","Summary Page help","D_DateCopy","D_Resource","D_Employee","KPI Help Maint Cost / SMU","KPI Help Site","Indicators","F_Asset_SMU_Hours_LTD","Current Date","F_Asset_Meter_Readings_Ltd","F_Asset_Meter_Readings","F_Asset_Depreciation","D_Asset_Meter","F_ASSET_SMU_HOURS_12_Mon","Quantity Prompt","D_Date WO Completion","D_FA_Asset","F_Asset_Status_Detail","F_Resource_Transaction","D_WorkOrder_DWH","F_Asset_PM_Prediction","D_PM_Schedule","D_Asset_Activity","F_Service_Prediction","F_Planned_Work_Prediction"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table F_WorkOrder_Costs
+ref table D_Organization
+ref table F_WorkOrder_Hours
+ref table F_Asset_SMU_Hours
+ref table F_Downtime
+ref table D_Asset
+ref table D_WorkOrder
+ref table D_GL_Account
+ref table F_Service_Accuracy
+ref table '_Currency Prompt'
+ref table F_HP_Forecast
+ref table D_Activity
+ref table D_Date
+ref table LKP_Asset_Model
+ref table 'Fact Measures'
+ref table 'AMAX Work Order Master'
+ref table 'Maintenance Types'
+ref table 'KPI Outliers Help'
+ref table LKP_WO_Status
+ref table LKP_WO_Type
+ref table F_GL_Transactions
+ref table 'KPI Help SA'
+ref table 'KPI Help SMU'
+ref table 'KPI Help MC'
+ref table 'KPI Avoidable Help Guide'
+ref table 'Summary Page help'
+ref table D_DateCopy
+ref table 'KPI Help Maint Cost / SMU'
+ref table 'KPI Help Site'
+ref table Indicators
+ref table F_Asset_Costs_SMU
+ref table F_Asset_SMU_Hours_LTD
+ref table 'Current Date'
+ref table F_Asset_Meter_Readings_Ltd
+ref table F_Asset_Meter_Readings
+ref table D_Asset_Meter
+ref table F_Asset_Depreciation
+ref table D_FA_Asset
+ref table F_ASSET_SMU_HOURS_12_Mon
+ref table F_Failures
+ref table 'Quantity Prompt'
+ref table 'GL Location Fields'
+ref table 'Parent Asset Fields'
+ref table 'Slicer Table for ACH Measures'
+ref table 'D_Date WO Completion'
+ref table F_Asset_SMU_Hours_0
+ref table F_Asset_Status_Detail
+ref table D_WorkOrder_DWH
+ref table Workorder_Costs
+ref table Workorder_Hours
+ref table F_Resource_Transaction
+ref table D_Resource
+ref table D_Employee
+ref table F_Asset_PM_Prediction
+ref table D_PM_Schedule
+ref table D_Asset_Activity
+ref table F_Service_Prediction
+ref table F_Planned_Work_Prediction
+ref table F_Component_Details_Capital_Rebuild
+
+ref cultureInfo en-US
+

@@ -1,0 +1,216 @@
+table F_Asset_Costs_SMU
+	lineageTag: 792829aa-ed91-4ba8-a671-a4c51961d1f1
+
+	measure 'Measure 3'
+		lineageTag: e4c28398-173f-40ab-a3e3-b983241ead02
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	column KEY_Site
+		dataType: string
+		lineageTag: 803aa065-55c0-49a6-864b-919d84bdc8c9
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: 84f42596-1e08-40c9-8ecd-8f42ef41f03a
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		lineageTag: 1f6806a4-db7b-41ae-b7c2-6d84eb9ae083
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount_USD
+		dataType: double
+		lineageTag: 8b99fb20-6c4e-4aee-9e57-f2e7ffd96b75
+		summarizeBy: sum
+		sourceColumn: Amount_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Amount_USD_3_Months
+		dataType: double
+		lineageTag: f261a3d7-639b-4beb-8bec-a6af4ace3d1b
+		summarizeBy: sum
+		sourceColumn: Amount_USD_3_Months
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Amount_USD_Prev_3_Months
+		dataType: double
+		lineageTag: 95301855-9d0b-4435-982b-dbef1b764109
+		summarizeBy: sum
+		sourceColumn: Amount_USD_Prev_3_Months
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SMU_Hours
+		dataType: double
+		lineageTag: b80ac5c3-c12c-4163-86ac-a35b9e33f787
+		summarizeBy: sum
+		sourceColumn: SMU_Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SMU_Hours_3_Months
+		dataType: double
+		lineageTag: 7e2cc65c-808e-43c5-9fd0-e438bea62276
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_3_Months
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SMU_Hours_Prev_3_Months
+		dataType: double
+		lineageTag: be09a2f6-d340-4241-ba76-0c0422712939
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_Prev_3_Months
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Month_Num_Key = 'F_Asset_Costs_SMU'[YearMonth] & "01"
+		lineageTag: 0953538b-b001-4456-8e51-29c98ad576d9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Group Mean' = LOOKUPVALUE(D_Asset[CPH],D_Asset[KEY_ASSET],F_Asset_Costs_SMU[KEY_Asset]) + 0
+		formatString: 0
+		lineageTag: 308a8fee-4c1e-485d-a4b5-fdbc75b53887
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column '3 Mth CPH' = IF(F_Asset_Costs_SMU[SMU_Hours_3_Months] =0,0,F_Asset_Costs_SMU[Amount_USD_3_Months]/F_Asset_Costs_SMU[SMU_Hours_3_Months])
+		lineageTag: 3373d5d8-c2ec-40ac-901d-0b3c36d0e072
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gap Potential' = (F_Asset_Costs_SMU[3 Mth CPH] - F_Asset_Costs_SMU[Group Mean]) * F_Asset_Costs_SMU[SMU_Hours_3_Months]
+		lineageTag: cdce0732-9665-4463-9f3d-cecd9e7c82f6
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Outlier Flag' = ```
+			IF(AND(F_Asset_Costs_SMU[Group Mean]>0,F_Asset_Costs_SMU[Gap Potential]>0),"Y","N") 
+			```
+		lineageTag: 48700c41-11ac-4f72-9e91-fc49debaa183
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outlier Count' = IF(F_Asset_Costs_SMU[Outlier Flag]="Y",1,0)
+		formatString: 0
+		lineageTag: 1d39c8a1-c913-444b-96e2-53452f608e52
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column '3 Mth CPH Prev' = IF(F_Asset_Costs_SMU[SMU_Hours_Prev_3_Months] =0,0,F_Asset_Costs_SMU[Amount_USD_Prev_3_Months]/F_Asset_Costs_SMU[SMU_Hours_Prev_3_Months])
+		lineageTag: 821bbedb-51ee-4aeb-83e9-93cdf706430a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Gap Potential Prev' = (F_Asset_Costs_SMU[3 Mth CPH Prev] - F_Asset_Costs_SMU[Group Mean]) * F_Asset_Costs_SMU[SMU_Hours_Prev_3_Months]
+		lineageTag: de10d9fd-2873-445b-b478-8d43d6461edf
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Outlier Flag Prev' = ```
+			IF(AND(F_Asset_Costs_SMU[Group Mean]>0,F_Asset_Costs_SMU[Gap Potential Prev]>0),"Y","N") 
+			```
+		lineageTag: b246f781-f789-4a4c-8f8d-3daed053bc92
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outlier Count Prev' = IF(F_Asset_Costs_SMU[Outlier Flag Prev]="Y",1,0)
+		formatString: 0
+		lineageTag: d78a70ec-11b9-4b1b-ac29-c47a00da5ed2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Asset Outlier Flag' = ```
+			IF(AND(F_Asset_Costs_SMU[Group Mean]>0,F_Asset_Costs_SMU[Gap Potential]>0),"Y","N") 
+			```
+		lineageTag: 40fe58c8-265c-4f8e-8bda-dba0ef0a1673
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Asset Outlier Flag Prev' = ```
+			IF(AND(F_Asset_Costs_SMU[Group Mean]>0,F_Asset_Costs_SMU[Gap Potential Prev]>0),"Y","N") 
+			```
+		lineageTag: 9198751d-ceb6-4231-b0fd-de4602f88158
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outlier KPI Indicator' = ```
+			
+			VAR Down = UNICHAR(8681)
+			VAR Up = UNICHAR(8679)
+			VAR Side = UNICHAR(8680)
+			VAR preMonthOutliers = F_Asset_Costs_SMU[Outlier Count Prev]
+			VAR currentMonthOutliers = F_Asset_Costs_SMU[Outlier Count]
+			RETURN 
+			IF(currentMonthOutliers < preMonthOutliers, Down, 
+			    IF(currentMonthOutliers > preMonthOutliers, Up, Side))
+			
+			```
+		lineageTag: 8b589d97-25d4-4f4d-9ed6-e8122231b206
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Asset_Costs_SMU-093c5fc3-162d-4893-9a97-6dd2d8357c69 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_F_Asset_Costs_SMU = Source{[Schema="DWH",Item="F_Asset_Costs_SMU"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(DWH_F_Asset_Costs_SMU,{{"Amount_Local_3_Months", "Amount_Local_3_Months"}, {"Amount_USD_3_Months", "Amount_USD_3_Months"}, {"SMU_Hours_3_Months", "SMU_Hours_3_Months"}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns",{"KEY_Site", "KEY_Asset", "YearMonth", "Amount_USD", "Amount_USD_3_Months", "Amount_USD_Prev_3_Months", "SMU_Hours", "SMU_Hours_3_Months", "SMU_Hours_Prev_3_Months"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

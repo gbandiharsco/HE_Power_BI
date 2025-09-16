@@ -1,0 +1,6093 @@
+table 'Fact Measures'
+	lineageTag: 3ec7ef4b-8289-4137-a4d7-56e5d68ad738
+
+	/// 
+	/// CALCULATE(DISTINCTCOUNT(D_Asset[Asset ID]), 
+	///                          FILTER(D_Asset,D_Asset[Asset_Criticality] IN {"HIGH","MEDIUM","CRITICAL",BLANK()}),
+	///                          FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500),
+	///                          FILTER(F_Downtime,F_Downtime[Total_Downtime] = 10 || BLANK()))
+	/// 
+	measure Downtime =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset ID] ),
+			    FILTER (
+			        D_Asset,
+			        D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM", "CRITICAL", BLANK () }
+			    ),
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 ),
+			    FILTER ( F_Downtime, F_Downtime[Total_Downtime] = 10 || BLANK () )
+			)
+		formatString: 0
+		displayFolder: Downtime
+		lineageTag: 86f45d0f-4441-4dcd-a8e7-bd4e434da20e
+
+	/// 
+	/// sum(F_Asset_SMU_Hours[SMU_Hours])
+	/// //sum(F_Asset_Costs_SMU[SMU_Hours])
+	/// 
+	measure 'SUM of SMU' =
+			
+			SUM ( F_Asset_SMU_Hours[SMU_Hours] )
+			//sum(F_Asset_Costs_SMU[SMU_Hours])
+		formatString: #,0
+		displayFolder: Outliers
+		lineageTag: 3ca4ac7c-9756-4175-b81b-75d5ea867b48
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// SUM(F_Asset_Costs_SMU[SMU_Hours_3_Months])
+	measure '3 Mth SMU' =
+			
+			SUM ( F_Asset_Costs_SMU[SMU_Hours_3_Months] )
+		formatString: 0
+		displayFolder: Outliers
+		lineageTag: e2917874-9908-4671-897d-f211ca0e856f
+
+	/// 
+	/// SUM(F_WorkOrder_Costs[WO Amount USD])
+	/// //SUM(F_WorkOrder_Costs_Aggr[WO Amount USD Excl Diesel])
+	measure 'SUM of Asset Cost' =
+			
+			SUM ( F_WorkOrder_Costs[WO Amount USD] )
+			//SUM(F_WorkOrder_Costs_Aggr[WO Amount USD Excl Diesel])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: 2839cb6b-7625-4075-a5f8-36c7006988f3
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// 
+	/// CALCULATE([SUM of Total Cost],FILTER(D_GL_Account,D_GL_Account[GL Account Group] <>"Diesel"))
+	/// //CALCULATE([SUM of Total Cost])
+	/// 
+	measure 'Total Asset Cost Excluding Fuel' =
+			
+			CALCULATE (
+			    [SUM of Total Cost],
+			    FILTER ( D_GL_Account, D_GL_Account[GL Account Group] <> "Diesel" )
+			)
+			//CALCULATE([SUM of Total Cost])
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: 4b297e51-6c56-4bf9-a5d8-c28bd33ed74e
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// 
+	/// SUM('F_Asset_Costs_SMU'[Amount_USD_3_Months])
+	measure '3 Mth Total Cost' =
+			
+			SUM ( 'F_Asset_Costs_SMU'[Amount_USD_3_Months] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: 1e912d6a-72ee-41dc-87d0-52da55623efa
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// 
+	/// SUMX(D_Asset,DIVIDE([3 Mth Total Cost] , [3 Mth SMU])) 
+	measure '3 Mth CPH' =
+			
+			SUMX ( D_Asset, DIVIDE ( [3 Mth Total Cost], [3 Mth SMU] ) )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: a4d7bd93-1ff3-4872-b221-bc8515f64f11
+
+	/// ('Fact Measures'[3 Mth Total Cost]/3) * 12
+	measure 'Projected Yearly Cost' =
+			
+			( 'Fact Measures'[3 Mth Total Cost] / 3 ) * 12
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: ae0a78ee-d4c6-476d-8ac6-37ae7ad603a5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// SUM(F_Asset_Costs_SMU[Gap Potential])
+	/// //SUMX(D_Asset,([3 Mth CPH]-[Group Mean]) * [3 Mth SMU] ) 
+	measure 'GAP Potential' =
+			
+			SUM ( F_Asset_Costs_SMU[Gap Potential] )
+			//SUMX(D_Asset,([3 Mth CPH]-[Group Mean]) * [3 Mth SMU] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: 6a5efa70-2096-4198-b5c4-adc4fc9c2e57
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// CALCULATE( SUM(F_WorkOrder_Hours[Hours]),D_GL_Account[GL Account Group] <> "Diesel")
+	measure 'SUM of Workshop Hours' =
+			
+			CALCULATE (
+			    SUM ( F_WorkOrder_Hours[Hours] ),
+			    D_GL_Account[GL Account Group] <> "Diesel"
+			)
+		displayFolder: Outliers
+		lineageTag: d41d92d3-8d40-406a-9ecb-f99078568e54
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// CALCULATE([SUM of Workshop Hours],D_GL_Account[GL Account Group] <> "Diesel")
+	measure 'Total Workshop Hours Excluding Fuel' =
+			
+			CALCULATE (
+			    [SUM of Workshop Hours],
+			    D_GL_Account[GL Account Group] <> "Diesel"
+			)
+		displayFolder: Outliers
+		lineageTag: 5e4f34c0-5c6e-4a67-835d-1cd681a17889
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// 
+	/// VAR MaxDate = MAX( D_Date[FullDate] )     -- retrieve latest date
+	/// VAR MinDate = EDATE( MaxDate, -3 )   -- move it back 12 months
+	/// VAR Result =
+	///      CALCULATE(
+	///           [SUM of Workshop Hours],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  > MinDate &&
+	///           D_Date[DayNumOfMonth] = 1)    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	/// 
+	/// /*VAR from_ = FORMAT(EOMONTH(MAX(D_Date[FullDate]), -3),"YYYYMMDD")
+	/// VAR end_  = FORMAT(MAX(D_Date[FullDate]),"YYYYMMDD")
+	/// RETURN
+	/// 
+	/// 
+	/// CALCULATE([SUM of Workshop Hours],F_WorkOrder_Hours[Month_Num_Key] > from_ && F_WorkOrder_Hours[Month_Num_Key] <= end_)
+	/// */
+	measure '3 Mth Workshop Hours' =
+			
+			VAR MaxDate =
+			    MAX ( D_Date[FullDate] ) -- retrieve latest date
+			VAR MinDate =
+			    EDATE ( MaxDate, -3 ) -- move it back 12 months
+			VAR Result =
+			    CALCULATE (
+			        [SUM of Workshop Hours],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] > MinDate
+			                && D_Date[DayNumOfMonth] = 1
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+			/*VAR from_ = FORMAT(EOMONTH(MAX(D_Date[FullDate]), -3),"YYYYMMDD")
+			VAR end_  = FORMAT(MAX(D_Date[FullDate]),"YYYYMMDD")
+			RETURN
+			
+			
+			CALCULATE([SUM of Workshop Hours],F_WorkOrder_Hours[Month_Num_Key] > from_ && F_WorkOrder_Hours[Month_Num_Key] <= end_)
+			*/
+		displayFolder: Outliers
+		lineageTag: 6ebb1a62-2595-4365-96d3-3e85d43a6f27
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// AVERAGE(F_Asset_Costs_SMU[Group Mean])
+	measure 'Group Mean' =
+			
+			AVERAGE ( F_Asset_Costs_SMU[Group Mean] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: e21252b6-4187-4005-b08f-7dc310de5491
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// SUM(F_Asset_Costs_SMU[Outlier Count])
+	measure 'Outlier Count' =
+			
+			SUM ( F_Asset_Costs_SMU[Outlier Count] )
+		formatString: 0
+		displayFolder: Outliers
+		lineageTag: 1f667163-67a9-421d-8581-926848bb0e12
+
+	/// 
+	/// [Outlier Count]
+	/// /*
+	/// VAR MaxDate = MAX( D_Date[FullDate] )     -- retrieve latest date
+	/// VAR MinDate = EDATE( MaxDate, -3 )   -- move it back 12 months
+	/// VAR Result =
+	///      CALCULATE(
+	///           [Outlier Count],
+	///           KEEPFILTERS(      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  > MinDate &&
+	///           D_Date[DayNumOfMonth] = 1)    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	/// */
+	/// -----CALCULATE([Outlier Count], DATESINPERIOD(D_Date[FullDate], MAX(D_Date[FullDate]), -3,MONTH))
+	measure '3 Mth Outlier Count' =
+			
+			[Outlier Count]
+			/*
+			VAR MaxDate = MAX( D_Date[FullDate] )     -- retrieve latest date
+			VAR MinDate = EDATE( MaxDate, -3 )   -- move it back 12 months
+			VAR Result =
+			     CALCULATE(
+			          [Outlier Count],
+			          KEEPFILTERS(      -- return period between
+			          D_Date[FullDate] <= MaxDate &&  -- latest date
+			          D_Date[FullDate]  > MinDate &&
+			          D_Date[DayNumOfMonth] = 1)    -- bigger than year before
+			     )
+			RETURN
+			     Result
+			*/
+			-----CALCULATE([Outlier Count], DATESINPERIOD(D_Date[FullDate], MAX(D_Date[FullDate]), -3,MONTH))
+		formatString: 0
+		displayFolder: Outliers
+		lineageTag: 98da5c94-1664-412a-9428-9c07d14c2db0
+
+	/// SUM(F_Downtime[Total_Downtime])
+	measure 'SUM of Downtime' =
+			
+			SUM ( F_Downtime[Total_Downtime] )
+		displayFolder: Outliers
+		lineageTag: 90b0f1c8-d8ac-4b0c-a516-aeb6530c8f5e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// VAR from_ = FORMAT(EOMONTH(MAX(D_Date[FullDate]), -3),"YYYYMMDD")
+	/// VAR end_  = FORMAT(MAX(D_Date[FullDate]),"YYYYMMDD")
+	/// RETURN
+	/// 
+	/// 
+	/// 
+	/// CALCULATE([SUM of Downtime], ALLEXCEPT(F_Downtime,D_Organization[Country],D_Organization[Site Name],D_Asset[Asset Number]),F_Downtime[Month_Num_Key] > from_ && F_Downtime[Month_Num_Key] <= end_)
+	measure '3 Mth Downtime' =
+			
+			VAR from_ =
+			    FORMAT ( EOMONTH ( MAX ( D_Date[FullDate] ), -3 ), "YYYYMMDD" )
+			VAR end_ =
+			    FORMAT ( MAX ( D_Date[FullDate] ), "YYYYMMDD" )
+			RETURN
+			    CALCULATE (
+			        [SUM of Downtime],
+			        ALLEXCEPT (
+			            F_Downtime,
+			            D_Organization[Country],
+			            D_Organization[Site Name],
+			            D_Asset[Asset Number]
+			        ),
+			        F_Downtime[Month_Num_Key] > from_
+			            && F_Downtime[Month_Num_Key] <= end_
+			    )
+		displayFolder: Outliers
+		lineageTag: 21a7fc09-064a-4a88-8b29-ca636ccf5779
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// VAR Down = UNICHAR(8681)
+	/// VAR Up = UNICHAR(8679)
+	/// VAR Side = UNICHAR(8680)
+	/// VAR preMonthOutliers = [3 Mth Ago 3 Mth Outlier Count]
+	/// VAR currentMonthOutliers = [3 Mth Outlier Count]
+	/// RETURN 
+	/// IF(currentMonthOutliers < preMonthOutliers, Down, 
+	///     IF(currentMonthOutliers > preMonthOutliers, Up, Side))
+	measure 'Outlier KPI Indicator' =
+			
+			VAR Down =
+			    UNICHAR ( 8681 )
+			VAR Up =
+			    UNICHAR ( 8679 )
+			VAR Side =
+			    UNICHAR ( 8680 )
+			VAR preMonthOutliers = [3 Mth Ago 3 Mth Outlier Count]
+			VAR currentMonthOutliers = [3 Mth Outlier Count]
+			RETURN
+			    IF (
+			        currentMonthOutliers < preMonthOutliers,
+			        Down,
+			        IF ( currentMonthOutliers > preMonthOutliers, Up, Side )
+			    )
+		displayFolder: Outliers
+		lineageTag: e711a784-baa3-492f-b559-faaf132d6899
+
+	/// 
+	/// IF([3 Mth Outlier Count] < [3 Mth Ago 3 Mth Outlier Count], "#008000", 
+	///         IF([3 Mth Outlier Count] > [3 Mth Ago 3 Mth Outlier Count], "#FF0000", "#FFBF00"))
+	measure 'Outlier Trend Color' =
+			
+			IF (
+			    [3 Mth Outlier Count] < [3 Mth Ago 3 Mth Outlier Count],
+			    "#008000",
+			    IF (
+			        [3 Mth Outlier Count] > [3 Mth Ago 3 Mth Outlier Count],
+			        "#FF0000",
+			        "#FFBF00"
+			    )
+			)
+		displayFolder: Outliers
+		lineageTag: e08e3171-3886-4895-8941-135a096b22e2
+
+	/// 
+	/// VAR TestGap= CALCULATE([Gap Potential],
+	/// FILTER(SUMMARIZE(D_Asset,D_Asset[Asset Model Grouping],D_Asset[KEY_ASSET]),[3 Mth SMU] > 0),
+	/// FILTER(SUMMARIZE(D_Date,D_Date[MonthYear]),[3 Mth SMU] > 0),
+	/// FILTER(SUMMARIZE(D_Asset,D_Asset[Asset Model Grouping],D_Asset[KEY_ASSET]),[Asset Outlier Flag] = "Y"),
+	/// 
+	/// FILTER(SUMMARIZE(D_Organization,D_Organization[Site Name]),[3 Mth SMU] > 0)
+	/// )
+	/// RETURN COALESCE(TestGap,0)
+	/// /*
+	/// VAR TestGap= CALCULATE([Gap Potential],
+	/// FILTER(SUMMARIZE(D_Asset,D_Asset[Asset Model Grouping],D_Asset[Asset Number],D_Asset[KEY_ASSET]),[3 Mth SMU] > 0),
+	/// FILTER(SUMMARIZE(D_Date,D_Date[MonthYear]),[3 Mth SMU] > 0),
+	/// FILTER(SUMMARIZE(D_Asset,D_Asset[Asset Model Grouping],D_Asset[Asset Number],D_Asset[KEY_ASSET]),[Asset Outlier Flag] = "Y"),
+	/// 
+	/// FILTER(SUMMARIZE(D_Organization,D_Organization[Region],D_Organization[Country],D_Organization[Site Name]),[3 Mth SMU] > 0)
+	/// )
+	/// RETURN COALESCE(TestGap,0)*/
+	measure 'GAP Potential Summary' =
+			
+			VAR TestGap =
+			    CALCULATE (
+			        [Gap Potential],
+			        FILTER (
+			            SUMMARIZE ( D_Asset, D_Asset[Asset Model Grouping], D_Asset[KEY_ASSET] ),
+			            [3 Mth SMU] > 0
+			        ),
+			        FILTER ( SUMMARIZE ( D_Date, D_Date[MonthYear] ), [3 Mth SMU] > 0 ),
+			        FILTER (
+			            SUMMARIZE ( D_Asset, D_Asset[Asset Model Grouping], D_Asset[KEY_ASSET] ),
+			            [Asset Outlier Flag] = "Y"
+			        ),
+			        FILTER (
+			            SUMMARIZE ( D_Organization, D_Organization[Site Name] ),
+			            [3 Mth SMU] > 0
+			        )
+			    )
+			RETURN
+			    COALESCE ( TestGap, 0 )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers
+		lineageTag: 5c8ca975-199a-45bd-a969-9bebd6f62879
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// 
+	/// SUMX(FILTER(SUMMARIZE(F_WorkOrder_Costs,D_Asset[Asset Number],D_Organization[Site Name]),[SUM of SMU] <> BLANK()),'Fact Measures'[SUM of Asset Cost])
+	/// //SUMX(FILTER(SUMMARIZE(F_WorkOrder_Costs_Aggr,D_Asset[Asset Number],D_Organization[Site Name]),[SUM of SMU] <> BLANK()),'Fact Measures'[SUM of Asset Cost])
+	/// 
+	measure 'SUM of Total Cost' =
+			
+			SUMX (
+			    FILTER (
+			        SUMMARIZE (
+			            F_WorkOrder_Costs,
+			            D_Asset[Asset Number],
+			            D_Organization[Site Name]
+			        ),
+			        [SUM of SMU] > 0
+			    ),
+			    'Fact Measures'[SUM of Asset Cost]
+			)
+			//SUMX(FILTER(SUMMARIZE(F_WorkOrder_Costs_Aggr,D_Asset[Asset Number],D_Organization[Site Name]),[SUM of SMU] <> BLANK()),'Fact Measures'[SUM of Asset Cost])
+		displayFolder: Outliers
+		lineageTag: c06b09ab-ba33-45e9-bbf3-f499ba3e2f0f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// 
+	/// SUMX(FILTER(SUMMARIZE(F_Asset_SMU_Hours,D_Asset[Asset Model Grouping],D_Asset[Asset Number],D_Organization[Site Name]),[SUM of SMU] <> BLANK()),'Fact Measures'[SUM of SMU])
+	/// 
+	measure 'SUM of SMU Hours' =
+			
+			SUMX (
+			    FILTER (
+			        SUMMARIZE (
+			            F_Asset_SMU_Hours,
+			            D_Asset[Asset Model Grouping],
+			            D_Asset[Asset Number],
+			            D_Organization[Site Name]
+			        ),
+			        [SUM of SMU] <> BLANK ()
+			    ),
+			    'Fact Measures'[SUM of SMU]
+			)
+		displayFolder: Outliers
+		lineageTag: 3891fd9b-b04f-4227-aa5f-61d7c4f20737
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// SUMX(FILTER(SUMMARIZE(F_WorkOrder_Hours,D_Asset[Asset Number],D_Organization[Site Name]),[SUM of SMU] <> BLANK()),'Fact Measures'[SUM of Workshop Hours])
+	measure 'SUM of Asset Workshop Hours' =
+			
+			SUMX (
+			    FILTER (
+			        SUMMARIZE (
+			            F_WorkOrder_Hours,
+			            D_Asset[Asset Number],
+			            D_Organization[Site Name]
+			        ),
+			        [SUM of SMU] <> BLANK ()
+			    ),
+			    'Fact Measures'[SUM of Workshop Hours]
+			)
+		displayFolder: Outliers
+		lineageTag: 4ed5d7b4-91b4-47e2-9681-17ab646349d2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// [Outlier Count Prev]
+	///  /*
+	/// VAR dDate = MAX( D_Date[FullDate] )     -- retrieve latest date
+	/// VAR MaxDate = EDATE( dDate, -3 )   -- move it back 3 months
+	/// VAR MinDate = EDATE( dDate, -5 )    -- move it back 6 months
+	/// VAR Result =
+	///      CALCULATE(
+	///           [Outlier Count Prev],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  > MinDate &&
+	///           D_Date[DayNumOfMonth] = 1)    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	/// */
+	/// 
+	/// /* CALCULATE([SUM of SMU], ALLEXCEPT(F_Asset_SMU_Hours,D_Organization[Country],D_Organization[Site Name],D_Asset[Asset Number]),F_Asset_SMU_Hours[Month_Num_Key] > from_ && F_Asset_SMU_Hours[Month_Num_Key] <= end_)*/
+	/// ----CALCULATE([Outlier Count], DATESINPERIOD(D_Date[FullDate], MAX(D_Date[FullDate]), -3,MONTH))
+	measure '3 Mth Ago 3 Mth Outlier Count' =
+			
+			[Outlier Count Prev]
+			/*
+			VAR dDate = MAX( D_Date[FullDate] )     -- retrieve latest date
+			VAR MaxDate = EDATE( dDate, -3 )   -- move it back 3 months
+			VAR MinDate = EDATE( dDate, -5 )    -- move it back 6 months
+			VAR Result =
+			     CALCULATE(
+			          [Outlier Count Prev],
+			          FILTER( ALL( D_Date ),      -- return period between
+			          D_Date[FullDate] <= MaxDate &&  -- latest date
+			          D_Date[FullDate]  > MinDate &&
+			          D_Date[DayNumOfMonth] = 1)    -- bigger than year before
+			     )
+			RETURN
+			     Result
+			*/
+			/* CALCULATE([SUM of SMU], ALLEXCEPT(F_Asset_SMU_Hours,D_Organization[Country],D_Organization[Site Name],D_Asset[Asset Number]),F_Asset_SMU_Hours[Month_Num_Key] > from_ && F_Asset_SMU_Hours[Month_Num_Key] <= end_)*/
+			----CALCULATE([Outlier Count], DATESINPERIOD(D_Date[FullDate], MAX(D_Date[FullDate]), -3,MONTH))
+		formatString: 0
+		displayFolder: Outliers
+		lineageTag: e5ffef90-e78f-4c2e-a254-ffbf8a65b701
+
+	/// [Service Accuracy %]
+	measure 'Service Accuracy % Current month' =
+			
+			[Service Accuracy %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 92d6a9d1-6c02-4a0d-9553-18b8b8c4bc24
+
+	/// if([# Compliant WO]=0,0,
+	/// COALESCE( DIVIDE ( [# Compliant WO], [# Meter based WO], 0 ), ""))
+	/// 
+	/// 
+	measure 'Service Accuracy %' =
+			
+			IF (
+			    [# Compliant WO] = 0,
+			    0,
+			    COALESCE ( DIVIDE ( [# Compliant WO], [# Meter based WO], 0 ), "" )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e5de0b15-dc5a-47e3-afbf-7eb1ca662c67
+
+	/// 
+	///    
+	///  COALESCE(
+	///         CALCULATE (
+	///                 COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+	///                 'F_Service_Accuracy'[Compliant_Flag] = 1),0
+	///             )
+	/// 
+	measure '# Compliant WO' =
+			
+			COALESCE (
+			    CALCULATE (
+			        COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			        'F_Service_Accuracy'[Compliant_Flag] = 1
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 2785329b-6618-4026-8eca-178647bb150e
+
+	/// 
+	/// 
+	///                 COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] )
+	///             
+	///   
+	measure '# Meter based WO' =
+			
+			COUNT ( F_Service_Accuracy[KEY_WorkOrder] )
+		formatString: 0
+		lineageTag: d8dfe717-7825-46ed-abfa-d5148f50af1c
+
+	/// 
+	/// CALCULATE(count(F_Asset_SMU_Hours[Asset_Number]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER" ),filter(D_Asset, [Is Active]="Y"),filter(D_Asset, [Is Parent]="Y") ,filter(D_asset, [Asset Equipment Type]="MOBILE"  )
+	/// )
+	measure 'SMU Assets' =
+			
+			CALCULATE (
+			    COUNT ( F_Asset_SMU_Hours[Asset_Number] ),
+			    FILTER (
+			        'D_Asset',
+			        [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			            && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			            && [Asset_Cost_Type_Desc] <> BLANK ()
+			            && [Asset_Cost_Type_Desc] <> "Other"
+			            && [Asset_Cost_Type_Desc] <> "WRECKER"
+			    ),
+			    FILTER ( D_Asset, [Is Active] = "Y" ),
+			    FILTER ( D_Asset, [Is Parent] = "Y" ),
+			    FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" )
+			)
+		formatString: 0
+		lineageTag: 92a2bde1-a5b6-4bb6-b7d1-a150a2304342
+
+	/// 
+	/// Var CM=month((max(D_Date[FullDate])))
+	/// var Yr=year(max(D_Date[FullDate]))
+	/// var PM=if(cm=1,CALCULATE(12,filter(D_Date,year([FullDate])=yr-1)),cm-1)
+	/// var SMU_PM = if(pm=12,
+	/// 
+	/// 
+	/// CALCULATE(sum(F_Asset_SMU_Hours[SMU_Hours]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER" ),filter(D_Asset, [Is Active]="Y") ,filter(D_Asset, [Is Parent]="Y"),filter(D_asset, [Asset Equipment Type]="MOBILE" ) ,month(D_Date[FullDate])=12,year(D_Date[FullDate])=yr-1),
+	/// 
+	/// CALCULATE(sum(F_Asset_SMU_Hours[SMU_Hours]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER" ),filter(D_Asset, [Is Active]="Y") ,filter(D_Asset, [Is Parent]="Y"),filter(D_asset, [Asset Equipment Type]="MOBILE"  )
+	/// ,Month(D_Date[FullDate])<cM,year(D_Date[FullDate])=yr))
+	/// return 
+	/// smu_PM
+	measure 'SMU Hours_PM' =
+			
+			VAR CM =
+			    MONTH ( ( MAX ( D_Date[FullDate] ) ) )
+			VAR Yr =
+			    YEAR ( MAX ( D_Date[FullDate] ) )
+			VAR PM =
+			    IF (
+			        cm = 1,
+			        CALCULATE ( 12, FILTER ( D_Date, YEAR ( [FullDate] ) = yr - 1 ) ),
+			        cm - 1
+			    )
+			VAR SMU_PM =
+			    IF (
+			        pm = 12,
+			        CALCULATE (
+			            SUM ( F_Asset_SMU_Hours[SMU_Hours] ),
+			            FILTER (
+			                'D_Asset',
+			                [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			                    && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			                    && [Asset_Cost_Type_Desc] <> BLANK ()
+			                    && [Asset_Cost_Type_Desc] <> "Other"
+			                    && [Asset_Cost_Type_Desc] <> "WRECKER"
+			            ),
+			            FILTER ( D_Asset, [Is Active] = "Y" ),
+			            FILTER ( D_Asset, [Is Parent] = "Y" ),
+			            FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" ),
+			            MONTH ( D_Date[FullDate] ) = 12,
+			            YEAR ( D_Date[FullDate] ) = yr - 1
+			        ),
+			        CALCULATE (
+			            SUM ( F_Asset_SMU_Hours[SMU_Hours] ),
+			            FILTER (
+			                'D_Asset',
+			                [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			                    && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			                    && [Asset_Cost_Type_Desc] <> BLANK ()
+			                    && [Asset_Cost_Type_Desc] <> "Other"
+			                    && [Asset_Cost_Type_Desc] <> "WRECKER"
+			            ),
+			            FILTER ( D_Asset, [Is Active] = "Y" ),
+			            FILTER ( D_Asset, [Is Parent] = "Y" ),
+			            FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" ),
+			            MONTH ( D_Date[FullDate] ) < cM,
+			            YEAR ( D_Date[FullDate] ) = yr
+			        )
+			    )
+			RETURN
+			    smu_PM
+		formatString: 0
+		lineageTag: bb91cdf8-a823-4a4d-a2c4-e7e95a88dd59
+
+	/// if(isfiltered(D_Date[MonthYear Prompt]), CALCULATE(countx(D_Asset,'Fact Measures'[SMU Hours]),filter(D_date,D_Date[FullDate].[MonthNo])),([Asset Total]-[Asset_count]))
+	measure 'Asset Count' =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    CALCULATE (
+			        COUNTX ( D_Asset, 'Fact Measures'[SMU Hours] ) --       , FILTER ( D_date, D_Date[FullDate].[MonthNo] )
+			    ),
+			    ( [Asset Total] - [Asset_count] )
+			)
+		formatString: 0
+		lineageTag: 7d6ede97-bf1c-43f5-b27b-105fae3b1d10
+
+	/// if(isblank(sum('F_Asset_SMU_Hours'[SMU_Hours])),0,CALCULATE(sum('F_Asset_SMU_Hours'[SMU_Hours])))
+	measure SMU =
+			
+			IF (
+			    ISBLANK ( SUM ( 'F_Asset_SMU_Hours'[SMU_Hours] ) ),
+			    0,
+			    CALCULATE ( SUM ( 'F_Asset_SMU_Hours'[SMU_Hours] ) )
+			)
+		formatString: 0
+		lineageTag: eb240303-364e-441a-a16c-5d8345fa968d
+
+	/// 
+	/// var CM=[Service Accuracy % Current month]
+	/// var PM=[Service Accuracy % PM]
+	/// 
+	/// return
+	/// 
+	/// var c = 
+	/// IF(isblank(cm),blank(),if(CM>=pm,1,0))
+	/// return
+	/// if(isblank(c),blank(),
+	/// if(c= 1 ,if(cm >= 0.95,1,if((cm >= 0.75 && cm < 0.95),2,if(cm < 0.75,3))),
+	/// if(c= 0, if(cm >= 0.95,4,if((cm >= 0.75 && cm < 0.95),5,if(cm < 0.75,6,if(isblank(c),0)))))))
+	measure 'Service Accuracy_KPI' =
+			
+			VAR CM = [Service Accuracy % Current month]
+			VAR PM = [Service Accuracy % PM]
+			RETURN
+			    VAR c =
+			        IF ( ISBLANK ( cm ), BLANK (), IF ( CM >= pm, 1, 0 ) )
+			    RETURN
+			        IF (
+			            ISBLANK ( c ),
+			            BLANK (),
+			            IF (
+			                c = 1,
+			                IF ( cm >= 0.95, 1, IF ( ( cm >= 0.75 && cm < 0.95 ), 2, IF ( cm < 0.75, 3 ) ) ),
+			                IF (
+			                    c = 0,
+			                    IF (
+			                        cm >= 0.95,
+			                        4,
+			                        IF (
+			                            ( cm >= 0.75
+			                                && cm < 0.95 ),
+			                            5,
+			                            IF ( cm < 0.75, 6, IF ( ISBLANK ( c ), 0 ) )
+			                        )
+			                    )
+			                )
+			            )
+			        )
+		formatString: 0
+		lineageTag: 1d89591a-3afa-4e5e-9f9b-1c5176574c08
+
+	/// 
+	/// CALCULATE([Service Accuracy %],ALLEXCEPT(D_Organization,D_Organization[Region code]))
+	measure 'Service Accuracy CM_Region' =
+			
+			CALCULATE (
+			    [Service Accuracy %],
+			    ALLEXCEPT ( D_Organization, D_Organization[Region code] )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 27ed9ef3-015a-468b-b429-fca082b483b3
+
+	/// calculate([Service Accuracy %],DATESMTD(PREVIOUSMONTH(D_Date[FullDate])))
+	measure 'Service Accuracy % PM' =
+			
+			CALCULATE (
+			    [Service Accuracy %],
+			    DATESMTD ( PREVIOUSMONTH ( D_Date[FullDate] ) )
+			)
+		lineageTag: 8f303dca-7b35-4cb4-80e3-5a4ef6554764
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// CALCULATE (
+	///     [WO Amount],
+	///     'D_WorkOrder'[Planned_Unplanned] = "Unplanned" )
+	measure '# Unplanned Cost' =
+			
+			CALCULATE ( [WO Amount], 'D_WorkOrder'[Planned_Unplanned] = "Unplanned" )
+		formatString: #,0.00
+		lineageTag: b61cb25f-8a38-4183-8c09-e2cfba834d28
+
+		changedProperty = FormatString
+
+	/// .20
+	measure '# Unplanned Target' =
+			
+			.20
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 55779006-1863-4bf5-b6df-9ab20b4359c1
+
+	/// DIVIDE ( [# Unplanned Cost], [# Total WO Cost], 0 )
+	measure '% Unplanned WO Cost' =
+			
+			DIVIDE ( [# Unplanned Cost], [# Total WO Cost], 0 )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9503892f-fe71-4be8-96f4-8a5a62919de7
+
+	/// CALCULATE ( [WO Amount] ,  'D_WorkOrder'[Planned_Unplanned] IN {"Unplanned","Planned"})
+	measure '# Total WO Cost' =
+			
+			CALCULATE (
+			    [WO Amount],
+			    'D_WorkOrder'[Planned_Unplanned] IN { "Unplanned", "Planned" }
+			)
+		lineageTag: f5820c26-e119-49b0-9ae8-258bb5775887
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// DIVIDE ( ( [Maint Cost Forecast]  ), [Sales Forecast], 0 )
+	measure 'Maint Cost % Sales Forecast' = ```
+			-- not using in report and replaced with AOP % (Annual Operating Plan) new Maint Cost % Sales AOP dax
+			VAR old = DIVIDE ( ( [Maint Cost Forecast] ), [Sales Forecast], 0 )
+			var new_org = MAX(D_Organization[Final Draft Sales V O&M]) // new forecast data share by eam team in excel for 2025 AOP
+			//var selectyear= SWITCH(SELECTEDVALUE(D_Date[Year]), "Current Year", new_org , BLANK()) --new Maint Cost % Sales AOP used for this 
+			RETURN //selectyear
+			//new_org 
+			old
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a67931e1-ca20-4562-b445-60050c5a760f
+
+	/// CALCULATE ([GL_Amount] / 1000, D_Date[Month Flag] <= 1 )
+	///     + CALCULATE ( [Forecast Value], D_Date[Month Flag] > 1 )
+	measure HYP_Actual_Forecast_Amount =
+			
+			CALCULATE ( [GL_Amount] / 1000, D_Date[Month Flag] <= 1 )
+			    + CALCULATE ( [Forecast Value], D_Date[Month Flag] > 1 )
+		lineageTag: ce70a846-fdab-4028-b543-5911b73d1220
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if('_Currency Prompt'[CurrencyPrompt]="USD",SUM(F_GL_Transactions[Amount USD]),SUM(F_GL_Transactions[Amount Local]))
+	measure GL_Amount =
+			
+			IF (
+			    '_Currency Prompt'[CurrencyPrompt] = "USD",
+			    SUM ( F_GL_Transactions[Amount USD] ),
+			    SUM ( F_GL_Transactions[Amount Local] )
+			)
+		lineageTag: 14cccdb7-acf9-4b80-8dd5-da2080810135
+
+	/// CALCULATE ( [GL_Amount] / 1000, D_Date[Month Flag] <= 1 )
+	///     + CALCULATE ( [Forecast Value], D_Date[Month Flag] > 1 )
+	measure HYP_Actual_Forecast_Sales =
+			
+			CALCULATE ( [GL_Amount] / 1000, D_Date[Month Flag] <= 1 )
+			    + CALCULATE ( [Forecast Value], D_Date[Month Flag] > 1 )
+		lineageTag: ae760ad2-b004-4cf3-b132-ee1faed35e82
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// CALCULATE (
+	///     [Forecast Amount],
+	///     D_GL_Account[GL Account Group] in { "Equip. Maint.","SubContr. Maint."}
+	/// )
+	measure 'Maint Cost Forecast' =
+			
+			CALCULATE (
+			    [Forecast Amount],
+			    D_GL_Account[GL Account Group] IN { "Equip. Maint.", "SubContr. Maint." }
+			)
+		lineageTag: 056c441e-59da-4de9-907e-29a8bd588b99
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// DIVIDE ( [Maint Cost], [Sales], 0 )
+	measure 'Maint Cost % Sales' =
+			
+			DIVIDE ( [Maint Cost], [Sales], 0 )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4cc37af2-1993-4026-95ee-e34c9d627c49
+
+	/// [Equip. Maint.] 
+	/// 
+	measure 'Maint Cost' =
+			
+			[Equip. Maint.]
+		formatString: #,0.00
+		lineageTag: b96ac05e-2a34-4f18-9502-564bc72d12aa
+
+		changedProperty = FormatString
+
+	/// CALCULATE ( [GL_Amount] )
+	measure 'P&L Amount' =
+			
+			CALCULATE ( [GL_Amount] )
+		formatString: 0.00
+		lineageTag: 8d60424a-b337-4ec3-92c6-eac734c9f381
+
+	/// CALCULATE (
+	///     [HYP_Actual_Forecast_Sales],
+	///     D_GL_Account[GL Account Group] = "Sales"
+	/// )
+	measure Sales =
+			
+			CALCULATE (
+			    [HYP_Actual_Forecast_Sales],
+			    D_GL_Account[GL Account Group] = "Sales"
+			)
+		formatString: #,0.00
+		lineageTag: d7da4600-7411-4bea-859d-9c4e56e3f645
+
+		changedProperty = FormatString
+
+	/// CALCULATE (
+	///     [Forecast Amount],
+	///     D_GL_Account[GL Account Group] = "Sales"
+	/// )
+	measure 'Sales Forecast' =
+			
+			CALCULATE ( [Forecast Amount], D_GL_Account[GL Account Group] = "Sales" )
+		lineageTag: 2a0acafa-6d45-43b4-b368-347eb42a96f8
+
+	/// CALCULATE (
+	///     [HYP_Actual_Forecast_Amount],
+	///     D_GL_Account[GL Account Group] = "Tyres"
+	/// )
+	measure Tyres =
+			
+			CALCULATE (
+			    [HYP_Actual_Forecast_Amount],
+			    D_GL_Account[GL Account Group] = "Tyres"
+			)
+		formatString: 0
+		lineageTag: 305e3979-ab46-42e9-b527-69cdf289712f
+
+	/// CALCULATE (
+	///     [Forecast Amount],
+	///     D_GL_Account[GL Account Group] = "Tyres"
+	/// )
+	measure 'Tyres Forecast' =
+			
+			CALCULATE ( [Forecast Amount], D_GL_Account[GL Account Group] = "Tyres" )
+		lineageTag: b6910163-00b9-4e17-bcc6-6dbcc322a81a
+
+	/// ([Forecast Value] )
+	measure 'Forecast Amount' =
+			
+			( [Forecast Value] )
+		lineageTag: 5e29f8c1-d7f8-4e14-a165-ab3305a4ae1a
+
+	/// if('_Currency Prompt'[CurrencyPrompt]="USD",SUM(F_HP_Forecast[Forecast Value USD]),SUM(F_HP_Forecast[Forecast Value Local]))
+	measure 'Forecast Value' =
+			
+			IF (
+			    '_Currency Prompt'[CurrencyPrompt] = "USD",
+			    SUM ( F_HP_Forecast[Forecast Value USD] ),
+			    SUM ( F_HP_Forecast[Forecast Value Local] )
+			)
+		lineageTag: f0d7a08a-2e21-472a-b3a8-f7852dec78f0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// CALCULATE (
+	///     [HYP_Actual_Forecast_Amount],
+	///     D_GL_Account[GL Account Group] in { "Equip. Maint.","SubContr. Maint."}
+	/// )
+	measure 'Equip. Maint.' =
+			
+			CALCULATE (
+			    [HYP_Actual_Forecast_Amount],
+			    D_GL_Account[GL Account Group] IN { "Equip. Maint.", "SubContr. Maint." }
+			)
+		lineageTag: 8184e619-eb11-4128-b12f-12f100f103e9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// CALCULATE (
+	///     COUNT ( 'F_WorkOrder_Costs'[KEY_WorkOrder] ),
+	///     'D_WorkOrder'[Planned_Unplanned] IN {"Unplanned","Planned"}
+	/// )
+	measure '# WO Count' =
+			
+			CALCULATE (
+			    COUNT ( 'F_WorkOrder_Costs'[KEY_WorkOrder] ),
+			    'D_WorkOrder'[Planned_Unplanned] IN { "Unplanned", "Planned" }
+			)
+		formatString: 0
+		lineageTag: d53b2920-1393-4b90-a2ba-f958c46bf02f
+
+	/// CALCULATE (
+	///     COUNT ( 'F_WorkOrder_Costs'[KEY_WorkOrder] ),
+	///     'D_WorkOrder'[Planned_Unplanned] = "Unplanned"
+	/// )
+	measure '# Unplanned WO' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( 'F_WorkOrder_Costs'[KEY_WorkOrder] ),
+			    'D_WorkOrder'[Planned_Unplanned] = "Unplanned"
+			)
+		formatString: 0
+		lineageTag: ceecd230-3f50-4e0a-8ce1-7d7ffec57ce6
+
+	/// if([SMU]=0,0,CALCULATE([Asset Count]/[SMU]))
+	measure 'Total SMU/Missing' =
+			
+			IF ( [SMU] = 0, 0, CALCULATE ( [Asset Count] / [SMU] ) )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: aacd18ad-3a4d-4f6f-bd99-785998d8cd36
+
+	/// 
+	/// // Forecast + 2.00 %
+	/// VAR varMaintTyreFcst = calculate([Forecast Value], D_GL_Account[GL Account Group] IN {"Equip. Maint.", "Tyres"})
+	/// VAR varSalesFcst = calculate([Forecast Value], D_GL_Account[GL Account Group]="Sales")
+	/// RETURN
+	/// divide(varMaintTyreFcst, varSalesFcst,0) + .02
+	/// 
+	measure 'Maint Cost inc Tyres % Sales Target1' =
+			
+			// Forecast + 2.00 %
+			VAR varMaintTyreFcst =
+			    CALCULATE (
+			        [Forecast Value],
+			        D_GL_Account[GL Account Group] IN { "Equip. Maint.", "Tyres" }
+			    )
+			VAR varSalesFcst =
+			    CALCULATE ( [Forecast Value], D_GL_Account[GL Account Group] = "Sales" )
+			RETURN
+			    DIVIDE ( varMaintTyreFcst, varSalesFcst, 0 ) + .02
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 71efa15f-176a-430b-abf2-32e9e2ec545b
+
+	/// 
+	/// VAR varUnplannedCost = calculate(F_WorkOrder_Costs[WO Amount], D_WorkOrder[Planned_Unplanned]="Unplanned")
+	/// VAR varTotalWOCost = calculate(F_WorkOrder_Costs[WO Amount], D_WorkOrder[Planned_Unplanned] IN {"Unplanned", "Planned"})
+	/// RETURN
+	/// COALESCE(divide(varUnplannedCost , varTotalWOCost, 0), "")
+	measure 'Unplanned WO Cost %' =
+			
+			VAR varUnplannedCost =
+			    CALCULATE (
+			        F_WorkOrder_Costs[WO Amount],
+			        D_WorkOrder[Planned_Unplanned] = "Unplanned"
+			    )
+			VAR varTotalWOCost =
+			    CALCULATE (
+			        F_WorkOrder_Costs[WO Amount],
+			        D_WorkOrder[Planned_Unplanned] IN { "Unplanned", "Planned" }
+			    )
+			RETURN
+			    COALESCE ( DIVIDE ( varUnplannedCost, varTotalWOCost, 0 ), "" )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d22067f5-f2ae-4444-a73d-e52591fa2ddc
+
+	/// 
+	/// CALCULATE([Unplanned WO Cost %], (DATESINPERIOD(D_Date[FullDate],max(D_Date[FullDate]),-3,MONTH)))
+	measure 'Unplanned WO Cost % 3 Mth' =
+			
+			CALCULATE (
+			    [Unplanned WO Cost %],
+			    ( DATESINPERIOD ( D_Date[FullDate], MAX ( D_Date[FullDate] ), -3, MONTH ) )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 129f4492-15ec-4271-ad59-013b4f78d28b
+
+	/// 
+	/// IF (
+	///     [Unplanned WO Cost %] <= [Unplanned WO Cost % Target], // GREEN
+	///     IF (
+	///         [Unplanned WO Cost %] = [Unplanned WO Cost % 3 Mth],
+	///         5, // Flag
+	///         IF ( [Unplanned WO Cost %] > [Unplanned WO Cost % 3 Mth], 
+	///                 1 /* UP */,
+	///                 2 /* DOWN */ 
+	///         )
+	///     ),
+	///     IF ( // RED
+	///         [Unplanned WO Cost %] = [Unplanned WO Cost % 3 Mth],
+	///         4, // DOWN ?
+	///         IF ( [Unplanned WO Cost %] > [Unplanned WO Cost % 3 Mth], 
+	///                 3 /* UP */,
+	///                 4 /* DOWN */)
+	/// 
+	///     )
+	/// )
+	measure 'Unplanned WO Cost % KPI Flag' =
+			
+			IF (
+			    [Unplanned WO Cost %] <= [Unplanned WO Cost % Target],
+			    // GREEN
+			    IF (
+			        [Unplanned WO Cost %] = [Unplanned WO Cost % 3 Mth],
+			        5,
+			        // Flag
+			        IF (
+			            [Unplanned WO Cost %] > [Unplanned WO Cost % 3 Mth],
+			            1 /* UP */
+			            ,
+			            2 /* DOWN */
+			        )
+			    ),
+			    IF (
+			        // RED
+			        [Unplanned WO Cost %] = [Unplanned WO Cost % 3 Mth],
+			        4,
+			        // DOWN ?
+			        IF (
+			            [Unplanned WO Cost %] > [Unplanned WO Cost % 3 Mth],
+			            3 /* UP */
+			            ,
+			            4 /* DOWN */
+			        )
+			    )
+			)
+		lineageTag: c433299b-bb55-4302-8a92-a1b9b21e4a08
+
+	/// .20
+	measure 'Unplanned WO Cost % Target' =
+			
+			.20
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0f301b44-a757-4047-8d66-d518e5d465b2
+
+	/// 
+	/// CALCULATE([3 Mth Outlier Count])
+	measure 'Outlier CM' =
+			
+			CALCULATE ( [3 Mth Outlier Count] )
+		formatString: 0
+		lineageTag: 44b7ede9-b7d3-419f-8e90-12bf8357676c
+
+	/// 
+	/// 
+	/// Var CM=month((max(D_Date[FullDate])))
+	/// var Yr=year(max(D_Date[FullDate]))
+	/// var PM=if(cm=1,CALCULATE(12,filter(D_Date,year([FullDate])=yr-1)),cm-1)
+	/// var Outlier_PM = if(pm=12,calculate([3 Mth Ago 3 Mth Outlier Count],
+	/// filter(all(D_Date),and(month(D_Date[FullDate])=12,year(D_Date[FullDate])=yr-1))),calculate([3 Mth Ago 3 Mth Outlier Count],
+	/// filter(all(D_Date),and(Month(D_Date[FullDate])=pm,year(D_Date[FullDate])=yr))))
+	/// return Outlier_PM
+	measure 'Outliers PM' =
+			
+			VAR CM =
+			    MONTH ( ( MAX ( D_Date[FullDate] ) ) )
+			VAR Yr =
+			    YEAR ( MAX ( D_Date[FullDate] ) )
+			VAR PM =
+			    IF (
+			        cm = 1,
+			        CALCULATE ( 12, FILTER ( D_Date, YEAR ( [FullDate] ) = yr - 1 ) ),
+			        cm - 1
+			    )
+			VAR Outlier_PM =
+			    IF (
+			        pm = 12,
+			        CALCULATE (
+			            [3 Mth Ago 3 Mth Outlier Count],
+			            FILTER (
+			                ALL ( D_Date ),
+			                AND ( MONTH ( D_Date[FullDate] ) = 12, YEAR ( D_Date[FullDate] ) = yr - 1 )
+			            )
+			        ),
+			        CALCULATE (
+			            [3 Mth Ago 3 Mth Outlier Count],
+			            FILTER (
+			                ALL ( D_Date ),
+			                AND ( MONTH ( D_Date[FullDate] ) = pm, YEAR ( D_Date[FullDate] ) = yr )
+			            )
+			        )
+			    )
+			RETURN
+			    Outlier_PM
+		formatString: 0
+		lineageTag: dcc17c17-ade0-4f7b-9ee3-e71418a612e6
+
+	/// CALCULATE([Outlier CM],ALLEXCEPT(D_Organization,'D_Organization'[Region Code]))
+	measure 'Outlier CM_Region' =
+			
+			CALCULATE (
+			    [Outlier CM],
+			    ALLEXCEPT ( D_Organization, 'D_Organization'[Region Code] )
+			)
+		formatString: 0
+		lineageTag: 22a05c54-ead4-4f6c-8c94-9df1629bb5a0
+
+	/// 
+	/// [Outlier CM]
+	/// 
+	measure 'Outliers by Regions' =
+			
+			[Outlier CM]
+		formatString: 0
+		lineageTag: 0f3e2ae1-a83a-464c-8a3b-1ad07bc789e1
+
+	/// 
+	/// 
+	/// if([Outlier CM]>0,
+	/// if([Outlier CM]>[Outliers PM],1,0))
+	measure Outliers_KPI =
+			
+			IF ( [Outlier CM] > 0, IF ( [Outlier CM] > [Outliers PM], 1, 0 ) )
+		formatString: 0
+		lineageTag: bd32a085-d5e3-4bb8-a2e7-540c3c3cecb8
+
+	/// 
+	/// 
+	/// CALCULATE(distinctcount(F_Asset_SMU_Hours[Asset_Number]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER"),filter(D_Asset, [Is Active]="Y"),filter(D_Asset, [Is Parent]="Y") ,filter(D_asset, [Asset Equipment Type]="MOBILE"  )
+	/// 
+	/// )
+	measure 'Asset Total' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( F_Asset_SMU_Hours[Asset_Number] ),
+			    D_Asset[SMU KPI Flag] = "Y" /*
+			    FILTER (
+			        'D_Asset',
+			        [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			            && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			            && [Asset_Cost_Type_Desc] <> BLANK ()
+			            && [Asset_Cost_Type_Desc] <> "Other"
+			            && [Asset_Cost_Type_Desc] <> "WRECKER"
+			    ),
+			    FILTER ( D_Asset, [Is Active] = "Y" ),
+			    FILTER ( D_Asset, [Is Parent] = "Y" ),
+			    FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" ),
+			    FILTER ( D_asset, D_Asset[SMU FLAG] <> "N" )
+			    */
+			)
+		formatString: 0
+		displayFolder: SMU KPI
+		lineageTag: 30ef8a3c-a21f-4187-a967-449a6d16430d
+
+	/// if(isfiltered(D_Date[MonthYear Prompt]),divide([Asset total],([Asset Total]+[Asset Count])),
+	/// if(isblank([asset_count]),0,divide([Asset_count],[Asset Total])))
+	measure 'Missing/Total Asset' =
+			
+			/*IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    DIVIDE ( [Asset total], ( [Asset Total] + [Asset Count] ) ),
+			    IF ( ISBLANK ( [asset_count] ), 0, DIVIDE ( [Asset_count], [Asset Total] ) )
+			)
+			*/
+			IF (
+			    ISBLANK ( [Asset Total] ),
+			    BLANK (),
+			    DIVIDE ( [Assets with SMU], [Asset Total] )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SMU KPI
+		lineageTag: abd6faa5-2644-435e-b390-9718622c1517
+
+	/// CALCULATE([Missing/Total Asset])
+	measure SMU_CM =
+			
+			CALCULATE ( [Missing/Total Asset] )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 85bf2be1-60eb-4988-b6b1-ae77149fe97c
+
+	/// 
+	/// CALCULATE([SMU_CM],ALLEXCEPT(D_Organization,'D_Organization'[Region code]))
+	///  
+	measure SMU_CM_Region =
+			
+			CALCULATE (
+			    [SMU_CM],
+			    ALLEXCEPT ( D_Organization, 'D_Organization'[Region code] )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 26e30a8a-00bb-48d4-9d4f-99dcfc25e4fa
+
+	measure Measure
+		lineageTag: d78cdabb-dfa7-4ea6-a8f9-ba94cb8aae75
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	/// 
+	/// CALCULATE([SMU_CM],filter('D_Asset',or(D_Asset[Asset_Criticality]="High",D_Asset[Asset_Criticality]="Medium")))
+	measure 'SMU by Regions' =
+			
+			CALCULATE (
+			    [SMU_CM],
+			    FILTER (
+			        'D_Asset',
+			        OR (
+			            D_Asset[Asset Criticality] = "High",
+			            D_Asset[Asset Criticality] = "Medium"
+			        )
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 58c4ea30-c88d-450d-933c-03dcf4fa290f
+
+	/// 
+	/// var CM=[SMU_CM]
+	/// var PM=[SMU_PM]
+	/// var target = 0.90
+	/// var c = 
+	/// IF(isblank(cm),blank(),if(CM>pm,0,1))
+	/// return 
+	/// if(isblank(c),blank(),if(c= 1 && cm >= target,1,if(c= 1 && cm < target,2,if(c= 0 && cm >= target,3,if(c= 0 && cm < target,4)))))
+	measure SMU_KPI =
+			
+			VAR CM = [SMU_CM]
+			VAR PM = [SMU_PM]
+			VAR target = 0.90
+			VAR c =
+			    IF ( ISBLANK ( cm ), BLANK (), IF ( CM > pm, 0, 1 ) )
+			RETURN
+			    IF (
+			        ISBLANK ( c ),
+			        BLANK (),
+			        IF (
+			            c = 1
+			                && cm >= target,
+			            1,
+			            IF (
+			                c = 1
+			                    && cm < target,
+			                2,
+			                IF ( c = 0 && cm >= target, 3, IF ( c = 0 && cm < target, 4 ) )
+			            )
+			        )
+			    )
+		formatString: 0
+		lineageTag: 6f7f1d56-22fc-4582-a203-c7d0578227b0
+
+	/// [Maint cost % current month]
+	measure 'Value_Maint %' =
+			
+			[Maint cost % current month]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4f0aad7d-5169-42df-adbe-17465c844984
+
+	/// 
+	/// CALCULATE([Maint Cost % Sales],ALLEXCEPT(D_Organization,D_Organization[Region code]))
+	measure 'Maint Cost CM_Region' =
+			
+			CALCULATE (
+			    [Maint Cost % Sales],
+			    ALLEXCEPT ( D_Organization, D_Organization[Region code] )
+			)
+		lineageTag: 7a9dfc6c-9908-4d95-aaca-b41afdebd856
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// calculate([Maint Cost % Sales],all(D_Date),month(D_Date[FullDate]) = month(today())-1,year(D_Date[FullDate]) = year(today()))
+	measure 'Maint cost % CM' =
+			
+			CALCULATE (
+			    [Maint Cost % Sales],
+			    ALL ( D_Date ),
+			    MONTH ( D_Date[FullDate] )
+			        = MONTH ( TODAY () ) - 1,
+			    YEAR ( D_Date[FullDate] ) = YEAR ( TODAY () )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4d9af74d-8ac2-42e1-8539-72910cb3414f
+
+	/// calculate([Maint Cost % Sales],DATESMTD(PREVIOUSMONTH(D_Date[FullDate])))
+	measure 'Maint cost % Previous month' =
+			
+			CALCULATE (
+			    [Maint Cost % Sales],
+			    DATESMTD ( PREVIOUSMONTH ( D_Date[FullDate] ) )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0b4b77af-1677-4188-82ef-6463fdf5bb18
+
+	/// calculate([Maint Cost % Sales],all(D_Date),month(D_Date[FullDate]) = month(today())-2,year(D_Date[FullDate]) = year(today()))
+	measure 'Maint cost % PM' =
+			
+			CALCULATE (
+			    [Maint Cost % Sales],
+			    ALL ( D_Date ),
+			    MONTH ( D_Date[FullDate] )
+			        = MONTH ( TODAY () ) - 2,
+			    YEAR ( D_Date[FullDate] ) = YEAR ( TODAY () )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d97ebb5e-4f13-48ea-9a8e-12212d98c49d
+
+	/// [Maint Cost % Sales]
+	measure 'Maint cost % current month' =
+			
+			[Maint Cost % Sales]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: bf79aecc-6970-4870-877d-2f90649a3d33
+
+	/// 
+	/// var CM=[Maint cost % current month]
+	/// var PM=[Maint cost % Previous month]
+	/// var target  = [Maint Cost % Sales Forecast]
+	/// var c = 
+	/// IF(isblank(cm),blank(),if(CM>=pm,1,0))
+	/// return
+	/// if(isblank(c),blank(),if(c= 1 && cm >= target,1,if(c= 1 && cm < target,2,if(c= 0 && cm >= target,3,if(c= 0 && cm < target,4,if(isblank(c),0))))))
+	measure 'Maint cost_KPI' =
+			
+			VAR CM = [Maint cost % current month]
+			VAR PM = [Maint cost % Previous month]
+			VAR target = [Maint Cost % Sales Forecast]
+			VAR c =
+			    IF ( ISBLANK ( cm ), BLANK (), IF ( CM >= pm, 1, 0 ) )
+			RETURN
+			    IF (
+			        ISBLANK ( c ),
+			        BLANK (),
+			        IF (
+			            c = 1
+			                && cm >= target,
+			            1,
+			            IF (
+			                c = 1
+			                    && cm < target,
+			                2,
+			                IF (
+			                    c = 0
+			                        && cm >= target,
+			                    3,
+			                    IF ( c = 0 && cm < target, 4, IF ( ISBLANK ( c ), 0 ) )
+			                )
+			            )
+			        )
+			    )
+		formatString: 0
+		lineageTag: 23f11b4b-d75e-4b9f-9871-c70cdc6e1cae
+
+	/// if(isblank(sum(F_Asset_SMU_Hours[SMU_Hours])),0,sum(F_Asset_SMU_Hours[SMU_Hours])) 
+	measure 'SMU Sum' =
+			
+			IF (
+			    ISBLANK ( SUM ( F_Asset_SMU_Hours[SMU_Hours] ) ),
+			    0,
+			    SUM ( F_Asset_SMU_Hours[SMU_Hours] )
+			)
+		lineageTag: 60e53087-fc9c-4da6-aa67-3a156f945460
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// CALCULATE([SMU Asset hours] ,ALLEXCEPT(D_Date,D_Date[FullDate].[Year]))
+	/// 
+	measure 'SMU Month' =
+			
+			CALCULATE ( [SMU Asset hours], ALLEXCEPT ( D_Date, D_Date[FullDate] ) )
+		formatString: 0
+		lineageTag: 9cca5c6c-390b-4659-9c90-7a0b837f4afd
+
+	/// if(isblank([Asset Count]),CALCULATE([Asset Count],filter('D_Date',[FullDate].[monthno]=month(today()))),CALCULATE([Asset Count]))
+	measure 'Asset Count Missing SMU' =
+			
+			IF (
+			    ISBLANK ( [Asset Count] ),
+			    CALCULATE (
+			        [Asset Count],
+			        FILTER ( 'D_Date', MONTH ( [FullDate] ) = MONTH ( TODAY () ) )
+			    ),
+			    CALCULATE ( [Asset Count] )
+			)
+		formatString: 0
+		lineageTag: 6ba80e91-c0a7-47f5-9e55-8cbd36f3f4dd
+
+	/// if([SMU Assets]
+	/// =distinctcount(D_Date[Month Flag]),1) 
+	measure 'Asset Count_CM' =
+			
+			IF ( [SMU Assets] = DISTINCTCOUNT ( D_Date[Month Flag] ), 1 )
+		formatString: 0
+		lineageTag: ded18d00-288f-4244-9440-2590eba90428
+
+	/// if(isblank([Asset Total]),blank(),CONCATENATE(if(isblank([Asset Count_table]),0,[Asset Count_table]),CONCATENATE("/",[Asset Total]))) 
+	measure 'Asset Count & Totals' =
+			
+			IF (
+			    ISBLANK ( [Asset Total] ),
+			    BLANK (),
+			    CONCATENATE (
+			        IF ( ISBLANK ( [Asset Count_table] ), 0, [Asset Count_table] ),
+			        CONCATENATE ( "/", [Asset Total] )
+			    )
+			)
+		lineageTag: 5e88fa8f-de9f-44a3-a22f-5628236d818a
+
+	/// CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500)) - CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500),(filter(F_WorkOrder_Hours,(F_WorkOrder_Hours[Hours] <> 0))))
+	measure 'TimeEntry Asset Count' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			    D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 )
+			)
+			    - CALCULATE (
+			        DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			        D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			        FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 ),
+			        ( FILTER ( F_WorkOrder_Hours, ( F_WorkOrder_Hours[Hours] <> 0 ) ) )
+			    )
+		formatString: 0
+		lineageTag: 77154e69-f131-4225-9534-cfe205a8959b
+
+	/// 
+	/// CALCULATE([TimeEntry Asset Count],ALLEXCEPT(D_Organization,D_Organization[Region code]))
+	measure TimeEntrycount_Region =
+			
+			CALCULATE (
+			    [TimeEntry Asset Count],
+			    ALLEXCEPT ( D_Organization, D_Organization[Region code] )
+			)
+		lineageTag: 078f2843-50a2-46c3-9640-67de39714b37
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// [TimeEntry Asset Count]
+	measure 'TimeEntry count' =
+			
+			[TimeEntry Asset Count]
+		lineageTag: bc33b0c2-bb28-4425-b762-26988fc020ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// calculate([TimeEntry Asset Count],DATESMTD(PREVIOUSMONTH(D_Date[FullDate])))
+	measure 'Time Entry PM' =
+			
+			CALCULATE (
+			    [TimeEntry Asset Count],
+			    DATESMTD ( PREVIOUSMONTH ( D_Date[FullDate] ) )
+			)
+		lineageTag: ed2739fb-4f0a-4722-9b1e-7c9dc5dbc9f3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// calculate([TimeEntry Asset Count],DATESMTD(D_Date[FullDate]))
+	measure 'Time Entry CM' =
+			
+			CALCULATE ( [TimeEntry Asset Count], DATESMTD ( D_Date[FullDate] ) )
+		lineageTag: 0b40ad24-16be-471a-a6a7-4c3d76184ba3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// var CM=[Time Entry CM]
+	/// var PM=[Time Entry PM]
+	/// var PM_Region=CALCULATE([Time Entry PM],ALLEXCEPT(D_Organization,'D_Organization'[Region code]))
+	/// return 
+	/// 
+	/// if(minx(D_Organization,[Region code])=blank(),if([TimeEntry count]>PM_Region,1,0),
+	/// IF(isblank([Time Entry CM]),blank(),if(CM>pm,1,0)))
+	measure 'Time Entry_KPI' =
+			
+			VAR CM = [Time Entry CM]
+			VAR PM = [Time Entry PM]
+			VAR PM_Region =
+			    CALCULATE (
+			        [Time Entry PM],
+			        ALLEXCEPT ( D_Organization, 'D_Organization'[Region code] )
+			    )
+			RETURN
+			    IF (
+			        MINX ( D_Organization, [Region code] ) = BLANK (),
+			        IF ( [TimeEntry count] > PM_Region, 1, 0 ),
+			        IF ( ISBLANK ( [Time Entry CM] ), BLANK (), IF ( CM > pm, 1, 0 ) )
+			    )
+		formatString: 0
+		lineageTag: 2e3a89d4-05fe-4944-bf81-816d1bbbc023
+
+	/// if(sum(F_Asset_SMU_Hours[SMU_Hours]) > 500 && not(sum(F_WorkOrder_Hours[Hours]) <> blank()),1,0)
+	measure 'Time Entry Filter' =
+			
+			IF (
+			    SUM ( F_Asset_SMU_Hours[SMU_Hours] ) > 500
+			        && NOT ( SUM ( F_WorkOrder_Hours[Hours] ) <> BLANK () ),
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: ffb8aaff-66c6-4462-add8-3b479bc46a1e
+
+	/// 
+	///  
+	/// CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500),all(D_Date))
+	measure 'Time Entry 3 Mth' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			    D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 ),
+			    ALL ( D_Date )
+			)
+		formatString: 0
+		lineageTag: 07265113-1a6c-496d-b115-56b081efe7d5
+
+	/// CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500),(filter(F_WorkOrder_Hours,(F_WorkOrder_Hours[Hours] <> 0))))
+	measure 'TimeEntry Asset_non blank' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			    D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 ),
+			    ( FILTER ( F_WorkOrder_Hours, ( F_WorkOrder_Hours[Hours] <> 0 ) ) )
+			)
+		formatString: 0
+		lineageTag: d1dc9e62-b20e-4ecb-b94c-ee62d3f63325
+
+	/// 
+	/// divide([TimeEntry Asset Count],[Total Asset count])
+	measure 'Time Entry Assets %' =
+			
+			DIVIDE ( [TimeEntry Asset Count], [Total Asset count] )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ac916829-7a80-435b-b0ea-9809ba511861
+
+	/// CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500)) 
+	measure 'Total Asset count' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			    D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 )
+			)
+		formatString: 0
+		lineageTag: 67a80fb5-47e1-4323-8399-476c66da1e8d
+
+	/// if([Time Entry CM] > [Time Entry PM], 1,if([Time Entry CM] < [Time Entry PM],0,if([Time Entry CM] = [Time Entry PM],2,blank())))
+	measure 'Time Entry Performance indicator' =
+			
+			IF (
+			    [Time Entry CM] > [Time Entry PM],
+			    1,
+			    IF (
+			        [Time Entry CM] < [Time Entry PM],
+			        0,
+			        IF ( [Time Entry CM] = [Time Entry PM], 2, BLANK () )
+			    )
+			)
+		formatString: 0
+		lineageTag: 61c1021a-c0b3-48e2-b9c4-55364478ff1a
+
+	/// 
+	///  
+	///  CALCULATE(DISTINCTCOUNT(D_Asset[Asset ID]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500)) - CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500),(filter(F_Downtime,F_Downtime[Total_Downtime] <> 0)))
+	measure test1 =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset ID] ),
+			    D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 )
+			)
+			    - CALCULATE (
+			        DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			        D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			        FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 ),
+			        ( FILTER ( F_Downtime, F_Downtime[Total_Downtime] <> 0 ) )
+			    )
+		formatString: 0
+		lineageTag: 9e43f07e-53a9-4a32-bf2c-3f901bea4764
+
+	/// "Asset Count : Count of high and medium criticality assets with SMU Hours > 500 in the selected month and have no Time Entry captured."
+	measure 'Time Entry Definition' =
+			
+			"Asset Count : Count of high and medium criticality assets with SMU Hours > 500 in the selected month and have no Time Entry captured."
+		lineageTag: cfcc985a-895a-4367-874b-1befea2af53f
+
+	/// 
+	/// Var CM=month((max(D_Date[FullDate])))
+	/// var Yr=year(max(D_Date[FullDate]))
+	/// var PM=if(cm=1,CALCULATE(12,filter(D_Date,year([FullDate])=yr-1)),cm-1)
+	/// var SMU_PM = if(pm=12,calculate([Missing/Total Asset],
+	/// filter(all(D_Date),and(month(D_Date[FullDate])=12,year(D_Date[FullDate])=yr-1))),calculate([Missing/Total Asset],
+	/// filter(all(D_Date),and(Month(D_Date[FullDate])=pm,year(D_Date[FullDate])=yr))))
+	/// return SMU_PM
+	/// 
+	/// 
+	measure SMU_PM =
+			
+			VAR CM =
+			    MONTH ( ( MAX ( D_Date[FullDate] ) ) )
+			VAR Yr =
+			    YEAR ( MAX ( D_Date[FullDate] ) )
+			VAR PM =
+			    IF (
+			        cm = 1,
+			        CALCULATE ( 12, FILTER ( D_Date, YEAR ( [FullDate] ) = yr - 1 ) ),
+			        cm - 1
+			    )
+			VAR SMU_PM =
+			    IF (
+			        pm = 12,
+			        CALCULATE (
+			            [Missing/Total Asset],
+			            FILTER (
+			                ALL ( D_Date ),
+			                AND ( MONTH ( D_Date[FullDate] ) = 12, YEAR ( D_Date[FullDate] ) = yr - 1 )
+			            )
+			        ),
+			        CALCULATE (
+			            [Missing/Total Asset],
+			            FILTER (
+			                ALL ( D_Date ),
+			                AND ( MONTH ( D_Date[FullDate] ) = pm, YEAR ( D_Date[FullDate] ) = yr )
+			            )
+			        )
+			    )
+			RETURN
+			    SMU_PM
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2ef89018-09a4-48e3-a572-54efa3430df7
+
+	/// if(and([SMU Hours]=1,isblank([SMU Asset hours])),0,[SMU Asset hours])
+	measure Asset_Test =
+			
+			IF (
+			    AND ( [SMU Hours] = 1, ISBLANK ( [SMU Asset hours] ) ),
+			    0,
+			    [SMU Asset hours]
+			)
+		formatString: 0
+		lineageTag: a12db1e2-a03f-4700-bcc7-ead24c6a7702
+
+	/// CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500)) - (CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500),(filter(F_Downtime,(F_Downtime[Total_Downtime] <> 0)))))
+	measure 'Downtime Asset Count' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			    D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 )
+			)
+			    - (
+			        CALCULATE (
+			            DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			            D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			            FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 ),
+			            ( FILTER ( F_Downtime, ( F_Downtime[Total_Downtime] <> 0 ) ) )
+			        )
+			    )
+		formatString: 0
+		lineageTag: 29d53f54-eb6a-4734-86f9-af733a39cdd2
+
+	/// 
+	/// CALCULATE([Downtime Asset Count],ALLEXCEPT(D_Organization,D_Organization[Region]))
+	measure Downtimecount_Region =
+			
+			CALCULATE (
+			    [Downtime Asset Count],
+			    ALLEXCEPT ( D_Organization, D_Organization[Region] )
+			)
+		formatString: 0
+		lineageTag: 1051fff1-2975-431f-8bad-676b108432be
+
+	/// CALCULATE(DISTINCTCOUNT(D_Asset[Asset Number]),D_Asset[Asset_Criticality] in {"HIGH","MEDIUM"},FILTER(F_Asset_SMU_Hours,F_Asset_SMU_Hours[SMU_Hours] > 500),(filter(F_Downtime,(F_Downtime[Total_Downtime] <> 0))))
+	measure 'Downtime Asset_non blank' =
+			
+			CALCULATE (
+			    DISTINCTCOUNT ( D_Asset[Asset Number] ),
+			    D_Asset[Asset Criticality] IN { "HIGH", "MEDIUM" },
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[SMU_Hours] > 500 ),
+			    ( FILTER ( F_Downtime, ( F_Downtime[Total_Downtime] <> 0 ) ) )
+			)
+		formatString: 0
+		lineageTag: 7a4c0386-a229-47f8-9daa-e3265e50c65f
+
+	/// calculate([Downtime Asset Count],DATESMTD(D_Date[FullDate]))
+	measure 'Downtime CM' =
+			
+			CALCULATE ( [Downtime Asset Count], DATESMTD ( D_Date[FullDate] ) )
+		formatString: 0
+		lineageTag: 4f7d5890-56d6-4244-a9e4-eb7a28ef5061
+
+	/// calculate([Downtime Asset Count],DATESMTD(PREVIOUSMONTH(D_Date[FullDate])))
+	measure 'Downtime PM' =
+			
+			CALCULATE (
+			    [Downtime Asset Count],
+			    DATESMTD ( PREVIOUSMONTH ( D_Date[FullDate] ) )
+			)
+		formatString: 0
+		lineageTag: cf05cb56-330c-4a68-8328-87e815959701
+
+	/// 
+	/// var CM=[Downtime CM]
+	/// var PM=[Downtime PM]
+	/// var PM_Region=CALCULATE([Downtime PM],ALLEXCEPT(D_Organization,'D_Organization'[Region]))
+	/// return 
+	/// 
+	/// if(minx(D_Organization,[Region Code])=blank(),if([Downtimecount_Region]>PM_Region,1,0),
+	/// IF(isblank([Downtime CM]),blank(),if(CM>pm,1,0)))
+	measure Downtime_KPI =
+			
+			VAR CM = [Downtime CM]
+			VAR PM = [Downtime PM]
+			VAR PM_Region =
+			    CALCULATE (
+			        [Downtime PM],
+			        ALLEXCEPT ( D_Organization, 'D_Organization'[Region] )
+			    )
+			RETURN
+			    IF (
+			        MINX ( D_Organization, [Region Code] ) = BLANK (),
+			        IF ( [Downtimecount_Region] > PM_Region, 1, 0 ),
+			        IF ( ISBLANK ( [Downtime CM] ), BLANK (), IF ( CM > pm, 1, 0 ) )
+			    )
+		formatString: 0
+		lineageTag: b75490d5-c6eb-489e-826a-450ad6b4677b
+
+	/// [Downtime Asset Count]
+	measure 'Downtime count' =
+			
+			[Downtime Asset Count]
+		formatString: 0
+		lineageTag: bd9b819e-35fd-4ede-927c-f59f952093b3
+
+	/// if([Time Entry CM] > [Time Entry PM], 1,if([Time Entry CM] < [Time Entry PM],0,if([Time Entry CM] = [Time Entry PM],2,blank())))
+	measure 'Downtime Performance indicator' =
+			
+			IF (
+			    [Time Entry CM] > [Time Entry PM],
+			    1,
+			    IF (
+			        [Time Entry CM] < [Time Entry PM],
+			        0,
+			        IF ( [Time Entry CM] = [Time Entry PM], 2, BLANK () )
+			    )
+			)
+		formatString: 0
+		lineageTag: 361465b2-0d04-4171-8efc-7c1a2cccf55f
+
+	/// if(sum(F_Asset_SMU_Hours[SMU_Hours]) > 500 && not(sum(F_Downtime[Total_Downtime]) <> blank()),1,0)
+	measure 'Downtime Filter' =
+			
+			IF (
+			    SUM ( F_Asset_SMU_Hours[SMU_Hours] ) > 500
+			        && NOT ( SUM ( F_Downtime[Total_Downtime] ) <> BLANK () ),
+			    1,
+			    0
+			)
+		formatString: 0
+		lineageTag: ac615cd8-e7d2-4a7a-a58a-a52be86309c1
+
+	/// "Asset Count : Count of high and medium criticality assets with SMU Hours > 500 in the selected month and have no Downtime captured."
+	measure 'Downtime Definition' =
+			
+			"Asset Count : Count of high and medium criticality assets with SMU Hours > 500 in the selected month and have no Downtime captured."
+		lineageTag: 8bb41eef-86fc-4352-bc37-852693c2b931
+
+	/// 
+	/// divide([Downtime Asset Count],[Total Asset count])
+	measure 'Downtime  Assets %' =
+			
+			DIVIDE ( [Downtime Asset Count], [Total Asset count] )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 85fd1830-63ff-4650-848c-e3d26d001c9a
+
+	/// DATEDIFF(STARTOFMONTH(D_Date[FullDate]),ENDOFMONTH(D_Date[FullDate]),DAY) +1
+	measure DaysCount =
+			
+			DATEDIFF (
+			    STARTOFMONTH ( D_Date[FullDate] ),
+			    ENDOFMONTH ( D_Date[FullDate] ),
+			    DAY
+			) + 1
+		formatString: 0
+		lineageTag: fda4e24c-eb57-431b-b5a6-ffba10a5f034
+
+	/// (1.0-( sum(F_Downtime[Total_Downtime]) / ([DaysCount] * 24 )))
+	measure Availability =
+			
+			(
+			    1.0
+			        - (
+			            SUM ( F_Downtime[Total_Downtime] ) / ( [DaysCount] * 24 )
+			        )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 97cf4657-03f2-42ce-bb4b-c342fadddb16
+
+	/// sum(F_Asset_SMU_Hours[SMU_Hours]) / (([DaysCount] * 24 ) - sum(F_Downtime[Total_Downtime]))
+	measure Utilization =
+			
+			SUM ( F_Asset_SMU_Hours[SMU_Hours] )
+			    / (
+			        ( [DaysCount] * 24 )
+			            - SUM ( F_Downtime[Total_Downtime] )
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5e9c8d93-eef5-41cb-ad14-c600e856a599
+
+	/// [DaysCount] * 24
+	measure CalendarHours =
+			
+			[DaysCount] * 24
+		formatString: 0
+		lineageTag: 9dad5045-4ae4-4492-becf-015da1e09306
+
+	/// SELECTEDVALUE(D_Organization[Site Name],"All Sites")
+	measure 'Site Title' =
+			
+			SELECTEDVALUE ( D_Organization[Site Name], "All Sites" )
+		displayFolder: Title
+		lineageTag: fee5da4a-c717-4f83-adf3-bd6a56ff193d
+
+	/// SELECTEDVALUE(D_Organization[Region],"")
+	measure 'Region Title' =
+			
+			SELECTEDVALUE ( D_Organization[Region], "" )
+		displayFolder: Title
+		lineageTag: 4d93acd2-bf7b-4fad-9edb-3eea6f54c615
+
+	/// SELECTEDVALUE(D_Organization[Country],"All Countries ")
+	measure 'Country Title' =
+			
+			SELECTEDVALUE ( D_Organization[Country], "All Countries " )
+		displayFolder: Title
+		lineageTag: 8f97ede6-eac4-47df-b71c-b5dc3f70faf1
+
+	/// if(HASONEVALUE(D_Organization[Region]),COMBINEVALUES(" ","GP Impacting KPI's in ",[Region Title] &"-",[Country Title]&"-",[Site Title]),"GP Impacting KPI's")
+	measure 'GP Impacting KPI''s' =
+			
+			IF (
+			    HASONEVALUE ( D_Organization[Region] ),
+			    COMBINEVALUES (
+			        " ",
+			        "GP Impacting KPI's in ",
+			        [Region Title] & "-",
+			        [Country Title] & "-",
+			        [Site Title]
+			    ),
+			    "GP Impacting KPI's"
+			)
+		displayFolder: Title
+		lineageTag: ca76d78b-ec2b-422b-8e9d-a8efc3f680e3
+
+	/// if(HASONEVALUE(D_Organization[Region]),COMBINEVALUES(" ","AM KPI's in ",[Region Title] &"-",[Country Title]&"-",[Site Title]),"AM KPI's")
+	measure 'AM KPI''s' =
+			
+			IF (
+			    HASONEVALUE ( D_Organization[Region] ),
+			    COMBINEVALUES (
+			        " ",
+			        "AM KPI's in ",
+			        [Region Title] & "-",
+			        [Country Title] & "-",
+			        [Site Title]
+			    ),
+			    "AM KPI's"
+			)
+		displayFolder: Title
+		lineageTag: d6bfa103-e509-431f-bad9-38357d479d3c
+
+	/// if(HASONEVALUE(D_Organization[Region]),COMBINEVALUES(" ","Data Accuracy in ",[Region Title] &"-",[Country Title]&"-",[Site Title]),"Data Accuracy")
+	measure 'Data Accuracy' =
+			
+			IF (
+			    HASONEVALUE ( D_Organization[Region] ),
+			    COMBINEVALUES (
+			        " ",
+			        "Data Accuracy in ",
+			        [Region Title] & "-",
+			        [Country Title] & "-",
+			        [Site Title]
+			    ),
+			    "Data Accuracy"
+			)
+		displayFolder: Title
+		lineageTag: 58cd0405-5252-4c3a-a25e-e41ad0d590ca
+
+	/// if(HASONEVALUE(D_Organization[Region]),COMBINEVALUES(" ","Cost Avoidance in ",[Region Title] &"-",[Country Title]&"-",[Site Title]),"Cost Avoidance")
+	measure 'Cost Avoidance' =
+			
+			IF (
+			    HASONEVALUE ( D_Organization[Region] ),
+			    COMBINEVALUES (
+			        " ",
+			        "Cost Avoidance in ",
+			        [Region Title] & "-",
+			        [Country Title] & "-",
+			        [Site Title]
+			    ),
+			    "Cost Avoidance"
+			)
+		displayFolder: Title
+		lineageTag: e30e25a6-55ba-4d3b-8ac4-0eab1ecbaf32
+
+	/// if(isblank([Service Accuracy %]),0,[Service Accuracy %])
+	measure 'Service Accuracy' =
+			
+			IF ( ISBLANK ( [Service Accuracy %] ), 0, [Service Accuracy %] )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0b724c4d-4890-4f3c-a374-0fd4ce96d411
+
+	/// CALCULATE([Outliers PM],ALLEXCEPT(D_Organization,'D_Organization'[Region Code]))
+	measure 'Outlier PM_Region' =
+			
+			CALCULATE (
+			    [Outliers PM],
+			    ALLEXCEPT ( D_Organization, 'D_Organization'[Region Code] )
+			)
+		formatString: 0
+		lineageTag: d58ddb14-8890-4cf8-a661-e47cf596fb98
+
+	/// 
+	/// 
+	/// if(isblank(F_WorkOrder_Costs[WO Amount]),0,CALCULATE(F_WorkOrder_Costs[WO Amount],FILTER(LKP_WO_Type,or(LKP_WO_Type[Order Type] ="Damage",LKP_WO_Type[Order Type] ="Breakdown")))
+	/// 
+	/// )
+	measure 'Avoidable Cost' =
+			
+			IF (
+			    ISBLANK ( F_WorkOrder_Costs[WO Amount] ),
+			    0,
+			    CALCULATE (
+			        F_WorkOrder_Costs[WO Amount],
+			        FILTER (
+			            LKP_WO_Type,
+			            OR ( LKP_WO_Type[Order Type] = "Damage", LKP_WO_Type[Order Type] = "Breakdown" )
+			        )
+			    )
+			)
+		formatString: #,0
+		displayFolder: Avoidable Cost
+		lineageTag: 5a77399f-652d-43df-9afa-c0368f551002
+
+	/// VAR 
+	/// varSales=calculate([GL_Amount], D_GL_Account[High Level Account Type]="P&L",D_GL_Account[GL Account Group] = "Sales") 
+	/// var
+	/// varCost = calculate([GL_Amount], D_GL_Account[High Level Account Type]="P&L",D_GL_Account[GL Account Group] <> "Sales") 
+	/// Var
+	/// varGP = varSales - varCost
+	/// return if(isblank(varGP),0,varGP)
+	measure 'Gross Profit' =
+			
+			VAR varSales =
+			    CALCULATE (
+			        [GL_Amount],
+			        D_GL_Account[High Level Account Type] = "P&L",
+			        D_GL_Account[GL Account Group] = "Sales"
+			    )
+			VAR varCost =
+			    CALCULATE (
+			        [GL_Amount],
+			        D_GL_Account[High Level Account Type] = "P&L",
+			        D_GL_Account[GL Account Group] <> "Sales"
+			    )
+			VAR varGP = varSales - varCost
+			RETURN
+			    IF ( ISBLANK ( varGP ), 0, varGP )
+		displayFolder: Avoidable Cost
+		lineageTag: 7d69a3e2-be25-4161-a30b-12ac58570a6b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	///     CALCULATE(
+	///         [Avoidable Cost],
+	///         PREVIOUSMONTH(D_Date[FullDate])
+	///     )
+	measure 'Previous Mth Avoidable Cost' =
+			
+			CALCULATE ( [Avoidable Cost], PREVIOUSMONTH ( D_Date[FullDate] ) )
+		formatString: #,0
+		displayFolder: Avoidable Cost
+		lineageTag: c3a1a1fb-81c9-4d69-bd93-15bf30bde336
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// -- Compare the avoidable costs to previous month
+	///     DIVIDE(
+	///         [Avoidable Cost],
+	///         [Previous Mth Avoidable Cost],
+	///         0
+	///     ) - 1
+	measure '% Change Avoidable Cost' =
+			
+			-- Compare the avoidable costs to previous month
+			DIVIDE (
+			    [Avoidable Cost],
+			    [Previous Mth Avoidable Cost],
+			    0
+			) - 1
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Avoidable Cost
+		lineageTag: 34602b6d-0406-498f-b1a4-aa9ead2f6f5d
+
+	/// 
+	///     CALCULATE(
+	///         [Avoidable Cost % PMS],
+	///         PREVIOUSMONTH(D_Date[FullDate])
+	///     )
+	measure 'Previous Mth Avoidable Cost % PMS' =
+			
+			CALCULATE ( [Avoidable Cost % PMS], PREVIOUSMONTH ( D_Date[FullDate] ) )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Avoidable Cost
+		lineageTag: de875b80-36e5-4050-aa4c-0c74c655255f
+
+	/// -- Compare the avoidable costs % GP to previous month
+	///     DIVIDE(
+	///         [Avoidable Cost % PMS],
+	///         [Previous Mth Avoidable Cost % PMS],
+	///         0
+	///     ) - 1
+	measure '% Change Avoidable Cost % PMS' =
+			
+			-- Compare the avoidable costs % GP to previous month
+			DIVIDE (
+			    [Avoidable Cost % PMS],
+			    [Previous Mth Avoidable Cost % PMS],
+			    0
+			) - 1
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Avoidable Cost
+		lineageTag: 07417ee7-0f0c-48bd-b4d6-f88152e8ab6a
+
+	/// 0.02*([Avoidable Cost])/([Avoidable Cost])
+	///     -- I added this last part for it to work properly in the chart, since the chart is filtering the last 12 months
+	measure 'Target Avoidable Cost % PMS' =
+			
+			0.02 * ( [Avoidable Cost] ) / ( [Avoidable Cost] )
+			-- I added this last part for it to work properly in the chart, since the chart is filtering the last 12 months
+		formatString: 0%;-0%;0%
+		displayFolder: Avoidable Cost
+		lineageTag: 5b5264fa-2c3e-49eb-9c9a-9dd3a1ff9a78
+
+	/// 
+	///     CALCULATE(
+	///         [Avoidable cost Deatil],
+	///         ALL(D_DATE)
+	///     )
+	measure 'LTD Avoidable Cost' =
+			
+			CALCULATE ( [Avoidable cost Deatil] --,ALL(D_DATE)
+			    )
+		displayFolder: Avoidable Cost
+		lineageTag: 8b9f75ce-a272-4c1a-b727-046bd1857da4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	///     DIVIDE(CALCULATE(
+	///         [Avoidable Cost],FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage","Breakdown"})),
+	///         CALCULATE(
+	///         [Previous Month Sales],FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage","Breakdown"})),
+	///         
+	///         0
+	///     )
+	measure 'Avoidable Cost % PMS' =
+			
+			DIVIDE (
+			    CALCULATE (
+			        [Avoidable Cost],
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage", "Breakdown" } )
+			    ),
+			    CALCULATE (
+			        [Previous Month Sales],
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage", "Breakdown" } )
+			    ),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Avoidable Cost
+		lineageTag: 02314029-68fb-46be-a3ca-ff8b06735ae8
+
+	/// blank()
+	measure blank =
+			
+			BLANK ()
+		formatString: 0
+		lineageTag: 1773abd2-7848-4b4e-bfc4-c0610a10a54b
+
+	/// var SMU_CM = calculate([SMU Asset hours])
+	/// Var SMU=if(smu_CM>0,SMU_CM,0)
+	/// var Asset=if(and(smu=0,and([SMU Hours_PM]>0,[SMU Month]>0)),1)
+	/// return Asset
+	///  --Used SMU Month to eliminate the assets which are not having smu in given year for January but having SMU in previous Month
+	measure 'SMU Hours' =
+			
+			VAR SMU_CM =
+			    CALCULATE ( [SMU Asset hours] )
+			VAR SMU =
+			    IF ( smu_CM > 0, SMU_CM, 0 )
+			VAR Asset =
+			    IF ( AND ( smu = 0, AND ( [SMU Hours_PM] > 0, [SMU Month] > 0 ) ), 1 )
+			RETURN
+			    Asset
+			--Used SMU Month to eliminate the assets which are not having smu in given year for January but having SMU in previous Month
+		formatString: 0
+		lineageTag: 6b0f3acf-a84f-4e0d-8f7c-133d4b056f74
+
+	/// if(isblank([GL_Amount]),0, calculate([GL_Amount], D_GL_Account[High Level Account Type]="P&L",D_GL_Account[GL Account Group] = "Sales",(PREVIOUSMONTH(D_DateCopy[FullDate]))))
+	measure 'Previous Month Sales Trend' =
+			
+			IF (
+			    ISBLANK ( [GL_Amount] ),
+			    0,
+			    CALCULATE (
+			        [GL_Amount],
+			        D_GL_Account[High Level Account Type] = "P&L",
+			        D_GL_Account[GL Account Group] = "Sales",
+			        ( PREVIOUSMONTH ( D_DateCopy[FullDate] ) )
+			    )
+			)
+		formatString: #,0
+		displayFolder: Avoidable Cost
+		lineageTag: 29b7649d-c64f-4245-ade4-8a1b8dce0e61
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// if([smu]>0,calculate(if([SMU Assets]>=1,[Smu])))
+	measure 'SMU Asset hours' =
+			
+			IF ( [smu] > 0, CALCULATE ( IF ( [SMU Assets] >= 1, [Smu] ) ) )
+		formatString: 0
+		lineageTag: f1a0bfed-c423-48f1-8a83-9ca3ad4dd55b
+
+	/// CALCULATE([asset total],ALLEXCEPT(D_Date,D_Date[FullDate].[Year]))-[Asset Total] 
+	measure 'Asset Count_per Month' =
+			
+			CALCULATE ( [asset total], ALLEXCEPT ( D_Date, D_Date[FullDate] ) ) - [Asset Total]
+		formatString: 0
+		lineageTag: 10c34166-7a36-446a-acc0-db8484a14110
+
+	/// countx(D_Asset,[Asset Count_CM]) 
+	measure Asset_Count =
+			
+			COUNTX ( D_Asset, [Asset Count_CM] )
+		formatString: 0
+		lineageTag: 0b16a9f6-9275-453c-8cfe-d9a12df886fa
+
+	/// 
+	/// Var CM=month((max(D_Date[FullDate])))
+	/// var Yr=year(max(D_Date[FullDate]))
+	/// var PM=if(cm=1,CALCULATE(12,filter(D_Date,year([FullDate])=yr-1)),cm-1)
+	/// var SMU_PM = if(pm=12,calculate([Asset Count],
+	/// filter(all(D_Date),and(month(D_Date[FullDate])=12,year(D_Date[FullDate])=yr-1))),calculate([Asset Count],
+	/// filter(all(D_Date),and(Month(D_Date[FullDate])=pm,year(D_Date[FullDate])=yr))))
+	/// return SMU_PM
+	/// 
+	/// 
+	measure 'Asset Count_PM' =
+			
+			VAR CY =
+			    //Year from Slicer
+			    CALCULATE (
+			        MAX ( D_Date[YearNum] ),
+			        D_Date[MonthYear Prompt] = SELECTEDVALUE ( D_Date[MonthYear Prompt] )
+			    )
+			VAR CM =
+			    //Month from Slicer
+			    CALCULATE (
+			        MAX ( D_Date[MonthNumOfYear] ),
+			        D_Date[MonthYear Prompt] = SELECTEDVALUE ( D_Date[MonthYear Prompt] )
+			    )
+			VAR PY =
+			    //Previous Month's Year
+			    IF ( CM = 1, CY - 1, CY )
+			VAR PM =
+			    //Previous Month
+			    IF ( CM = 1, 12, CM - 1 )
+			VAR SMU_PM =
+			    IF (
+			        ISFILTERED ( D_Date[MonthYear Prompt] ),
+			        CALCULATE (
+			            COUNTX ( D_Asset, 'Fact Measures'[SMU Hours] ),
+			            D_Date[YearNum] = PY,
+			            D_Date[MonthNumOfYear] = PM,
+			            REMOVEFILTERS ( D_Date[MonthYear Prompt] )
+			        ),
+			        ( [Asset Total] - [Asset_count] )
+			    )
+			RETURN
+			    SMU_PM
+		formatString: 0
+		lineageTag: aaf6d810-5fef-4670-ab2f-b48d13e46f0e
+
+	/// if(ISFILTERED(D_Date[MonthYear Prompt]),[Asset Count_PM],([Asset Total]-[Asset_count]))
+	measure 'Asset Total_SMU' =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    [Asset Count_PM],
+			    ( [Asset Total] - [Asset_count] )
+			)
+		formatString: 0
+		lineageTag: e7fbe75a-7098-4900-8626-63783ad46d62
+
+	/// var meterbased = COALESCE(CALCULATE (COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),'F_Service_Accuracy'[Meter non Compliant Flag] = 1,'F_Service_Accuracy'[Meter Based Flag] = 1),0)
+	/// var datebased = COALESCE(CALCULATE (COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),'F_Service_Accuracy'[Date Non Compliant Flag] = 1,'F_Service_Accuracy'[date Based Flag] = 1),0)
+	/// return
+	/// if(selectedvalue(F_Service_Accuracy[PM_Type]) = "Meter",meterbased,datebased)
+	/// 
+	measure '# Non Compliant WO' =
+			
+			VAR meterbased =
+			    COALESCE (
+			        CALCULATE (
+			            COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			            'F_Service_Accuracy'[Meter non Compliant Flag] = 1,
+			            'F_Service_Accuracy'[Meter Based Flag] = 1
+			        ),
+			        0
+			    )
+			VAR datebased =
+			    COALESCE (
+			        CALCULATE (
+			            COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			            'F_Service_Accuracy'[Date Non Compliant Flag] = 1,
+			            'F_Service_Accuracy'[date Based Flag] = 1
+			        ),
+			        0
+			    )
+			RETURN
+			    IF (
+			        SELECTEDVALUE ( F_Service_Accuracy[PM_Type] ) = "Meter",
+			        meterbased,
+			        datebased
+			    )
+		formatString: 0
+		lineageTag: 9ef5358a-fa58-4643-bb44-6878e136d5e4
+
+	/// CALCULATE(
+	///         [Avoidable Cost],FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] ="Breakdown"))
+	measure 'BreakDown Cost' =
+			
+			CALCULATE (
+			    [Avoidable Cost],
+			    FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] = "Breakdown" )
+			)
+		formatString: #,0
+		lineageTag: e8df4134-632d-49db-ba89-e2cdbb3f30a0
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// CALCULATE(
+	///         [Avoidable Cost],FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] ="Damage"))
+	measure 'Damage Cost' =
+			
+			CALCULATE (
+			    [Avoidable Cost],
+			    FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] = "Damage" )
+			)
+		formatString: #,0
+		lineageTag: a32a1ee3-0d41-4dbd-9ec8-824a9d42eb15
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// 
+	/// var CM=[Avoidable Cost % PMS]
+	/// var PM=[Previous Mth Avoidable Cost % PMS]
+	/// var target = [Target Avoidable Cost % PMS]
+	/// var c = 
+	/// IF(isblank(cm),blank(),if(CM>=pm,1,0))
+	/// return
+	/// if(isblank(c),blank(),
+	/// if(c= 1 && cm >= target,1,if(c= 1 && cm < target,2,
+	/// if(c= 0 && cm >= target,3,if(c= 0 && cm < target,4,if(isblank(c),0))))))
+	measure Avoidable_KPI =
+			
+			VAR CM = [Avoidable Cost % PMS]
+			VAR PM = [Previous Mth Avoidable Cost % PMS]
+			VAR target = [Target Avoidable Cost % PMS]
+			VAR c =
+			    IF ( ISBLANK ( cm ), BLANK (), IF ( CM >= pm, 1, 0 ) )
+			RETURN
+			    IF (
+			        ISBLANK ( c ),
+			        BLANK (),
+			        IF (
+			            c = 1
+			                && cm >= target,
+			            1,
+			            IF (
+			                c = 1
+			                    && cm < target,
+			                2,
+			                IF (
+			                    c = 0
+			                        && cm >= target,
+			                    3,
+			                    IF ( c = 0 && cm < target, 4, IF ( ISBLANK ( c ), 0 ) )
+			                )
+			            )
+			        )
+			    )
+		formatString: 0
+		lineageTag: c6648e62-c857-4aaf-90da-4e6d0ab380b4
+
+	/// CALCULATE([Previous Month Sales],(PREVIOUSMONTH(D_Date[FullDate])))
+	measure 'PMS Previous Month' =
+			
+			CALCULATE ( [Previous Month Sales], ( PREVIOUSMONTH ( D_Date[FullDate] ) ) )
+		formatString: #,0
+		lineageTag: b730c2d2-c751-4af0-84ce-7e5ab518b506
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)  
+	/// VAR Result =
+	///      CALCULATE(
+	///           'Fact Measures'[SMU Hours filtered],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	/// 
+	/// 
+	/// 
+	measure 'SMU for Target' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[SMU Hours filtered],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: 4c287cf4-aaa8-4152-a788-6fbc0431c773
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// 
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)    
+	/// VAR Result =
+	///      CALCULATE(
+	///           [Maint Cost],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure 'Maint Cost % Sales for Target' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        [Maint Cost],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: 19e7b2a0-bde2-4508-a56f-138eef0e47c2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isblank('Fact Measures'[SMU Hours filtered]) || 'Fact Measures'[SMU Hours filtered] = 0,0,[Maint Cost] * 1000/'Fact Measures'[SMU Hours filtered])
+	measure costs/SMU =
+			
+			IF (
+			    ISBLANK ( 'Fact Measures'[SMU Hours filtered] )
+			        || 'Fact Measures'[SMU Hours filtered] = 0,
+			    0,
+			    [Maint Cost] * 1000 / 'Fact Measures'[SMU Hours filtered]
+			)
+		formatString: 0.00
+		lineageTag: bbebdff1-c315-4eb1-ae7e-36372e7c507c
+
+	/// calculate('Fact Measures'[costs/SMU],DATESMTD(PREVIOUSMONTH(D_Date[FullDate])))
+	/// 
+	measure 'costs/SMU Previous Month' =
+			
+			CALCULATE (
+			    'Fact Measures'[costs/SMU],
+			    DATESMTD ( PREVIOUSMONTH ( D_Date[FullDate] ) )
+			)
+		lineageTag: b4ca0731-16f5-404e-bb50-69119bf880b2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// var CM='Fact Measures'[costs/SMU %]
+	/// var PM= 'Fact Measures'[costs/SMU PM %]
+	/// var target = [COSTS/SMU Target %]
+	/// return 
+	/// var c = 
+	/// IF(isblank(cm),blank(),if(CM>=pm,1,0))
+	/// return
+	/// if(isblank(c),blank(),if(c= 1 && cm >= target,1,if(c= 1 && cm < target,2,if(c= 0 && cm >= target,3,if(c= 0 && cm < target,4)))))
+	measure Costs/SMU_KPI =
+			
+			VAR CM = 'Fact Measures'[costs/SMU %]
+			VAR PM = 'Fact Measures'[costs/SMU PM %]
+			VAR target = [COSTS/SMU Target %]
+			RETURN
+			    VAR c =
+			        IF ( ISBLANK ( cm ), BLANK (), IF ( CM >= pm, 1, 0 ) )
+			    RETURN
+			        IF (
+			            ISBLANK ( c ),
+			            BLANK (),
+			            IF (
+			                c = 1
+			                    && cm >= target,
+			                1,
+			                IF (
+			                    c = 1
+			                        && cm < target,
+			                    2,
+			                    IF ( c = 0 && cm >= target, 3, IF ( c = 0 && cm < target, 4 ) )
+			                )
+			            )
+			        )
+		formatString: 0
+		lineageTag: 8eab51d7-4df5-4b1e-bc3e-95b24ab65282
+
+	/// 
+	///     COALESCE(
+	///         CALCULATE (
+	///                 COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+	///                 'F_Service_Accuracy'[Date Compliant Flag] = 1,
+	///                 'F_Service_Accuracy'[Date Based Flag] = 1
+	///             ),
+	///             0
+	///     )
+	measure '# Date Compliant WO' =
+			
+			COALESCE (
+			    CALCULATE (
+			        COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			        'F_Service_Accuracy'[Date Compliant Flag] = 1,
+			        'F_Service_Accuracy'[Date Based Flag] = 1
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: f4d31126-2ebe-4c40-bed5-8dfb99e69eea
+
+	/// 
+	///     COALESCE(
+	///         CALCULATE (
+	///          COUNT ( F_Service_Accuracy[KEY_WorkOrder] ),
+	///             F_Service_Accuracy[Date Based Flag] = 1
+	///         ),
+	///         0
+	///     )
+	/// 
+	measure '# Date based WO' =
+			
+			COALESCE (
+			    CALCULATE (
+			        COUNT ( F_Service_Accuracy[KEY_WorkOrder] ),
+			        F_Service_Accuracy[Date Based Flag] = 1
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: bdddea57-6946-4934-bbad-f5799cb62a38
+
+	/// COALESCE(CALCULATE (COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),'F_Service_Accuracy'[Date Non Compliant Flag] = 1,'F_Service_Accuracy'[date Based Flag] = 1),0)
+	measure '# Date Non Compliant WO' =
+			
+			COALESCE (
+			    CALCULATE (
+			        COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			        'F_Service_Accuracy'[Date Non Compliant Flag] = 1,
+			        'F_Service_Accuracy'[date Based Flag] = 1
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: ad1b7282-7a3d-4a0e-a181-1b87238b162c
+
+	/// if([# Date Compliant WO]=0,0,
+	/// COALESCE( DIVIDE ( [# Date Compliant WO], [# Date based WO], 0 ), ""))
+	measure 'Date based Service Accuracy %' =
+			
+			IF (
+			    [# Date Compliant WO] = 0,
+			    0,
+			    COALESCE ( DIVIDE ( [# Date Compliant WO], [# Date based WO], 0 ), "" )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0d15968f-e71d-4486-ac24-b7df23be46bb
+
+	/// calculate([Date based Service Accuracy %],DATESMTD(D_Date[FullDate]))
+	measure 'Date based Service Accuracy % Current month' =
+			
+			CALCULATE ( [Date based Service Accuracy %], DATESMTD ( D_Date[FullDate] ) )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2447d92a-32c7-4385-adbf-ae0d515155a3
+
+	/// calculate([Date based Service Accuracy %],DATESMTD(PREVIOUSMONTH(D_Date[FullDate])))
+	measure 'Date based Service Accuracy % Previous Month' =
+			
+			CALCULATE (
+			    [Date based Service Accuracy %],
+			    DATESMTD ( PREVIOUSMONTH ( D_Date[FullDate] ) )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 08d239ac-4f8a-4399-9d42-0e064d35ac28
+
+	/// 
+	/// var CM=[Date based Service Accuracy % Current month]
+	/// var PM=[Date based Service Accuracy % Previous Month]
+	/// var PM_Region=CALCULATE([Date based Service Accuracy % Previous Month],ALLEXCEPT(D_Organization,'D_Organization'[Region code]))
+	/// return 
+	/// 
+	/// if(minx(D_Organization,[Region code])=blank(),if([Date based Service Accuracy CM_Region]>PM_Region,1,0),
+	/// IF(or(cm=0,pm=0),blank(),if(CM>pm,1,0)))
+	measure 'Date based Service Accuracy_KPI' =
+			
+			VAR CM = [Date based Service Accuracy % Current month]
+			VAR PM = [Date based Service Accuracy % Previous Month]
+			VAR PM_Region =
+			    CALCULATE (
+			        [Date based Service Accuracy % Previous Month],
+			        ALLEXCEPT ( D_Organization, 'D_Organization'[Region code] )
+			    )
+			RETURN
+			    IF (
+			        MINX ( D_Organization, [Region code] ) = BLANK (),
+			        IF ( [Date based Service Accuracy CM_Region] > PM_Region, 1, 0 ),
+			        IF ( OR ( cm = 0, pm = 0 ), BLANK (), IF ( CM > pm, 1, 0 ) )
+			    )
+		formatString: 0
+		lineageTag: d4219fe3-4096-4b0c-8d3f-8f16150e097b
+
+	/// 
+	/// CALCULATE([Date based Service Accuracy %],ALLEXCEPT(D_Organization,D_Organization[Region code]))
+	measure 'Date based Service Accuracy CM_Region' =
+			
+			CALCULATE (
+			    [Date based Service Accuracy %],
+			    ALLEXCEPT ( D_Organization, D_Organization[Region code] )
+			)
+		lineageTag: 9ffc4338-2a12-4b8d-8b7c-e4c6d4bc777c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isblank([SMU for Target]) || 'Fact Measures'[SMU for Target] = 0,0,'Fact Measures'[Maint Cost % Sales for Target] * 1000 / 'Fact Measures'[SMU for Target])
+	measure 'Costs/SMU Target' =
+			
+			IF (
+			    ISBLANK ( [SMU for Target] )
+			        || 'Fact Measures'[SMU for Target] = 0,
+			    0,
+			    'Fact Measures'[Maint Cost % Sales for Target] * 1000 / 'Fact Measures'[SMU for Target]
+			)
+		lineageTag: 70aea12c-b4ac-4300-a6de-a54e60b11e4a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// IF (
+	///     [Maint Cost % Sales] <= [Maint Cost Inc Tyres % Sales Target], // GREEN
+	///     IF (
+	///         [Maint Cost % Sales] = [Maint Cost Inc Tyres % Sales 3 Mth],
+	///         5, // Flag
+	///         IF ( [Maint Cost % Sales] > [Maint Cost Inc Tyres % Sales 3 Mth], 
+	///                 1 /* UP */,
+	///                 2 /* DOWN */ 
+	///         )
+	///     ),
+	///     IF ( // RED
+	///         [Maint Cost % Sales] = [Maint Cost Inc Tyres % Sales 3 Mth],
+	///         4, // DOWN ?
+	///         IF ( [Maint Cost % Sales] > [Maint Cost Inc Tyres % Sales 3 Mth], 
+	///                 3 /* UP */,
+	///                 4 /* DOWN */)
+	/// 
+	///     )
+	/// )
+	measure a =
+			
+			IF (
+			    [Maint Cost % Sales] <= [Maint Cost Exc Tyres % Sales Target],
+			    // GREEN
+			    IF (
+			        [Maint Cost % Sales] = [Maint Cost Exc Tyres % Sales 3 Mth],
+			        5,
+			        // Flag
+			        IF (
+			            [Maint Cost % Sales] > [Maint Cost Exc Tyres % Sales 3 Mth],
+			            1 /* UP */
+			            ,
+			            2 /* DOWN */
+			        )
+			    ),
+			    IF (
+			        // RED
+			        [Maint Cost % Sales] = [Maint Cost Exc Tyres % Sales 3 Mth],
+			        4,
+			        // DOWN ?
+			        IF (
+			            [Maint Cost % Sales] > [Maint Cost Exc Tyres % Sales 3 Mth],
+			            3 /* UP */
+			            ,
+			            4 /* DOWN */
+			        )
+			    )
+			)
+		formatString: 0
+		lineageTag: 1423920b-4436-413a-81f1-5d623d2e1b4d
+
+	/// if(isfiltered(D_Date[MonthYear Prompt]), CALCULATE(countx(D_Asset,'Fact Measures'[SMU Hours])),([Asset Total]-[Asset_count]))
+	measure test =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    CALCULATE ( COUNTX ( D_Asset, 'Fact Measures'[SMU Hours] ) ),
+			    ( [Asset Total] - [Asset_count] )
+			)
+		formatString: 0
+		lineageTag: 22535777-6512-446b-8677-dd4f071b01cb
+
+	/// 'Fact Measures'[costs/SMU] / 1000
+	measure 'COSTS/SMU %' =
+			
+			'Fact Measures'[costs/SMU] / 1000
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: abbb5fea-a249-4fd1-a2da-1ee1d4b3526c
+
+	/// 'Fact Measures'[costs/SMU Previous Month] / 1000
+	measure 'COSTS/SMU PM %' =
+			
+			'Fact Measures'[costs/SMU Previous Month] / 1000
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 384a2f72-bc61-4eff-b203-2f06a6d69d71
+
+	/// 'Fact Measures'[Costs/SMU Target] / 1000
+	measure 'COSTS/SMU Target %' =
+			
+			'Fact Measures'[Costs/SMU Target] / 1000
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 33343e7a-9a42-4198-bebc-b023c5c47560
+
+	/// 
+	///     DIVIDE(CALCULATE(
+	///         [Avoidable Cost Analysis],REMOVEFILTERS(d_date),FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage","Breakdown"})),
+	///         CALCULATE(
+	///         [Previous Month Sales Analysis],REMOVEFILTERS(d_date),FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage","Breakdown"})),
+	///         
+	///         BLANK()
+	///     )
+	measure 'Avoidable Cost % PMS Analysis' =
+			
+			DIVIDE (
+			    CALCULATE (
+			        [Avoidable Cost Analysis],
+			        REMOVEFILTERS ( d_date ),
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage", "Breakdown" } )
+			    ),
+			    CALCULATE (
+			        [Previous Month Sales Analysis],
+			        REMOVEFILTERS ( d_date ),
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage", "Breakdown" } )
+			    ),
+			    BLANK ()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: bcb9b83f-7f3e-4a63-8c41-e356fa8e441e
+
+	/// 
+	/// if(isblank(F_WorkOrder_Costs[WO Amount]),0,CALCULATE(F_WorkOrder_Costs[WO Amount],REMOVEFILTERS(d_date),FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage","Breakdown"}),USERELATIONSHIP(D_DateCopy[DateKey],F_WorkOrder_Costs[Month_Num_Key])))
+	measure 'Avoidable Cost Analysis' =
+			
+			IF (
+			    ISBLANK ( F_WorkOrder_Costs[WO Amount] ),
+			    0,
+			    CALCULATE (
+			        F_WorkOrder_Costs[WO Amount],
+			        REMOVEFILTERS ( d_date ),
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage", "Breakdown" } ),
+			        USERELATIONSHIP ( D_DateCopy[DateKey], F_WorkOrder_Costs[Month_Num_Key] )
+			    )
+			)
+		formatString: #,0
+		lineageTag: ab437226-64e4-47e2-a953-61f66c86f13b
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// ('Fact Measures'[Avoidable Cost]/'Fact Measures'[Current Month Sales])
+	measure '12 Months Avoidable Cost % Sales' =
+			
+			( 'Fact Measures'[Avoidable Cost] / 'Fact Measures'[Current Month Sales] )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fc2f2c3c-9d41-49cf-bb19-7c83d8d86007
+
+	/// 
+	/// if(isblank([GL_Amount]),0,calculate([GL_Amount], D_GL_Account[High Level Account Type]="P&L",D_GL_Account[GL Account Group] = "Sales"))
+	measure 'Current Month Sales' =
+			
+			IF (
+			    ISBLANK ( [GL_Amount] ),
+			    0,
+			    CALCULATE (
+			        [GL_Amount],
+			        D_GL_Account[High Level Account Type] = "P&L",
+			        D_GL_Account[GL Account Group] = "Sales"
+			    )
+			)
+		formatString: #,0
+		lineageTag: 510580dd-3684-474d-834e-7316836615ab
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// 
+	/// VAR LandingPage = if(isblank(selectedvalue(D_Date[Month Flag])),1,selectedvalue(D_Date[Month Flag]))
+	/// VAR Analysispage =if(landingpage=MAX(D_Datecopy[Month Flag]),1,0)
+	/// return
+	/// Analysispage
+	measure 'Selected Month KPI' =
+			
+			VAR LandingPage =
+			    IF (
+			        ISBLANK ( SELECTEDVALUE ( D_Date[Month Flag] ) ),
+			        1,
+			        SELECTEDVALUE ( D_Date[Month Flag] )
+			    )
+			VAR Analysispage =
+			    IF ( landingpage = MAX ( D_Datecopy[Month Flag] ), 1, 0 )
+			RETURN
+			    Analysispage
+		formatString: 0
+		lineageTag: e8a04da0-2aa6-410e-9ac1-2baed85e9554
+
+	/// calculate([GL_Amount],REMOVEFILTERS(d_date),
+	/// USERELATIONSHIP(D_DateCopy[fulldate],F_GL_Transactions[GL Date]),D_GL_Account[High Level Account Type]="P&L",D_GL_Account[GL Account Group] = "Sales",
+	/// (PREVIOUSMONTH(D_Datecopy[FullDate])))
+	measure 'Previous Month Sales Analysis' =
+			
+			CALCULATE (
+			    [GL_Amount],
+			    REMOVEFILTERS ( d_date ),
+			    USERELATIONSHIP ( D_DateCopy[fulldate], F_GL_Transactions[GL Date] ),
+			    D_GL_Account[High Level Account Type] = "P&L",
+			    D_GL_Account[GL Account Group] = "Sales",
+			    ( PREVIOUSMONTH ( D_Datecopy[FullDate] ) )
+			)
+		lineageTag: a9d63162-bacd-4766-9770-bd7b8a348c3c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isblank([COSTS/SMU Target %]),CALCULATE([COSTS/SMU Target %],allexcept(D_Organization,D_Organization[Country])),[COSTS/SMU Target %])
+	measure 'Maint Cost / SMU Target %' =
+			
+			IF (
+			    ISBLANK ( [COSTS/SMU Target %] ),
+			    CALCULATE (
+			        [COSTS/SMU Target %],
+			        ALLEXCEPT ( D_Organization, D_Organization[Country] )
+			    ),
+			    [COSTS/SMU Target %]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0a8e4edd-d6b6-4514-9f27-be9449f3d3fb
+
+	/// 
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)  
+	/// VAR Result =
+	///      CALCULATE(
+	///           'Fact Measures'[Current Month Sales],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure 'Sales for Target' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Current Month Sales],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: 33130a0e-8951-45b8-8a1d-095d29a39ce2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)    
+	/// VAR Result =
+	///      CALCULATE(
+	///           'Fact Measures'[Avoidable Cost],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure 'Avoidable Cost for Target' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Avoidable Cost],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: adbc4e1a-5503-4e06-a81b-5c0ac5831725
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if([Sales for Target]>0,if(isblank([Sales for Target]),Blank(),'Fact Measures'[Avoidable Cost for Target]/'Fact Measures'[Sales for Target]),0)
+	measure 'Avoidable cost/sales for Target %' =
+			
+			IF (
+			    [Sales for Target] > 0,
+			    IF (
+			        ISBLANK ( [Sales for Target] ),
+			        BLANK (),
+			        'Fact Measures'[Avoidable Cost for Target] / 'Fact Measures'[Sales for Target]
+			    ),
+			    0
+			)
+		lineageTag: 0a86be85-4662-487c-97d4-fde0883fd115
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isblank([Avoidable cost/sales for Target %]),
+	/// CALCULATE([Avoidable cost/sales for Target %],allexcept(D_Organization,D_Organization[Country])),
+	/// [Avoidable cost/sales for Target %])
+	measure 'Avoidable Cost/Sales Target % Final' =
+			
+			IF (
+			    ISBLANK ( [Avoidable cost/sales for Target %] ),
+			    CALCULATE (
+			        [Avoidable cost/sales for Target %],
+			        ALLEXCEPT ( D_Organization, D_Organization[Country] )
+			    ),
+			    [Avoidable cost/sales for Target %]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4b19a438-b207-4572-97d4-c0d27f235c06
+
+	/// 
+	/// VAR AvoidableCost = calculate([Avoidable Cost],(DATESINPERIOD(D_Date[FullDate],max(D_Date[FullDate]),-3,MONTH)))
+	/// VAR Sales  =  calculate([Current Month Sales],(DATESINPERIOD(D_Date[FullDate],max(D_Date[FullDate]),-3,MONTH)))
+	/// RETURN
+	/// DIVIDE(AvoidableCost, Sales,0)
+	measure '3 Mth Avg' =
+			
+			VAR AvoidableCost =
+			    CALCULATE (
+			        [Avoidable Cost],
+			        ( DATESINPERIOD ( D_Date[FullDate], MAX ( D_Date[FullDate] ), -3, MONTH ) )
+			    )
+			VAR Sales =
+			    CALCULATE (
+			        [Current Month Sales],
+			        ( DATESINPERIOD ( D_Date[FullDate], MAX ( D_Date[FullDate] ), -3, MONTH ) )
+			    )
+			RETURN
+			    DIVIDE ( AvoidableCost, Sales, 0 )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6fa09d82-d605-4f40-b48a-5e329491d782
+
+	/// if(isblank('Fact Measures'[smu hours filtered]), blank(),'Fact Measures'[Sales]/[smu hours filtered])
+	measure 'Sales / SMU' =
+			
+			IF (
+			    ISBLANK ( 'Fact Measures'[smu hours filtered] ),
+			    BLANK (),
+			    'Fact Measures'[Sales] / [smu hours filtered]
+			)
+		formatString: 0.00
+		lineageTag: b610b208-1c55-4665-a0cc-a2b620c49a05
+
+	/// 'Fact Measures'[COSTS/SMU %] - 'Fact Measures'[Maint Cost / SMU Target %]
+	measure 'Avoidable Vs Target' =
+			
+			'Fact Measures'[COSTS/SMU %] - 'Fact Measures'[Maint Cost / SMU Target %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 50ec5dd7-c9f4-47e2-848d-9e4708b6dfaf
+
+		changedProperty = FormatString
+
+	/// 'Fact Measures'[Avoidable Cost % PMS] - 'Fact Measures'[Avoidable Cost/Sales Target % Final]
+	measure 'Avoidable % PMS Vs Avoidable % PMS Target' =
+			
+			'Fact Measures'[Avoidable Cost % PMS] - 'Fact Measures'[Avoidable Cost/Sales Target % Final]
+		lineageTag: 29bb93b0-ee93-40f3-8eee-0c29f49cd92d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// CALCULATE(F_WorkOrder_Costs[WO Amount],FILTER(LKP_WO_Type,or(LKP_WO_Type[Order Type] ="Damage",LKP_WO_Type[Order Type] ="Breakdown")
+	/// ))
+	measure 'Avoidable cost Deatil' =
+			
+			CALCULATE (
+			    F_WorkOrder_Costs[WO Amount],
+			    FILTER (
+			        LKP_WO_Type,
+			        OR ( LKP_WO_Type[Order Type] = "Damage", LKP_WO_Type[Order Type] = "Breakdown" )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 010ea9f2-6649-43f4-b8cb-af7655b9e7d0
+
+		changedProperty = FormatString
+
+	/// 
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)  
+	/// VAR Result =
+	///      CALCULATE(
+	///           'Fact Measures'[Current Month Sales],
+	///           FILTER( ALL( D_Datecopy ),      -- return period between
+	///           D_Datecopy[FullDate] <= MaxDate &&  -- latest date
+	///           D_Datecopy[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure 'Sales for Target Analysis' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Current Month Sales],
+			        FILTER (
+			            ALL ( D_Datecopy ),
+			            -- return period between
+			            D_Datecopy[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Datecopy[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: 97bdbd4a-3fc3-4d1a-9dc4-fc3219e57ee5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)    
+	/// VAR Result =
+	///      CALCULATE(
+	///           'Fact Measures'[Avoidable Cost],
+	///           FILTER( ALL( D_DateCopy ),      -- return period between
+	///           D_Datecopy[FullDate] <= MaxDate &&  -- latest date
+	///           D_DateCopy[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure 'Avoidable Cost for Target Analysis' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Avoidable Cost],
+			        FILTER (
+			            ALL ( D_DateCopy ),
+			            -- return period between
+			            D_Datecopy[FullDate] <= MaxDate
+			                && -- latest date
+			            D_DateCopy[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: aa3238c2-e3a3-42b4-9544-a0f337a0bc02
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if([Sales for Target Analysis]>0,if(isblank([Sales for Target Analysis]),Blank(),'Fact Measures'[Avoidable Cost for Target Analysis]/'Fact Measures'[Sales for Target Analysis]),0)
+	measure 'Avoidable cost/sales for Target %  Analysis' =
+			
+			IF (
+			    [Sales for Target Analysis] > 0,
+			    IF (
+			        ISBLANK ( [Sales for Target Analysis] ),
+			        BLANK (),
+			        'Fact Measures'[Avoidable Cost for Target Analysis] / 'Fact Measures'[Sales for Target Analysis]
+			    ),
+			    0
+			)
+		lineageTag: 125136de-3176-4863-ba75-4b44b4cbcce1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isblank([Avoidable cost/sales for Target % Trend]),
+	/// CALCULATE([Avoidable cost/sales for Target % Trend],allexcept(D_Organization,D_Organization[Country])),
+	/// [Avoidable cost/sales for Target % Trend])
+	measure 'Avoidable Cost/Sales Target % Final Analysis' =
+			
+			IF (
+			    ISBLANK ( [Avoidable cost/sales for Target % Trend] ),
+			    CALCULATE (
+			        [Avoidable cost/sales for Target % Trend],
+			        ALLEXCEPT ( D_Organization, D_Organization[Country] )
+			    ),
+			    [Avoidable cost/sales for Target % Trend]
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: fe7e72d6-0e5b-473f-aabe-b9c27a42c91e
+
+	/// 
+	/// if(isblank(F_WorkOrder_Costs[WO Amount]),0,CALCULATE(F_WorkOrder_Costs[WO Amount],REMOVEFILTERS(d_date),FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage"}),USERELATIONSHIP(D_DateCopy[DateKey],F_WorkOrder_Costs[Month_Num_Key])))
+	measure 'Damage Cost Test' =
+			
+			IF (
+			    ISBLANK ( F_WorkOrder_Costs[WO Amount] ),
+			    0,
+			    CALCULATE (
+			        F_WorkOrder_Costs[WO Amount],
+			        REMOVEFILTERS ( d_date ),
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage" } ),
+			        USERELATIONSHIP ( D_DateCopy[DateKey], F_WorkOrder_Costs[Month_Num_Key] )
+			    )
+			)
+		formatString: #,0
+		lineageTag: aab0c264-63be-4ddd-bedc-b75420060c2d
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// 
+	/// if(isblank(F_WorkOrder_Costs[WO Amount]),0,CALCULATE(F_WorkOrder_Costs[WO Amount],REMOVEFILTERS(d_date),FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Breakdown"}),USERELATIONSHIP(D_DateCopy[DateKey],F_WorkOrder_Costs[Month_Num_Key])))
+	measure 'Breakdown Cost Test' =
+			
+			IF (
+			    ISBLANK ( F_WorkOrder_Costs[WO Amount] ),
+			    0,
+			    CALCULATE (
+			        F_WorkOrder_Costs[WO Amount],
+			        REMOVEFILTERS ( d_date ),
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Breakdown" } ),
+			        USERELATIONSHIP ( D_DateCopy[DateKey], F_WorkOrder_Costs[Month_Num_Key] )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 8c37dc70-affe-4e76-95fa-7b21ae6b0420
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// CALCULATE([Damage Cost Test],REMOVEFILTERS(d_date),USERELATIONSHIP(D_DateCopy[DateKey],F_WorkOrder_Costs[Month_Num_Key]),PREVIOUSMONTH(D_DateCopy[FullDate]))
+	measure 'Previous Month Damage Cost' =
+			
+			CALCULATE (
+			    [Damage Cost Test],
+			    REMOVEFILTERS ( d_date ),
+			    USERELATIONSHIP ( D_DateCopy[DateKey], F_WorkOrder_Costs[Month_Num_Key] ),
+			    PREVIOUSMONTH ( D_DateCopy[FullDate] )
+			)
+		formatString: #,0
+		lineageTag: 026fe195-4dd4-4a46-b408-5c97779fa25d
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// CALCULATE([Breakdown Cost Test],REMOVEFILTERS(d_date),USERELATIONSHIP(D_DateCopy[DateKey],F_WorkOrder_Costs[Month_Num_Key]),PREVIOUSMONTH(D_DateCopy[FullDate]))
+	measure 'Previous Month Breakdown  Cost' =
+			
+			CALCULATE (
+			    [Breakdown Cost Test],
+			    REMOVEFILTERS ( d_date ),
+			    USERELATIONSHIP ( D_DateCopy[DateKey], F_WorkOrder_Costs[Month_Num_Key] ),
+			    PREVIOUSMONTH ( D_DateCopy[FullDate] )
+			)
+		formatString: #,0
+		lineageTag: 590ab84a-6ba9-4536-9e4a-17dafc21aaf9
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// 
+	/// var CM=[Damage Cost 6 months]
+	/// var PM=[Previous Month Damage Cost 6 months] 
+	/// return
+	/// IF(isblank([Damage Cost 6 Months]),blank(),if(CM>PM,1,0))
+	measure 'Damage KPI Test' =
+			
+			VAR CM = [Damage Cost 6 months]
+			VAR PM = [Previous Month Damage Cost 6 months]
+			RETURN
+			    IF ( ISBLANK ( [Damage Cost 6 Months] ), BLANK (), IF ( CM > PM, 1, 0 ) )
+		formatString: 0
+		lineageTag: 44a6e577-a789-4f79-b27e-756fd01f188b
+
+	/// 
+	/// var CM=[Breakdown Cost 6 months] 
+	/// var PM=[Previous Month Breakdown Cost 6 Months]  
+	/// return
+	/// IF(isblank([Breakdown Cost 6 months]),blank(),if(CM>PM,1,0))
+	measure 'Breakdown Cost KPI Test' =
+			
+			VAR CM = [Breakdown Cost 6 months]
+			VAR PM = [Previous Month Breakdown Cost 6 Months]
+			RETURN
+			    IF ( ISBLANK ( [Breakdown Cost 6 months] ), BLANK (), IF ( CM > PM, 1, 0 ) )
+		formatString: 0
+		lineageTag: 09f33532-bb3f-4d11-b1a5-35de78b78f3c
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Service Accuracy %],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Service Accuracy 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Service Accuracy %],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e9148c2e-6f4b-49a1-a945-4ac64c63d723
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[# Meter based WO],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure '# Meter based WO 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[# Meter based WO],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0
+		lineageTag: 3be86258-7279-4053-a6c4-a0b4be2c0f5a
+
+	/// VAR NumOfMonths = -6
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// VAR PreviousDates =
+	///     DATESINPERIOD (
+	///         'D_DateCopy'[FullDate],
+	///         ReferenceDate,
+	///         NumOfMonths,
+	///         MONTH
+	///     )
+	/// VAR Result =
+	///     CALCULATE (
+	///         [Asset Count & Totals_6 mth],
+	///         REMOVEFILTERS ( 'D_Date' ),
+	///         KEEPFILTERS ( PreviousDates ),
+	///         USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	///     )
+	/// RETURN Result
+	measure 'SMU 6 MOnths_table' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        [Asset Count & Totals_6 mth],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		lineageTag: 44d52f8e-e8fe-4cf5-9d25-f3af919581e4
+
+	/// if(isblank([Asset Total]),blank(),CONCATENATE(if(isblank([Asset Count_6 mth]),0,[Asset Count_6 mth]),CONCATENATE("/",[Asset Total])))  
+	measure 'Asset Count & Totals_6 mth' =
+			
+			IF (
+			    ISBLANK ( [Asset Total] ),
+			    BLANK (),
+			    CONCATENATE (
+			        IF ( ISBLANK ( [Asset Count_6 mth] ), 0, [Asset Count_6 mth] ),
+			        CONCATENATE ( "/", [Asset Total] )
+			    )
+			)
+		lineageTag: 197d3282-825e-48d3-8e72-eca733093195
+
+	/// CALCULATE(countx(D_Asset,'Fact Measures'[SMU Hours_6 mth])) 
+	measure 'Asset Count_6 mth' =
+			
+			CALCULATE ( COUNTX ( D_Asset, 'Fact Measures'[SMU Hours_6 mth] ) )
+		formatString: 0
+		lineageTag: 4364cac5-e03c-45b4-b3c4-585cf5237199
+
+	/// var SMU_CM = calculate([SMU Asset hours_matrix])
+	/// Var SMU=if(smu_CM>0,SMU_CM,0)
+	/// var Asset=if(and(smu=0,and([SMU Hours_PM_D_Datecopy_matrix]>0,[SMU Month_D_datecopy_matrix]>0)),1)
+	/// return asset
+	///   --Used SMU Month to eliminate the assets which are not having smu in given year for January but having SMU in previous Month
+	measure 'SMU Hours_6 mth' =
+			
+			VAR SMU_CM =
+			    CALCULATE ( [SMU Asset hours_matrix] )
+			VAR SMU =
+			    IF ( smu_CM > 0, SMU_CM, 0 )
+			VAR Asset =
+			    IF (
+			        AND (
+			            smu = 0,
+			            AND ( [SMU Hours_PM_D_Datecopy_matrix] > 0, [SMU Month_D_datecopy_matrix] > 0 )
+			        ),
+			        1
+			    )
+			RETURN
+			    asset
+			--Used SMU Month to eliminate the assets which are not having smu in given year for January but having SMU in previous Month
+		formatString: 0
+		lineageTag: 36156ac6-78ca-47bb-b12a-47c1f368e27a
+
+	/// 
+	/// Var CM=month((max(D_Datecopy[FullDate])))
+	/// var Yr=year(max(D_Datecopy[FullDate]))
+	/// var PM=if(cm=1,CALCULATE(12,filter(D_Datecopy,year([FullDate])=yr-1)),cm-1)
+	/// var SMU_PM = if(pm=12,
+	/// CALCULATE(sum(F_Asset_SMU_Hours[SMU_Hours]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER" ),filter(D_Asset, [Is Active]="Y") ,filter(D_Asset, [Is Parent]="Y"),filter(D_asset, [Asset Equipment Type]="MOBILE" ) ,month(D_Datecopy[FullDate])=12,year(D_Datecopy[FullDate])=yr-1),
+	/// 
+	/// calculate(sum(F_Asset_SMU_Hours[SMU_Hours]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER" ),filter(D_Asset, [Is Active]="Y") ,filter(D_Asset, [Is Parent]="Y"),filter(D_asset, [Asset Equipment Type]="MOBILE"  )
+	/// ,Month(D_Datecopy[FullDate])<cM,year(D_Datecopy[FullDate])=yr))
+	/// return smu_pm
+	measure 'SMU Hours_PM_D_Datecopy' =
+			
+			VAR CM =
+			    MONTH ( ( MAX ( D_Datecopy[FullDate] ) ) )
+			VAR Yr =
+			    YEAR ( MAX ( D_Datecopy[FullDate] ) )
+			VAR PM =
+			    IF (
+			        cm = 1,
+			        CALCULATE ( 12, FILTER ( D_Datecopy, YEAR ( [FullDate] ) = yr - 1 ) ),
+			        cm - 1
+			    )
+			VAR SMU_PM =
+			    IF (
+			        pm = 12,
+			        CALCULATE (
+			            SUM ( F_Asset_SMU_Hours[SMU_Hours] ),
+			            FILTER (
+			                'D_Asset',
+			                [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			                    && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			                    && [Asset_Cost_Type_Desc] <> BLANK ()
+			                    && [Asset_Cost_Type_Desc] <> "Other"
+			                    && [Asset_Cost_Type_Desc] <> "WRECKER"
+			            ),
+			            FILTER ( D_Asset, [Is Active] = "Y" ),
+			            FILTER ( D_Asset, [Is Parent] = "Y" ),
+			            FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" ),
+			            MONTH ( D_Datecopy[FullDate] ) = 12,
+			            YEAR ( D_Datecopy[FullDate] ) = yr - 1
+			        ),
+			        CALCULATE (
+			            SUM ( F_Asset_SMU_Hours[SMU_Hours] ),
+			            FILTER (
+			                'D_Asset',
+			                [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			                    && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			                    && [Asset_Cost_Type_Desc] <> BLANK ()
+			                    && [Asset_Cost_Type_Desc] <> "Other"
+			                    && [Asset_Cost_Type_Desc] <> "WRECKER"
+			            ),
+			            FILTER ( D_Asset, [Is Active] = "Y" ),
+			            FILTER ( D_Asset, [Is Parent] = "Y" ),
+			            FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" ),
+			            MONTH ( D_Datecopy[FullDate] ) < cM,
+			            YEAR ( D_Datecopy[FullDate] ) = yr
+			        )
+			    )
+			RETURN
+			    smu_pm
+		lineageTag: 16d39548-ac86-4089-be92-6dfe0c9a074f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// CALCULATE([SMU Asset hours] ,ALLEXCEPT(D_DateCopy,D_DateCopy[FullDate].[Year]))
+	/// 
+	/// 
+	measure 'SMU Month_D_datecopy' =
+			
+			CALCULATE ( [SMU Asset hours], ALLEXCEPT ( D_DateCopy, D_DateCopy[FullDate] ) )
+		lineageTag: dcef7cc5-06d9-43e7-aa21-3408454c69a9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// VAR NumOfMonths = -6
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// VAR PreviousDates =
+	///     DATESINPERIOD (
+	///         'D_DateCopy'[FullDate],
+	///         ReferenceDate,
+	///         NumOfMonths,
+	///         MONTH
+	///     )
+	/// VAR Result =
+	///     CALCULATE (
+	///         [Asset_Test_6 mth],
+	///         REMOVEFILTERS ( 'D_Date' ),
+	///         KEEPFILTERS ( PreviousDates ),
+	///         USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	///     )
+	/// RETURN Result
+	measure 'SMU 6 Months' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        [Asset_Test_6 mth],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0
+		lineageTag: 686898a1-3db6-452e-9d9b-d62a5a8bad0b
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// if(and([SMU Hours_6 mth]=1,isblank([SMU Asset hours])),0,[SMU Asset hours])
+	measure 'Asset_Test_6 mth' =
+			
+			IF (
+			    AND ( [SMU Hours_6 mth] = 1, ISBLANK ( [SMU Asset hours] ) ),
+			    0,
+			    [SMU Asset hours]
+			)
+		formatString: 0
+		lineageTag: 0b0c267f-bb20-49ba-b208-35e6dbc54e58
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// VAR NumOfMonths = -6
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// VAR PreviousDates =
+	///     DATESINPERIOD (
+	///         'D_DateCopy'[FullDate],
+	///         ReferenceDate,
+	///         NumOfMonths,
+	///         MONTH
+	///     )
+	/// VAR Result =
+	///     CALCULATE (
+	///         [SMU Hours_6 mth],
+	///         REMOVEFILTERS ( 'D_Date' ),
+	///         KEEPFILTERS ( PreviousDates ),
+	///         USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	///     )
+	/// RETURN [SMU Hours_6 mth]
+	measure 'SMU Hours 6 Months' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        [SMU Hours_6 mth],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    [SMU Hours_6 mth]
+		formatString: 0
+		lineageTag: 97cf842a-6833-4007-a173-7594c21b7225
+
+	/// VAR NumOfMonths = -6
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// VAR PreviousDates =
+	///     DATESINPERIOD (
+	///         'D_DateCopy'[FullDate],
+	///         ReferenceDate,
+	///         NumOfMonths,
+	///         MONTH
+	///     )
+	/// VAR Result =
+	///     CALCULATE (
+	///         [SMU Hours_PM_D_Datecopy],
+	///         REMOVEFILTERS ( 'D_Date' ),
+	///         KEEPFILTERS ( PreviousDates ),
+	///         USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	///     )
+	/// RETURN Result
+	measure 'SMU Hours PM_6 Months' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        [SMU Hours_PM_D_Datecopy],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		lineageTag: 54f12c77-50a0-4437-90d9-df45a6d70cc3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// CALCULATE(sumx(F_Asset_SMU_Hours,[SMU 6 Months]))
+	measure SUMX =
+			
+			CALCULATE ( SUMX ( F_Asset_SMU_Hours, [SMU 6 Months] ) )
+		lineageTag: bd2d4860-e474-4ab1-b92a-b854201d3197
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Maint Cost % Sales],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure '# Maint Cost % Sales 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Maint Cost % Sales],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 173a62f0-d25f-47e1-a27b-ad34e4096afc
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Maint Cost Inc Tyres % Sales Target],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure '# Maint Cost % Sales Target 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Maint Cost Inc Tyres % Sales Target],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 62fcf53d-819d-4f0f-9fc5-4c4e6fec6f91
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[# Unplanned Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure '# Unplanned Cost 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[# Unplanned Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0.00
+		lineageTag: 43bf2ae8-c62e-4eea-9742-bb535989eecd
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[# Unplanned Target],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure '# Unplanned Target WO 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[# Unplanned Target],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 313c9ac9-6728-4053-b279-9c43fa08aa40
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[% Unplanned WO Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure '% Unplanned WO Cost 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[% Unplanned WO Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 09e2f644-5b01-439a-8899-77ad4929ab11
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Maint Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Maint Cost 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Maint Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0.00
+		lineageTag: e949c638-9a88-4d22-836e-ef2d63e4b354
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Sales],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Sales 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Sales],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0.00
+		lineageTag: 307d58ca-ede7-4529-bf19-3bfba5b26b14
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Sales / SMU],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Sales / SMU 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Sales / SMU],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0%;-0%;0%
+		lineageTag: 14cf221d-3220-45e5-bdf0-75cfb3c7e057
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[SUM of SMU],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Sum of SMU 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[SUM of SMU],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0
+		lineageTag: 74a474e6-509b-4c8b-9a6f-02b02a8270db
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[COSTS/SMU %],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Costs/SMU % 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[COSTS/SMU %],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: df21ef22-a9ee-4a1c-9903-c72f8cde1e91
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[costs/SMU PM DateCopy],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'COSTS/SMU PM % 6 Months' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[costs/SMU PM DateCopy],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 190f89b0-1cf7-4f25-9776-330bc59002cd
+
+		changedProperty = FormatString
+
+	/// if(selectedvalue(F_Service_Accuracy[PM_Type]) = "Meter", sum(F_Service_Accuracy[Avg Meter Differnce]),sum(F_Service_Accuracy[Avg Date Differnce]))
+	measure 'Avg Difference' =
+			
+			IF (
+			    SELECTEDVALUE ( F_Service_Accuracy[PM_Type] ) = "Meter",
+			    SUM ( F_Service_Accuracy[Avg Meter Differnce] ),
+			    SUM ( F_Service_Accuracy[Avg Date Differnce] )
+			)
+		lineageTag: 0fc38f19-721c-460a-a9da-654c651e2bee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Maint Cost % Sales Forecast],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure '# Maint Cost % Sales AOP 6 Months' = ```
+			//# Maint Cost % Sales Forecast 6 Months = 
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Maint Cost % Sales AOP],
+			        //'Fact Measures'[Maint Cost % Sales Forecast],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+			```
+		lineageTag: f9cd4fb6-af9c-4db3-8932-fe91782fef0d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// calculate('Fact Measures'[costs/SMU],DATESMTD(PREVIOUSMONTH(D_DateCopy[FullDate])))/1000
+	measure 'costs/SMU PM DateCopy' =
+			
+			CALCULATE (
+			    'Fact Measures'[costs/SMU],
+			    DATESMTD ( PREVIOUSMONTH ( D_DateCopy[FullDate] ) )
+			) / 1000
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1318fa05-79e8-447a-8949-bdd80b5a9e43
+
+		changedProperty = FormatString
+
+	/// var compliant = COALESCE(
+	///         CALCULATE (
+	///                 COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+	///                 'F_Service_Accuracy'[Compliant_Flag] = 1),0
+	///             )
+	///     var total  =  
+	///                 COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] )
+	/// 
+	///                 return 
+	///                 divide (compliant,total)
+	measure 'Service Accuracy % Total' =
+			
+			VAR compliant =
+			    COALESCE (
+			        CALCULATE (
+			            COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			            'F_Service_Accuracy'[Compliant_Flag] = 1
+			        ),
+			        0
+			    )
+			VAR total =
+			    COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] )
+			RETURN
+			    DIVIDE ( compliant, total )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: cea06338-0274-415e-abc6-a556d6a7db65
+
+		changedProperty = FormatString
+
+	measure 'Measure 2'
+		lineageTag: 3562cdd6-5571-41ce-9bc0-826de7f1bac1
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	/// var NumOfMonths = -12
+	/// --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Avoidable Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Avoidable Cost 6 Months' =
+			
+			VAR NumOfMonths = -12 --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Avoidable Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0
+		lineageTag: fb9c2787-395d-4a31-b704-692f12664698
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = -12
+	/// --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Avoidable Cost % PMS Trend],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Avoidable Cost % PMS 6 Months' =
+			
+			VAR NumOfMonths = -12 --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Avoidable Cost % PMS Trend],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 59249752-b9f4-4b56-9bab-e7a255033f7f
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths =-12
+	///  --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Damage Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Damage Cost 6 Months' =
+			
+			VAR NumOfMonths = -12 --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Damage Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0
+		lineageTag: edf66d16-e497-4eb9-8a9f-821a80ab8dac
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// var NumOfMonths = -12 
+	/// --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[BreakDown Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Breakdown Cost 6 Months' =
+			
+			VAR NumOfMonths = -12 --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[BreakDown Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0
+		lineageTag: c150d375-fc8c-4504-b3d5-f32d7d97695b
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = -12 
+	/// --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Previous Month Damage Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Previous Month Damage Cost 6 Months' =
+			
+			VAR NumOfMonths = -12 --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Previous Month Damage Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0
+		lineageTag: 3d4b0fa2-99ac-469b-bebb-926283f7227f
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = -12
+	/// -- if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Previous Month Breakdown  Cost],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Previous Month Breakdown Cost 6 Months' =
+			
+			VAR NumOfMonths = -12 -- if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Previous Month Breakdown  Cost],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: #,0
+		lineageTag: 91fed463-707a-43ca-8b47-9d5f9d1a46b6
+
+		changedProperty = FormatString
+
+	/// var NumOfMonths = -12
+	/// --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Previous Month Sales Trend],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Previous Month Sales 6 Months' =
+			
+			VAR NumOfMonths = -12 --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Previous Month Sales Trend],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0
+		lineageTag: 74edf71a-c9ad-4f89-bd50-4723f2c4dfa6
+
+		changedProperty = FormatString
+
+	/// 
+	///  var NumOfMonths = -12
+	/// --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Avoidable Cost/Sales Target % Final],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Avoidable Cost/Sales Target % 6 Months' =
+			
+			VAR NumOfMonths = -12 --if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Avoidable Cost/Sales Target % Final],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3afff848-abfb-4204-8067-35c275d61c81
+
+		changedProperty = FormatString
+
+	/// 
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)  
+	/// VAR Result =
+	///      CALCULATE(
+	///           'Fact Measures'[Current Month Sales],
+	///           FILTER( ALL( D_DateCopy ),      -- return period between
+	///           D_DateCopy[FullDate] <= MaxDate &&  -- latest date
+	///           D_DateCopy[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure 'Sales for Target Trend' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Current Month Sales],
+			        FILTER (
+			            ALL ( D_DateCopy ),
+			            -- return period between
+			            D_DateCopy[FullDate] <= MaxDate
+			                && -- latest date
+			            D_DateCopy[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: 30b9adff-f11d-4975-a1be-0d5d33269215
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// VAR MaxDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,12,31)     
+	/// VAR MinDate = date(value("20"& right(selectedvalue(D_Date[MonthYear]),2))-1,1,1)    
+	/// VAR Result =
+	///      CALCULATE(
+	///           'Fact Measures'[Avoidable Cost],
+	///           FILTER( ALL( D_DateCopy ),      -- return period between
+	///           D_DateCopy[FullDate] <= MaxDate &&  -- latest date
+	///           D_DateCopy[FullDate]  >= MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure 'Avoidable Cost for Target Trend' =
+			
+			VAR MaxDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 12, 31 )
+			VAR MinDate =
+			    DATE ( VALUE ( "20" & RIGHT ( SELECTEDVALUE ( D_Date[MonthYear] ), 2 ) ) - 1, 1, 1 )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Avoidable Cost],
+			        FILTER (
+			            ALL ( D_DateCopy ),
+			            -- return period between
+			            D_DateCopy[FullDate] <= MaxDate
+			                && -- latest date
+			            D_DateCopy[FullDate] >= MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		lineageTag: 33205455-c064-49ba-b79b-88ddce899e1b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if([Sales for Target Trend]>0,if(isblank([Sales for Target Trend]),Blank(),'Fact Measures'[Avoidable Cost for Target Trend]/'Fact Measures'[Sales for Target Trend]),0)
+	measure 'Avoidable cost/sales for Target % Trend' =
+			
+			IF (
+			    [Sales for Target Trend] > 0,
+			    IF (
+			        ISBLANK ( [Sales for Target Trend] ),
+			        BLANK (),
+			        'Fact Measures'[Avoidable Cost for Target Trend] / 'Fact Measures'[Sales for Target Trend]
+			    ),
+			    0
+			)
+		lineageTag: a53259c4-52af-4367-bb82-b4ba80f9a585
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isblank([GL_Amount]),0, calculate([GL_Amount], D_GL_Account[High Level Account Type]="P&L",D_GL_Account[GL Account Group] = "Sales",(PREVIOUSMONTH(D_Date[FullDate]))))
+	measure 'Previous Month Sales' =
+			
+			IF (
+			    ISBLANK ( [GL_Amount] ),
+			    0,
+			    CALCULATE (
+			        [GL_Amount],
+			        D_GL_Account[High Level Account Type] = "P&L",
+			        D_GL_Account[GL Account Group] = "Sales",
+			        ( PREVIOUSMONTH ( D_Date[FullDate] ) )
+			    )
+			)
+		lineageTag: 1bdf2fdc-44f8-457c-97e5-db03a73aaa82
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	///     DIVIDE(CALCULATE(
+	///         [Avoidable Cost],FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage","Breakdown"})),
+	///         CALCULATE(
+	///         [Previous Month Sales Trend],FILTER(LKP_WO_Type,LKP_WO_Type[Order Type] in {"Damage","Breakdown"})),
+	///         
+	///         blank()
+	///     )
+	measure 'Avoidable Cost % PMS Trend' =
+			
+			DIVIDE (
+			    CALCULATE (
+			        [Avoidable Cost],
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage", "Breakdown" } )
+			    ),
+			    CALCULATE (
+			        [Previous Month Sales Trend],
+			        FILTER ( LKP_WO_Type, LKP_WO_Type[Order Type] IN { "Damage", "Breakdown" } )
+			    ),
+			    BLANK ()
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 592c53cd-9eea-40e8-ace4-3ce88b2399b3
+
+		changedProperty = FormatString
+
+	/// if(ISFILTERED(D_Date[MonthYear Prompt]),CONCATENATE("Assets with no SMU/with SMU for ",FIRSTNONBLANK(D_Date[MonthYear Prompt],"")),"Assets with no SMU/with SMU") 
+	measure SMU_Table_Title =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    CONCATENATE (
+			        "Assets with no SMU/with SMU for ",
+			        FIRSTNONBLANK ( D_Date[MonthYear Prompt], "" )
+			    ),
+			    "Assets with no SMU/with SMU"
+			)
+		lineageTag: fd6276e5-f62c-405a-81e3-25f8f2015fae
+
+	/// if(ISFILTERED(D_Date[MonthYear Prompt]),CONCATENATE("Asset Count by Criticality for ",FIRSTNONBLANK(D_Date[MonthYear Prompt],"")),"Asset Count by Criticality for") 
+	measure 'Asset count by criticality_Title' =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    CONCATENATE (
+			        "Asset Count by Criticality for ",
+			        FIRSTNONBLANK ( D_Date[MonthYear Prompt], "" )
+			    ),
+			    "Asset Count by Criticality for"
+			)
+		lineageTag: 6796a0c5-8ae5-4e79-857b-239333df4846
+
+	/// if(ISFILTERED(D_Date[MonthYear Prompt]),CONCATENATE("Asset Count by Region for ",FIRSTNONBLANK(D_Date[MonthYear Prompt],"")),"Asset Count by Region")
+	measure 'Asset Count by Region_Title' =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    CONCATENATE (
+			        "Asset Count by Region for ",
+			        FIRSTNONBLANK ( D_Date[MonthYear Prompt], "" )
+			    ),
+			    "Asset Count by Region"
+			)
+		lineageTag: e31511e0-a403-4ca0-8150-01d8fab7d112
+
+	/// if(ISFILTERED(D_Date[MonthYear Prompt]),CONCATENATE("Assets by Country for ",FIRSTNONBLANK(D_Date[MonthYear Prompt],"")),"Assets by Country")
+	measure 'Assets by Country_Title' =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    CONCATENATE (
+			        "Assets by Country for ",
+			        FIRSTNONBLANK ( D_Date[MonthYear Prompt], "" )
+			    ),
+			    "Assets by Country"
+			)
+		lineageTag: 136227d4-a1f1-4730-bb9a-5277e7eeeb77
+
+	/// CALCULATE(sum(F_Asset_SMU_Hours[SMU_Hours]),filter(D_asset, [Asset Equipment Type]="MOBILE"  ),filter(D_Asset, [Is Active]="Y")
+	/// )
+	measure 'SMU Hours filtered' =
+			
+			CALCULATE (
+			    SUM ( F_Asset_SMU_Hours[SMU_Hours] ),
+			    D_asset[Asset Equipment Type] = "MOBILE",
+			    D_Asset[Is Active] = "Y"
+			)
+		formatString: 0
+		lineageTag: eed69866-f4b0-45cf-9b51-5064bff06517
+
+		changedProperty = FormatString
+
+	/// 0.90
+	measure 'SMU Collection Target' =
+			
+			0.90
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f9384ba0-e138-4497-adee-e25f2edc9a55
+
+		changedProperty = FormatString
+
+	/// if(isblank([Asset Total]),blank(),if(isblank([Asset Count_6 mth_matrix]),0,divide([Asset Count_6 mth_matrix],[Asset Total])))
+	measure 'Asset Count & Totals_6 mth_Matrix' =
+			
+			IF (
+			    ISBLANK ( [Asset Total] ),
+			    BLANK (),
+			    IF (
+			        ISBLANK ( [Asset Count_6 mth_matrix] ),
+			        0,
+			        DIVIDE ( [Asset Count_6 mth_matrix], [Asset Total] )
+			    )
+			)
+		lineageTag: 290cb176-ece0-4310-b159-d6ebefce847c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// VAR NumOfMonths = -6
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// VAR PreviousDates =
+	///     DATESINPERIOD (
+	///         'D_DateCopy'[FullDate],
+	///         ReferenceDate,
+	///         NumOfMonths,
+	///         MONTH
+	///     )
+	/// VAR Result =
+	///     CALCULATE (
+	///         'Fact Measures'[Asset Count & Totals_6 mth_Matrix],
+	///         REMOVEFILTERS ( 'D_Date' ),
+	///         KEEPFILTERS ( PreviousDates ),
+	///         USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	///     )
+	/// RETURN Result
+	measure 'SMU 6 MOnths_matrix' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Asset Count & Totals_6 mth_Matrix],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e87a6c41-f328-4637-b3aa-2fd2e6f9f3c3
+
+		changedProperty = FormatString
+
+	/// if(isblank(sum('F_Asset_SMU_Hours'[SMU_Hours])),0,CALCULATE(sum('F_Asset_SMU_Hours'[SMU_Hours]),ALLEXCEPT(D_DateCopy,D_DateCopy[FullDate].[MonthNo],D_DateCopy[FullDate].[Year])))
+	measure SMU_matrix =
+			
+			IF (
+			    ISBLANK ( SUM ( 'F_Asset_SMU_Hours'[SMU_Hours] ) ),
+			    0,
+			    CALCULATE (
+			        SUM ( 'F_Asset_SMU_Hours'[SMU_Hours] ),
+			        ALLEXCEPT ( D_DateCopy, D_DateCopy[FullDate] )
+			    )
+			)
+		lineageTag: 9df0bf9b-3129-4799-a87e-2b393cd5ef9f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// calculate(if([SMU Assets]>=1,[SMU_matrix]))
+	measure 'SMU Asset hours_matrix' =
+			
+			CALCULATE ( IF ( [SMU Assets] >= 1, [SMU_matrix] ) )
+		lineageTag: 0471e410-da99-4d0a-a230-925cb1f1a604
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// var SMU_CM = calculate([SMU Asset hours_matrix])
+	/// Var SMU=if(smu_CM>0,SMU_CM,0)
+	/// var Asset=if(and(smu=0,and([SMU Hours_PM_D_Datecopy_matrix]>0,[SMU Month_D_datecopy_matrix]>0)),1)
+	/// return asset
+	///   --Used SMU Month to eliminate the assets which are not having smu in given year for January but having SMU in previous Month
+	///   
+	measure 'SMU Hours_6 mth_matrix' =
+			
+			VAR SMU_CM =
+			    CALCULATE ( [SMU Asset hours_matrix] )
+			VAR SMU =
+			    IF ( smu_CM > 0, SMU_CM, 0 )
+			VAR Asset =
+			    IF (
+			        AND (
+			            smu = 0,
+			            AND ( [SMU Hours_PM_D_Datecopy_matrix] > 0, [SMU Month_D_datecopy_matrix] > 0 )
+			        ),
+			        1
+			    )
+			RETURN
+			    asset
+			--Used SMU Month to eliminate the assets which are not having smu in given year for January but having SMU in previous Month
+		formatString: 0
+		lineageTag: 85f3cf7f-99ba-4ad3-a33e-6b1b46dc8509
+
+	/// CALCULATE(countx(D_Asset,'Fact Measures'[SMU Hours_6 mth_matrix])) 
+	measure 'Asset Count_6 mth_matrix' =
+			
+			CALCULATE ( COUNTX ( D_Asset, 'Fact Measures'[SMU Hours_6 mth_matrix] ) )
+		formatString: 0
+		lineageTag: 3f2962f9-878a-443c-b21e-aa33fab957ad
+
+	/// 
+	/// Var CM=month((max(D_Datecopy[FullDate])))
+	/// var Yr=year(max(D_Datecopy[FullDate]))
+	/// var PM=if(cm=1,CALCULATE(12,filter(D_Datecopy,year([FullDate])=yr-1)),cm-1)
+	/// var SMU_PM = if(pm=12,
+	/// CALCULATE(sum(F_Asset_SMU_Hours[SMU_Hours]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER" ),filter(D_Asset, [Is Active]="Y") ,filter(D_Asset, [Is Parent]="Y"),filter(D_asset, [Asset Equipment Type]="MOBILE" ) ,month(D_Datecopy[FullDate])=12,year(D_Datecopy[FullDate])=yr-1),
+	/// 
+	/// calculate(sum(F_Asset_SMU_Hours[SMU_Hours]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER" ),filter(D_Asset, [Is Active]="Y") ,filter(D_Asset, [Is Parent]="Y"),filter(D_asset, [Asset Equipment Type]="MOBILE"  )
+	/// ,Month(D_Datecopy[FullDate])<cM,year(D_Datecopy[FullDate])=yr))
+	/// return smu_pm
+	measure 'SMU Hours_PM_D_Datecopy_matrix' =
+			
+			VAR CM =
+			    MONTH ( ( MAX ( D_Datecopy[FullDate] ) ) )
+			VAR Yr =
+			    YEAR ( MAX ( D_Datecopy[FullDate] ) )
+			VAR PM =
+			    IF (
+			        cm = 1,
+			        CALCULATE ( 12, FILTER ( D_Datecopy, YEAR ( [FullDate] ) = yr - 1 ) ),
+			        cm - 1
+			    )
+			VAR SMU_PM =
+			    IF (
+			        pm = 12,
+			        CALCULATE (
+			            SUM ( F_Asset_SMU_Hours[SMU_Hours] ),
+			            FILTER (
+			                'D_Asset',
+			                [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			                    && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			                    && [Asset_Cost_Type_Desc] <> BLANK ()
+			                    && [Asset_Cost_Type_Desc] <> "Other"
+			                    && [Asset_Cost_Type_Desc] <> "WRECKER"
+			            ),
+			            FILTER ( D_Asset, [Is Active] = "Y" ),
+			            FILTER ( D_Asset, [Is Parent] = "Y" ),
+			            FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" ),
+			            MONTH ( D_Datecopy[FullDate] ) = 12,
+			            YEAR ( D_Datecopy[FullDate] ) = yr - 1
+			        ),
+			        CALCULATE (
+			            SUM ( F_Asset_SMU_Hours[SMU_Hours] ),
+			            FILTER (
+			                'D_Asset',
+			                [Asset_Cost_Type_Desc] <> "SUPPORT EQUIPMENT"
+			                    && [Asset_Cost_Type_Desc] <> "MOBILE NON-HFF"
+			                    && [Asset_Cost_Type_Desc] <> BLANK ()
+			                    && [Asset_Cost_Type_Desc] <> "Other"
+			                    && [Asset_Cost_Type_Desc] <> "WRECKER"
+			            ),
+			            FILTER ( D_Asset, [Is Active] = "Y" ),
+			            FILTER ( D_Asset, [Is Parent] = "Y" ),
+			            FILTER ( D_asset, [Asset Equipment Type] = "MOBILE" ),
+			            MONTH ( D_Datecopy[FullDate] ) < cM,
+			            YEAR ( D_Datecopy[FullDate] ) = yr
+			        )
+			    )
+			RETURN
+			    smu_pm
+		lineageTag: e39efd4b-3126-4550-9af5-8c052d849f09
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// CALCULATE([SMU Asset hours_matrix] ,ALLEXCEPT(D_DateCopy,D_DateCopy[FullDate].[Year]))
+	measure 'SMU Month_D_datecopy_matrix' =
+			
+			CALCULATE (
+			    [SMU Asset hours_matrix],
+			    ALLEXCEPT ( D_DateCopy, D_DateCopy[FullDate] )
+			)
+		lineageTag: 56abeb04-3ad5-4fcb-be06-7676ca296e84
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isblank([Asset Total]),0,divide(([Asset Total]), ([Asset Total]+ [Asset Count_6 mth]),0))
+	measure 'Asset Count & Totals_6 mth_NEW' =
+			
+			IF (
+			    ISBLANK ( [Asset Total] ),
+			    0,
+			    DIVIDE ( ( [Asset Total] ), ( [Asset Total] + [Asset Count_6 mth] ), 0 )
+			)
+		lineageTag: 2b3fd690-b766-4a1c-8d2c-c001b881234f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// VAR NumOfMonths = -6
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// VAR PreviousDates =
+	///     DATESINPERIOD (
+	///         'D_DateCopy'[FullDate],
+	///         ReferenceDate,
+	///         NumOfMonths,
+	///         MONTH
+	///     )
+	/// VAR Result =
+	///     CALCULATE (
+	///        [Asset Count & Totals_6 mth_NEW],
+	///         REMOVEFILTERS ( 'D_Date' ),
+	///         KEEPFILTERS ( PreviousDates ),
+	///         USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	///         
+	///     )
+	/// RETURN if(isblank([SMU 6 MOnths_table_Final]),blank(),Result)
+	measure 'SMU 6 MOnths_table_NEW' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        [Asset Count & Totals_6 mth_NEW],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    IF ( ISBLANK ( [SMU 6 MOnths_table_Final] ), BLANK (), Result )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 032ae34d-76b3-460b-9c84-0b9ba0877de6
+
+		changedProperty = FormatString
+
+	/// 
+	/// VAR NumOfMonths = -6
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// VAR PreviousDates =
+	///     DATESINPERIOD (
+	///         'D_DateCopy'[FullDate],
+	///         ReferenceDate,
+	///         NumOfMonths,
+	///         MONTH
+	///     )
+	/// VAR Result =
+	///     CALCULATE (sumx(D_Datecopy,
+	///        [Asset Count & Totals_6 mth_NEW]),
+	///         REMOVEFILTERS ( 'D_Date' ),
+	///         KEEPFILTERS ( PreviousDates ),
+	///         USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	///    , ALLEXCEPT(D_DateCopy,D_DateCopy[MonthYear])
+	/// 
+	/// 
+	///     )
+	/// RETURN result
+	measure 'SMU 6 MOnths_table_Final' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        SUMX ( D_Datecopy, [Asset Count & Totals_6 mth_NEW] ),
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] ),
+			        ALLEXCEPT ( D_DateCopy, D_DateCopy[MonthYear] )
+			    )
+			RETURN
+			    result
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 585df992-0dc6-470a-866a-a3ec6731cc13
+
+		changedProperty = FormatString
+
+	/// if(isblank('Fact Measures'[smu hours filtered]), blank(),'Fact Measures'[Sales] * 1000 /[smu hours filtered])
+	measure 'Sales*1000 / SMU' =
+			
+			IF (
+			    ISBLANK ( 'Fact Measures'[smu hours filtered] ),
+			    BLANK (),
+			    'Fact Measures'[Sales] * 1000 / [smu hours filtered]
+			)
+		formatString: 0.00
+		lineageTag: 3f4fdefb-2983-448a-ac8a-38d9acab8000
+
+		changedProperty = FormatString
+
+	/// if(selectedvalue('_Currency Prompt'[Currency]) = "USD",format('Fact Measures'[Sales], "Currency"),format('Fact Measures'[Sales],"Standard"))
+	measure 'Sales $/Local' =
+			
+			IF (
+			    SELECTEDVALUE ( '_Currency Prompt'[Currency] ) = "USD",
+			    FORMAT ( 'Fact Measures'[Sales], "Currency" ),
+			    FORMAT ( 'Fact Measures'[Sales], "Standard" )
+			)
+		lineageTag: 04b05cab-d457-49b7-bc9e-4efde338f20e
+
+	/// if(selectedvalue('_Currency Prompt'[Currency]) = "USD",format('Fact Measures'[Sales 6 Months], "Currency"),format('Fact Measures'[Sales 6 Months],"Standard"))
+	measure 'Sales $/Local 6 Months' =
+			
+			IF (
+			    SELECTEDVALUE ( '_Currency Prompt'[Currency] ) = "USD",
+			    FORMAT ( 'Fact Measures'[Sales 6 Months], "Currency" ),
+			    FORMAT ( 'Fact Measures'[Sales 6 Months], "Standard" )
+			)
+		lineageTag: c81f5c2f-5cb3-42b7-a21e-f9f8a0a1d5fa
+
+	/// if(selectedvalue('_Currency Prompt'[Currency]) = "USD",format('Fact Measures'[Maint Cost 6 Months], "Currency"),format('Fact Measures'[Maint Cost 6 Months],"Standard"))
+	measure 'Maint Cost $/Local 6 Months' =
+			
+			IF (
+			    SELECTEDVALUE ( '_Currency Prompt'[Currency] ) = "USD",
+			    FORMAT ( 'Fact Measures'[Maint Cost 6 Months], "Currency" ),
+			    FORMAT ( 'Fact Measures'[Maint Cost 6 Months], "Standard" )
+			)
+		lineageTag: ac23ae78-a7e6-4087-842f-dcce66fa2e99
+
+	/// if(selectedvalue('_Currency Prompt'[Currency]) = "USD",format('Fact Measures'[Maint Cost], "Currency"),format('Fact Measures'[Maint Cost],"Standard"))
+	measure 'Maint Cost $/Local' =
+			
+			IF (
+			    SELECTEDVALUE ( '_Currency Prompt'[Currency] ) = "USD",
+			    FORMAT ( 'Fact Measures'[Maint Cost], "Currency" ),
+			    FORMAT ( 'Fact Measures'[Maint Cost], "Standard" )
+			)
+		lineageTag: 8aa2fcd2-a3e5-47a3-a6c1-1149c945fec5
+
+		changedProperty = FormatString
+
+	/// if(selectedvalue('_Currency Prompt'[Currency]) = "USD",format('Fact Measures'[# Unplanned Cost 6 Months], "Currency"),format('Fact Measures'[# Unplanned Cost 6 Months],"Standard"))
+	measure '# Unplanned Cost $/Local 6 Months' =
+			
+			IF (
+			    SELECTEDVALUE ( '_Currency Prompt'[Currency] ) = "USD",
+			    FORMAT ( 'Fact Measures'[# Unplanned Cost 6 Months], "Currency" ),
+			    FORMAT ( 'Fact Measures'[# Unplanned Cost 6 Months], "Standard" )
+			)
+		lineageTag: 913aac8e-8687-42db-9366-efa4d2356f8f
+
+	/// if(selectedvalue('_Currency Prompt'[Currency]) = "USD",format('Fact Measures'[# Unplanned Cost], "Currency"),format('Fact Measures'[# Unplanned Cost],"Standard"))
+	measure '# Unplanned Cost $/Local' =
+			
+			IF (
+			    SELECTEDVALUE ( '_Currency Prompt'[Currency] ) = "USD",
+			    FORMAT ( 'Fact Measures'[# Unplanned Cost], "Currency" ),
+			    FORMAT ( 'Fact Measures'[# Unplanned Cost], "Standard" )
+			)
+		lineageTag: 039c4911-8ffe-44e4-b21f-7eb38dd02545
+
+	/// 
+	///  var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[SMU Hours filtered],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'SMU 6 Months Maint/SMU' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[SMU Hours filtered],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		lineageTag: 1e041433-9362-4ea3-8e58-23d6feab491c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	///  var NumOfMonths = if(LEN(selectedvalue(D_Date[MonthYear])) = 6,  -6, -12)
+	/// 
+	/// VAR ReferenceDate = MAX ( 'D_Date'[FullDate] )
+	/// 
+	/// VAR PreviousDates =
+	/// 
+	/// DATESINPERIOD (
+	/// 
+	/// 'D_DateCopy'[FullDate],
+	/// 
+	/// ReferenceDate,
+	/// 
+	/// NumOfMonths,
+	/// 
+	/// MONTH
+	/// 
+	/// )
+	/// 
+	/// VAR Result =
+	/// 
+	/// CALCULATE (
+	/// 
+	/// 'Fact Measures'[Sales*1000 / SMU],
+	/// 
+	/// REMOVEFILTERS ( 'D_Date' ),
+	/// 
+	/// KEEPFILTERS ( PreviousDates ),
+	/// 
+	/// USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+	/// 
+	/// )
+	/// 
+	/// RETURN Result
+	measure 'Sales/SMU  Maint/SMU' =
+			
+			VAR NumOfMonths =
+			    IF ( LEN ( SELECTEDVALUE ( D_Date[MonthYear] ) ) = 6, -6, -12 )
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        'Fact Measures'[Sales*1000 / SMU],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		lineageTag: 6d483b50-6ad6-41c4-8563-89fa506964b9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// if(isfiltered(D_Date[MonthYear Prompt]), CALCULATE(countx(D_Asset,'Fact Measures'[SMU Hours_6 mth_matrix])),([Asset Total]-[Asset_count]))
+	measure 'Asset Count_table' =
+			
+			IF (
+			    ISFILTERED ( D_Date[MonthYear Prompt] ),
+			    CALCULATE ( COUNTX ( D_Asset, 'Fact Measures'[SMU Hours_6 mth_matrix] ) ),
+			    ( [Asset Total] - [Asset_count] )
+			)
+		formatString: 0
+		lineageTag: 3ac3f740-b562-492d-b450-f521558130b0
+
+	/// 
+	/// var row_max= maxx(D_WorkOrder,D_WorkOrder[S.no])
+	/// var rows_ = calculate(count(D_WorkOrder[S.no]),ALLEXCEPT('D_WorkOrder',D_WorkOrder[Asset_Number]))
+	/// var check = calculate(maxx(D_WorkOrder,calculate(min(D_WorkOrder[S.no]),filter(D_WorkOrder,D_WorkOrder[Status_Desc]<>"Complete"))),ALLEXCEPT(D_WorkOrder,D_WorkOrder[Asset_Number]))
+	/// return if(row_max<check,CALCULATE(distinctcount('F_WorkOrder_Costs'[KEY_WorkOrder])))
+	measure 'WO Count' =
+			
+			VAR row_max =
+			    MAXX ( D_WorkOrder, D_WorkOrder[S.no] )
+			VAR rows_ =
+			    CALCULATE (
+			        COUNT ( D_WorkOrder[S.no] ),
+			        ALLEXCEPT ( 'D_WorkOrder', D_WorkOrder[Asset_Number] )
+			    )
+			VAR check =
+			    CALCULATE (
+			        MAXX (
+			            D_WorkOrder,
+			            CALCULATE (
+			                MIN ( D_WorkOrder[S.no] ),
+			                FILTER ( D_WorkOrder, D_WorkOrder[Status_Desc] <> "Complete" )
+			            )
+			        ),
+			        ALLEXCEPT ( D_WorkOrder, D_WorkOrder[Asset_Number] )
+			    )
+			RETURN
+			    IF (
+			        row_max < check,
+			        CALCULATE ( DISTINCTCOUNT ( 'F_WorkOrder_Costs'[KEY_WorkOrder] ) )
+			    )
+		formatString: 0
+		lineageTag: cf132503-e5b6-4342-871a-e884257ed5c1
+
+	/// CALCULATE(countx('D_WorkOrder',[WO Count]))
+	measure 'WO Count_Count' =
+			
+			CALCULATE ( COUNTX ( 'D_WorkOrder', [WO Count] ) )
+		formatString: 0
+		lineageTag: 84757538-8c7a-48a8-a76f-98345d46b855
+
+	/// 
+	///    
+	///  COALESCE(
+	///         CALCULATE (
+	///                 COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+	///                 'F_Service_Accuracy'[Compliant_Flag] = 0),0
+	///             )
+	/// 
+	measure '# Non Compliant WO Test' =
+			
+			COALESCE (
+			    CALCULATE (
+			        COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			        'F_Service_Accuracy'[Compliant_Flag] = 0
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 3eaed58b-1e26-4ee2-81b3-2d4b88dbc431
+
+	/// IF(AND('Fact Measures'[Group Mean] > 0,'Fact Measures'[GAP Potential] >0),"Y","N")
+	measure 'Outlier Flag' =
+			
+			IF (
+			    AND ( 'Fact Measures'[Group Mean] > 0, 'Fact Measures'[GAP Potential] > 0 ),
+			    "Y",
+			    "N"
+			)
+		displayFolder: Outliers
+		lineageTag: b075b30d-a798-431f-922c-b8aa114a026b
+
+	/// 
+	/// 
+	/// VAR MaxDate = MAX( D_Date[FullDate] )     -- retrieve latest date
+	/// VAR MinDate = EDATE( MaxDate, -3 )   -- move it back 12 months
+	/// VAR Result =
+	///      CALCULATE(
+	///           [SUM of SMU],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  > MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure '3 Mth SMU1' =
+			
+			VAR MaxDate =
+			    MAX ( D_Date[FullDate] ) -- retrieve latest date
+			VAR MinDate =
+			    EDATE ( MaxDate, -3 ) -- move it back 12 months
+			VAR Result =
+			    CALCULATE (
+			        [SUM of SMU],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] > MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		formatString: 0
+		displayFolder: Outlier1
+		lineageTag: 7e44cfa1-178a-4730-831f-dc10644786c4
+
+		changedProperty = FormatString
+
+	/// SUM(F_Asset_Costs_SMU[SMU_Hours_Prev_3_Months])
+	measure '3 Mth SMU Prev' =
+			
+			SUM ( F_Asset_Costs_SMU[SMU_Hours_Prev_3_Months] )
+		displayFolder: Outlier1
+		lineageTag: 60672191-16a6-4f21-aeb3-84f2233954c6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// 
+	/// VAR MaxDate = MAX( D_Date[FullDate] )     -- retrieve latest date
+	/// VAR MinDate = EDATE( MaxDate, -3 )   -- move it back 12 months
+	/// VAR Result =
+	///      CALCULATE(
+	///           [Total Asset Cost Excluding Fuel],
+	///           FILTER( ALL( D_Date ),      -- return period between
+	///           D_Date[FullDate] <= MaxDate &&  -- latest date
+	///           D_Date[FullDate]  > MinDate )    -- bigger than year before
+	///      )
+	/// RETURN
+	///      Result
+	measure '3 Mth Total Cost1' =
+			
+			VAR MaxDate =
+			    MAX ( D_Date[FullDate] ) -- retrieve latest date
+			VAR MinDate =
+			    EDATE ( MaxDate, -3 ) -- move it back 12 months
+			VAR Result =
+			    CALCULATE (
+			        [Total Asset Cost Excluding Fuel],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] > MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers1
+		lineageTag: 88d4de28-e958-4f28-bc58-fda98968e703
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// SUM('F_Asset_Costs_SMU'[Amount_USD_Prev_3_Months])
+	/// /*SUMX(FILTER(F_Asset_Costs_SMU,F_Asset_Costs_SMU[SMU_Hours_Prev_3_Months]<>0),'F_Asset_Costs_SMU'[Amount_USD_Prev_3_Months])*/
+	measure '3 Mth Total Cost Prev' =
+			
+			SUM ( 'F_Asset_Costs_SMU'[Amount_USD_Prev_3_Months] )
+			/*SUMX(FILTER(F_Asset_Costs_SMU,F_Asset_Costs_SMU[SMU_Hours_Prev_3_Months]<>0),'F_Asset_Costs_SMU'[Amount_USD_Prev_3_Months])*/
+		displayFolder: Outliers1
+		lineageTag: 073c5ca7-341a-49f3-aefa-d317af8f9d67
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// SUMX(D_Asset,[3 Mth Total Cost1]/[3 Mth SMU1] ) 
+	measure '3 Mth CPH1' =
+			
+			SUMX ( D_Asset, [3 Mth Total Cost1] / [3 Mth SMU1] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: Outliers1
+		lineageTag: b4167e9e-700c-4efb-a87e-de8a2ab66f10
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	/// 
+	/// //SUMX(D_Asset,[3 Mth Total Cost Prev]/[3 Mth SMU Prev] ) 
+	/// SUMX(D_Asset,IF([3 Mth SMU Prev] = 0,0,[3 Mth Total Cost Prev] / [3 Mth SMU Prev] )) 
+	measure '3 Mth CPH Prev' = ```
+			
+			//SUMX(D_Asset,[3 Mth Total Cost Prev]/[3 Mth SMU Prev] ) 
+			SUMX (
+			    D_Asset,
+			    IF ( [3 Mth SMU Prev] = 0, 0, [3 Mth Total Cost Prev] / [3 Mth SMU Prev] )
+			)
+			```
+		formatString: 0
+		displayFolder: Outliers1
+		lineageTag: da048258-a4b2-4f00-b8b9-f28bb85b0994
+
+	/// SUMX(D_Asset,([3 Mth CPH1]-[Group Mean]) * [3 Mth SMU1] ) 
+	measure 'GAP Potential1' =
+			
+			SUMX ( D_Asset, ( [3 Mth CPH1] - [Group Mean] ) * [3 Mth SMU1] )
+		displayFolder: Outliers1
+		lineageTag: 9d3a7914-888b-4df9-b93c-8508eff7e949
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// IF(AND('Fact Measures'[Group Mean1] > 0,'Fact Measures'[GAP Potential1]>0),"Y","N")
+	measure 'Outlier Flag1' =
+			
+			IF (
+			    AND ( 'Fact Measures'[Group Mean1] > 0, 'Fact Measures'[GAP Potential1] > 0 ),
+			    "Y",
+			    "N"
+			)
+		displayFolder: Outliers1
+		lineageTag: 88f3667a-aba8-4b07-885c-19ac00dc4a40
+
+	/// SUMX(D_Asset,([3 Mth CPH Prev]-[Group Mean]) * [3 Mth SMU Prev] ) 
+	measure 'GAP Potential Prev' =
+			
+			SUM ( F_Asset_Costs_SMU[Gap Potential Prev] )
+			//SUMX(D_Asset,([3 Mth CPH Prev]-[Group Mean]) * [3 Mth SMU Prev] )
+		formatString: 0
+		displayFolder: Outliers1
+		lineageTag: 99eac06c-ad10-4e38-895e-5aa2bcecc288
+
+	/// 
+	/// AVERAGE(F_Asset_Costs_SMU[Group Mean])
+	/// //AVERAGE(D_Asset[CPH])
+	measure 'Group Mean1' =
+			
+			AVERAGE ( F_Asset_Costs_SMU[Group Mean] )
+			//AVERAGE(D_Asset[CPH])
+		displayFolder: Outliers1
+		lineageTag: df8b88b1-6b93-4a5e-a62c-565f6e0868ae
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// 
+	/// 
+	/// VAR OuCount= CALCULATE(COUNT(D_Asset[Asset Number]),
+	/// FILTER(SUMMARIZE(D_Asset,D_Asset[Asset Model Grouping],D_Asset[Asset Number],D_Asset[KEY_ASSET]),'D_Asset'[Asset Outlier Flag1] = "Y"),
+	/// FILTER(SUMMARIZE(D_Organization,D_Organization[Region],D_Organization[Country],D_Organization[Site Name]),D_Organization[Country] <> "Blank")
+	/// )
+	/// 
+	/// RETURN OuCount
+	/// 
+	measure 'Outlier Count1' =
+			
+			VAR OuCount =
+			    CALCULATE (
+			        COUNT ( D_Asset[Asset Number] ),
+			        FILTER (
+			            SUMMARIZE (
+			                D_Asset,
+			                D_Asset[Asset Model Grouping],
+			                D_Asset[Asset Number],
+			                D_Asset[KEY_ASSET]
+			            ),
+			            'D_Asset'[Asset Outlier Flag1] = "Y"
+			        ),
+			        FILTER (
+			            SUMMARIZE (
+			                D_Organization,
+			                D_Organization[Region],
+			                D_Organization[Country],
+			                D_Organization[Site Name]
+			            ),
+			            D_Organization[Country] <> "Blank"
+			        )
+			    )
+			RETURN
+			    OuCount
+		formatString: 0
+		displayFolder: Outliers1
+		lineageTag: ebe9cd42-1c3f-488f-a4a0-40b06d4520f0
+
+	/// 
+	/// 
+	/// VAR OuCount= CALCULATE(COUNT(D_Asset[Asset Number]),
+	/// FILTER(SUMMARIZE(D_Asset,D_Asset[Asset Model Grouping],D_Asset[Asset Number],D_Asset[KEY_ASSET]),'D_Asset'[Asset Outlier Flag Prev] = "Y"),
+	/// FILTER(SUMMARIZE(D_Organization,D_Organization[Region],D_Organization[Country],D_Organization[Site Name]),D_Organization[Country] <> "Blank")
+	/// )
+	/// 
+	/// RETURN OuCount
+	measure 'Outlier Count Prev' =
+			
+			VAR OuCount =
+			    CALCULATE (
+			        COUNT ( D_Asset[Asset Number] ),
+			        FILTER (
+			            SUMMARIZE (
+			                D_Asset,
+			                D_Asset[Asset Model Grouping],
+			                D_Asset[Asset Number],
+			                D_Asset[KEY_ASSET]
+			            ),
+			            'D_Asset'[Asset Outlier Flag Prev] = "Y"
+			        ),
+			        FILTER (
+			            SUMMARIZE (
+			                D_Organization,
+			                D_Organization[Region],
+			                D_Organization[Country],
+			                D_Organization[Site Name]
+			            ),
+			            D_Organization[Country] <> "Blank"
+			        )
+			    )
+			RETURN
+			    OuCount
+		formatString: 0
+		displayFolder: Outliers1
+		lineageTag: fc2262f6-0012-4e7f-aac6-f42169d1ac8f
+
+	/// 
+	/// VAR Down = UNICHAR(8681)
+	/// VAR Up = UNICHAR(8679)
+	/// VAR Side = UNICHAR(8680)
+	/// VAR preMonthOutliers = SUM(F_Asset_Costs_SMU[Outlier Count Prev])
+	/// VAR currentMonthOutliers = SUM(F_Asset_Costs_SMU[Outlier Count])
+	/// RETURN 
+	/// IF(currentMonthOutliers < preMonthOutliers, Down, 
+	///     IF(currentMonthOutliers > preMonthOutliers, Up, Side))
+	/// 
+	measure 'Outlier KPI Indicator1' =
+			
+			VAR Down =
+			    UNICHAR ( 8681 )
+			VAR Up =
+			    UNICHAR ( 8679 )
+			VAR Side =
+			    UNICHAR ( 8680 )
+			VAR preMonthOutliers =
+			    SUM ( F_Asset_Costs_SMU[Outlier Count Prev] )
+			VAR currentMonthOutliers =
+			    SUM ( F_Asset_Costs_SMU[Outlier Count] )
+			RETURN
+			    IF (
+			        currentMonthOutliers < preMonthOutliers,
+			        Down,
+			        IF ( currentMonthOutliers > preMonthOutliers, Up, Side )
+			    )
+		displayFolder: Outliers1
+		lineageTag: fa745829-2d35-4ac5-8cca-2dfff9b89001
+
+	/// 
+	/// IF(sum(F_Asset_Costs_SMU[Outlier Count])< sum(F_Asset_Costs_SMU[Outlier Count Prev]), "#008000", 
+	///         IF(sum(F_Asset_Costs_SMU[Outlier Count]) > sum(F_Asset_Costs_SMU[Outlier Count Prev]), "#FF0000", "#FFBF00"))
+	/// 
+	measure 'Outlier Trend Color1' =
+			
+			IF (
+			    [Outlier Count] < [Outlier Count Prev],
+			    "#008000",
+			    IF ( [Outlier Count] > [Outlier Count Prev], "#FF0000", "#FFBF00" )
+			)
+		displayFolder: Outlier1
+		lineageTag: 52677b3e-2a92-4d82-a4ee-73ab2b56d8bc
+
+	/// IF(AND('Fact Measures'[Group Mean] > 0, 'Fact Measures'[GAP Potential Prev]>0),"Y","N")
+	measure 'Outlier Flag Prev' =
+			
+			IF (
+			    AND ( 'Fact Measures'[Group Mean] > 0, 'Fact Measures'[GAP Potential Prev] > 0 ),
+			    "Y",
+			    "N"
+			)
+		displayFolder: Outliers1
+		lineageTag: 5ee753cc-5321-4325-abdd-2e6182475c92
+
+	/// ('Fact Measures'[3 Mth Total Cost1]/3) * 12
+	measure 'Projected Yearly Cost1' =
+			
+			( 'Fact Measures'[3 Mth Total Cost1] / 3 ) * 12
+		formatString: 0.00
+		displayFolder: Outliers1
+		lineageTag: f70ea5d1-911e-4a7d-a782-728245f8c289
+
+		changedProperty = FormatString
+
+	measure 'Total Asset Cost Excluding Fuel and Captial' =
+			
+			CALCULATE (
+			    [SUM of Total Cost],
+			    FILTER ( D_GL_Account, D_GL_Account[GL Account Group] <> "Diesel" ),
+			    FILTER (
+			        D_WorkOrder,
+			        NOT D_WorkOrder[Order_Type_desc] IN { "L.CAPITAL", "L.CAPITAL AWAITING AFI" }
+			    )
+			)
+			//CALCULATE([SUM of Total Cost]))
+		lineageTag: d3a310d5-3f4a-42f7-975d-e079e1f861a7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '3 Mth Total Cost Excluding Fuel and Capital' =
+			
+			VAR MaxDate =
+			    MAX ( D_Date[FullDate] ) -- retrieve latest date
+			VAR MinDate =
+			    EDATE ( MaxDate, -3 ) -- move it back 12 months
+			VAR Result =
+			    CALCULATE (
+			        [Total Asset Cost Excluding Fuel and Captial],
+			        FILTER (
+			            ALL ( D_Date ),
+			            -- return period between
+			            D_Date[FullDate] <= MaxDate
+			                && -- latest date
+			            D_Date[FullDate] > MinDate
+			        ) -- bigger than year before
+			    )
+			RETURN
+			    Result
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 72f5afe0-3ba5-4676-ae31-1c9a0d01d116
+
+		changedProperty = FormatString
+
+	measure '3 Mth CPH excluding Fuel and Captial' =
+			
+			SUMX (
+			    D_Asset,
+			    DIVIDE ( [3 Mth Total Cost Excluding Fuel and Capital], [3 Mth SMU] )
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: bbe5acc3-33aa-4c58-9b02-cc2753314c33
+
+		changedProperty = FormatString
+
+	measure '3 Mth CPH excluding fuel and Captial 1' =
+			
+			SUMX ( D_Asset, [3 Mth Total Cost Excluding Fuel and Capital] / [3 Mth SMU1] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 3406091a-64b9-4bce-a65a-80736ac9d1bf
+
+		changedProperty = FormatString
+
+	measure 'Assets NO SMU' =
+			
+			CALCULATE (
+			    [Asset Total],
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[Missing_SMU_Flag] = "Y" )
+			)
+		formatString: 0
+		displayFolder: SMU KPI
+		lineageTag: 008d41eb-1387-4fa8-a260-5abb09e86c8e
+
+	measure 'Assets with SMU' =
+			
+			CALCULATE (
+			    [Asset Total],
+			    FILTER ( F_Asset_SMU_Hours, F_Asset_SMU_Hours[Missing_SMU_Flag] = BLANK () )
+			)
+		formatString: 0
+		displayFolder: SMU KPI
+		lineageTag: 3f412415-5fc1-4031-b3b3-9ef3e3599242
+
+	measure 'Assets NO SMU / SMU' =
+			
+			IF (
+			    ISBLANK ( [Assets with SMU] ),
+			    BLANK (),
+			    CONCATENATE ( [Assets NO SMU], CONCATENATE ( "/", [Assets with SMU] ) )
+			)
+		displayFolder: SMU KPI
+		lineageTag: 219fd208-1e0c-450b-b2c1-6aace6ba845b
+
+	measure 'Assets NO SMU / SMU 6 Mths' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        [Assets NO SMU / SMU],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		displayFolder: SMU KPI
+		lineageTag: 78b22db0-104e-4457-8e1a-49537134df61
+
+	measure 'Missing/Total Asset 6 Mths' =
+			
+			VAR NumOfMonths = -6
+			VAR ReferenceDate =
+			    MAX ( 'D_Date'[FullDate] )
+			VAR PreviousDates =
+			    DATESINPERIOD ( 'D_DateCopy'[FullDate], ReferenceDate, NumOfMonths, MONTH )
+			VAR Result =
+			    CALCULATE (
+			        [Missing/Total Asset],
+			        REMOVEFILTERS ( 'D_Date' ),
+			        KEEPFILTERS ( PreviousDates ),
+			        USERELATIONSHIP ( 'D_DateCopy'[DateKey], 'D_Date'[DateKey] )
+			    )
+			RETURN
+			    Result
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: SMU KPI
+		lineageTag: 6ab70a8a-04cf-41c8-b96b-43d531c8aec0
+
+	measure 'Assets NO SMU (PM)' =
+			
+			CALCULATE ( [Assets NO SMU], PREVIOUSMONTH ( D_Date[FullDate] ) )
+		formatString: 0
+		displayFolder: SMU KPI
+		lineageTag: 3a0f9137-a49e-47e6-8abc-281d1ff43d89
+
+	measure Card_Hide =
+			
+			""
+		lineageTag: 3466bf04-5e64-4c28-9ef5-d9073d6ccc53
+
+	measure Hide_Table1&2 =
+			
+			IF ( ISFILTERED ( D_Organization[Country] ), "#333333", "#FFFFFF00" )
+		lineageTag: 4f157c11-46fe-4e6a-89e2-9fec3d4918e3
+
+	measure Hide_Country3 =
+			
+			IF ( ISFILTERED ( D_Organization[Country] ), "#FFFFFF00", "#333333" )
+		lineageTag: a9fd38f7-f8f5-44be-b2d4-63c99814fcf5
+
+	measure '# Meter Compliant WO' =
+			
+			COALESCE (
+			    CALCULATE (
+			        COUNT ( 'F_Service_Accuracy'[KEY_WorkOrder] ),
+			        'F_Service_Accuracy'[Meter Compliant Flag] = 1,
+			        'F_Service_Accuracy'[Meter Based Flag] = 1
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 82a3dc4c-14c1-4df5-bdbb-bed4f5b03924
+
+	measure 'Meter based Service Accuracy %.' =
+			
+			IF (
+			    [# Meter Compliant WO] = 0,
+			    0,
+			    COALESCE ( DIVIDE ( [# Meter Compliant WO], [# Meter based WO_SA], 0 ), "" )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ada505e1-50b0-4552-b7a5-9e465dba2233
+
+	measure '# Meter based WO_SA' =
+			
+			COALESCE (
+			    CALCULATE (
+			        COUNT ( F_Service_Accuracy[KEY_WorkOrder] ),
+			        F_Service_Accuracy[Meter Based Flag] = 1
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: c3c32324-d49c-4caf-b82c-4a7c1065c291
+
+	measure 'Maint Cost % Sales AOP' =
+			//AOP % Annual Operating Plan -- new measure for Maint Cost % Sales Forecast --old
+			VAR old = DIVIDE ( ( [Maint Cost Forecast] ), [Sales Forecast], 0 )
+			var new_org = MAX(D_Organization[Final Draft Sales V O&M]) // new forecast data share by eam team in excel for 2025 AOP
+			var selectyearResult= SWITCH(SELECTEDVALUE(D_Date[Year]), "Current Year", new_org , old)--BLANK()) // AOP data for 2025 and remaining years old data F_HP_Forecast
+			RETURN selectyearResult  // this is impacting Maint Cost % Sales Forecast 6 months dax so this new one created to replace it
+			//new_org
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4b8ca31e-1f85-43ee-ba34-73576d1d9e34
+
+	measure 'Maint Cost Inc Tyres % Sales' =
+			
+			'Fact Measures'[Maint Cost % Sales]
+			//VAR varMaintTyre = calculate([GL_Amount], D_GL_Account[GL Account Group] IN {"Equip. Maint.", "Tyres"})
+			//VAR varSales = calculate([GL_Amount], D_GL_Account[GL Account Group] ="Sales")
+			//RETURN
+			//COALESCE(divide(varMaintTyre, varSales, 0), "")
+		displayFolder: Maint Cost
+		lineageTag: 7be15a29-4c1c-4ea7-9b18-ca97decff767
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Maint Cost Inc Tyres % Sales 3 Mth' =
+			
+			CALCULATE (
+			    [Maint Cost % Sales],
+			    ( DATESINPERIOD ( D_Date[FullDate], MAX ( D_Date[FullDate] ), -3, MONTH ) )
+			)
+		displayFolder: Maint Cost
+		lineageTag: ff548859-fc8d-42b2-8881-c0399afc1f80
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Maint Cost Inc Tyres % Sales KPI Flag' =
+			
+			IF (
+			    [Maint Cost % Sales] <= [Maint Cost Inc Tyres % Sales Target],
+			    // GREEN
+			    IF (
+			        [Maint Cost % Sales] = [Maint Cost Inc Tyres % Sales 3 Mth],
+			        5,
+			        // Flag
+			        IF (
+			            [Maint Cost % Sales] > [Maint Cost Inc Tyres % Sales 3 Mth],
+			            1 /* UP */
+			            ,
+			            2 /* DOWN */
+			        )
+			    ),
+			    IF (
+			        // RED
+			        [Maint Cost % Sales] = [Maint Cost Inc Tyres % Sales 3 Mth],
+			        4,
+			        // DOWN ?
+			        IF (
+			            [Maint Cost % Sales] > [Maint Cost Inc Tyres % Sales 3 Mth],
+			            3 /* UP */
+			            ,
+			            4 /* DOWN */
+			        )
+			    )
+			)
+		displayFolder: Maint Cost
+		lineageTag: 618efa0b-cdd8-4b11-9cba-9b3915cdb85e
+
+	measure 'Maint Cost Inc Tyres % Sales Target' =
+			
+			//[Maint Cost % Sales Forecast] + 0.02
+			DIVIDE (
+			    ( [Maint Cost Forecast] ),
+			    [Sales Forecast],
+			    0
+			)
+		displayFolder: Maint Cost
+		lineageTag: ec650096-7d04-4d4a-b9f1-ff8a0d36b900
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// IF([Assets NO SMU] =1 ,"Y","N")
+	measure 'Assets NO SMU -Y/N' =
+			
+			IF([Assets NO SMU] =1 ,"Y","N")
+		displayFolder: SMU KPI
+		lineageTag: f95ec9e3-a7e0-4f4c-8312-9e0f35b5823d
+
+	column 'SMU Assets_Test' =
+			
+			CALCULATE(count(F_Asset_SMU_Hours[Asset_Number]),filter('D_Asset',  [Asset_Cost_Type_Desc] <>"SUPPORT EQUIPMENT" && [Asset_Cost_Type_Desc] <>"MOBILE NON-HFF" && [Asset_Cost_Type_Desc] <>blank() && [Asset_Cost_Type_Desc] <>"Other" && [Asset_Cost_Type_Desc] <>"WRECKER"),filter(D_Asset, [Is Active]="Y") ,filter(D_Asset, [Is Parent]="Y"),filter(D_asset, [Asset Equipment Type]="MOBILE"  )
+			)
+		formatString: 0
+		lineageTag: 814af34f-a9a0-4a10-bedd-5199702fc41d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Fact Measures-bea2cb6c-8cd0-4eea-b0bc-33252b7ea7a1' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WckksSVSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

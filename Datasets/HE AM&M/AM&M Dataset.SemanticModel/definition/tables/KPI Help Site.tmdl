@@ -1,0 +1,323 @@
+table 'KPI Help Site'
+	lineageTag: 9e131fc2-2667-42e9-9a89-015b4ec4ade5
+
+	column Region
+		dataType: string
+		lineageTag: 051364b6-b290-4886-b78b-cede05dfa3fc
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: ee51ea34-3baa-469c-88df-acdeb32d8533
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site Code'
+		dataType: string
+		lineageTag: 2c71c11e-d7c3-4c17-9050-3e6977b83ef1
+		summarizeBy: none
+		sourceColumn: Site Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site Name'
+		dataType: string
+		lineageTag: d7a91fb0-df89-41df-a702-1023fd38c0f7
+		summarizeBy: none
+		sourceColumn: Site Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region Code'
+		dataType: string
+		lineageTag: 7f6353ce-6e2e-4f89-a644-c963277e1394
+		summarizeBy: none
+		sourceColumn: Region Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Active = ```
+			if('KPI Help Site'[Site Code] in 
+			{"1NB",
+			"1NC",
+			"1ND",
+			"1NG",
+			"1NH",
+			"1NI",
+			"1NK",
+			"1NM",
+			"1NO",
+			"1NQ",
+			"1NS",
+			"1NU",
+			"1NV",
+			"1NX",
+			"1NY",
+			"1NZ",
+			"1OA",
+			"1OB",
+			"1OC",
+			"1OO",
+			"1OP",
+			"1OQ",
+			"1OJ",
+			"1OK",
+			"1OL",
+			"1OT",
+			"1OM",
+			"1JA",
+			"1JC",
+			"1JL",
+			"1JO",
+			"1LK",
+			"1JR",
+			"1JU",
+			"1JW",
+			"1JX",
+			"1JS",
+			"1JT",
+			"1KB",
+			"000",
+			"889",
+			"970",
+			"972",
+			"977",
+			"993",
+			"997",
+			"998",
+			"000",
+			"000",
+			"287",
+			"289",
+			"630",
+			"000",
+			"644",
+			"1AB",
+			"1AD",
+			"1AG",
+			"1AJ",
+			"1AP",
+			"1AT",
+			"1CK",
+			"000",
+			"639",
+			"000",
+			"277",
+			"282",
+			"284",
+			"286",
+			"288",
+			"000",
+			"649",
+			"000",
+			"621",
+			"622",
+			"623",
+			"890",
+			"1AZ",
+			"1BX",
+			"1CJ",
+			"1DC",
+			"ZAA",
+			"000",
+			"570",
+			"574",
+			"1TB",
+			"1TC",
+			"1TE",
+			"1TN",
+			"1TZ",
+			"1UD",
+			"000",
+			"552",
+			"553",
+			"555",
+			"000",
+			"101",
+			"000",
+			"080",
+			"081",
+			"082",
+			"084",
+			"087",
+			"090",
+			"092",
+			"093",
+			"129",
+			"140",
+			"141",
+			"000",
+			"584",
+			"1BE",
+			"1BG",
+			"1BH",
+			"1BF",
+			"000",
+			"202",
+			"205",
+			"206",
+			"214",
+			"215",
+			"230",
+			"241",
+			"1BW",
+			"1CZ",
+			"1BQ",
+			"000",
+			"601",
+			"602",
+			"604",
+			"1CH",
+			"1PQ",
+			"1BN",
+			"1BK",
+			"1BM",
+			"1BJ",
+			"1BL",
+			"1BO",
+			"000",
+			"900",
+			"901",
+			"908",
+			"909",
+			"1CP",
+			"000",
+			"490",
+			"771",
+			"775",
+			"776",
+			"781",
+			"788",
+			"801",
+			"815",
+			"872",
+			"874",
+			"955",
+			"956",
+			"1SP",
+			"1SR",
+			"1SS",
+			"1ST",
+			"1SV",
+			"1SW",
+			"1SX",
+			"1SA",
+			"1SK",
+			"1SO",
+			"1BA",
+			"000",
+			"725",
+			"730",
+			"732",
+			"734",
+			"000",
+			"150",
+			"151",
+			"158",
+			"163",
+			"172",
+			"173",
+			"175",
+			"000",
+			"331",
+			"341",
+			"345",
+			"347",
+			"348",
+			"349",
+			"360",
+			"380",
+			"381",
+			"390",
+			"395",
+			"893",
+			"000",
+			"691",
+			"693",
+			"695",
+			"696",
+			"697",
+			"699",
+			"000",
+			"687",
+			"688",
+			"689","1SB","1SC","1SD","1SG","1SH","1SI","1SJ","1SL","1SM",
+			"1SN","330","1LA","1LB","1LL","1LN","1NA","269",
+			"1BC"},"N","Y")
+			
+			
+			```
+		lineageTag: 416960fe-2643-421a-a661-5252eba42bd4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column AM_Region_Code
+		dataType: string
+		lineageTag: 9de19ea0-5e95-41be-8307-6854cedffba4
+		summarizeBy: none
+		sourceColumn: AM_Region_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column AM_Region_Name
+		dataType: string
+		lineageTag: 537c01cf-ca1f-463b-9a04-d8e5a5edc0af
+		summarizeBy: none
+		sourceColumn: AM_Region_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORGANIZATION_ID
+		dataType: string
+		lineageTag: 753a64ed-3a67-4e61-9d27-f9075b861eac
+		summarizeBy: none
+		sourceColumn: ORGANIZATION_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Acitve_Site_AMM = LOOKUPVALUE(D_Organization[Site & Code],D_Organization[Site Code],'KPI Help Site'[Site Code])
+		lineageTag: 8a4da1c1-1422-47c5-97b1-1f89593f4be5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Acitve_AMM =
+			IF('KPI Help Site'[Acitve_Site_AMM] = Blank(),"N","Y")
+			 --IF('KPI Help Site'[Acitve_Site_AMM], "1","0")
+		dataType: string
+		lineageTag: 6bf86fef-de5d-4569-b9c2-385ed2098bac
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'KPI Help Site-c25f3dc4-32cb-4fee-9caf-359250cb40ff' = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    // From  DWH.D_Organization
+				    DWH_D_Organization = Source{[Schema="DWH",Item="D_Organization"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(DWH_D_Organization, each ([KEY_Site] <> "1LP~27") and ([Process_Enabled_Flag] = "N") and ([IsEnabled] = "Y")and ( [KEY_Site] <> "2BE~28" and [KEY_Site] <> "2BH~28" and [KEY_Site] <> "2BI~28" and [KEY_Site] <> "2BJ~28" and [KEY_Site] <> "2BK~28" and [KEY_Site] <> "2BL~28" and [KEY_Site] <> "2BM~28" and [KEY_Site] <> "2BN~28" and [KEY_Site] <> "2BO~28")),
+				    #"Removed Duplicates" = Table.Distinct(#"Filtered Rows", {"KEY_Finance_Location"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Removed Duplicates",{"Company_Code", "Company_Name", "Country_Currency", "Division_Code", "Entity_Code", "Entity_Name", "Region_Code", "SourceSystemID", "VAT"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Division_Name", "Division"}, {"Country_Name", "Country"}, {"Finance_Location_Code", "Finance Location Code"}, {"Site_Code", "Site Code"}, {"Site_Name", "Site Name"}, {"Region_Name", "Region"}, {"Finance_Location_Name", "Finance Location Name"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "Region Code", each if [Region] = "Europe South/West" then "ESW" else if [Region] = "North America" then "NA" else if [Region] = "Latin America" then "LATAM" else if [Region] = "India" then "India" else if [Region] = "Europe North/East" then "ENE" else if [Region] = "China" then "China" else if [Region] = "Middle East/Asia Pacific" then "MEROW" else "Other"),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column",{"KEY_Finance_Location", "KEY_Site", "Country_Code", "Finance Location Code", "IsEnabled", "Process_Enabled_Flag", "Division", "Finance Location Name"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns1",{"Region", "AM_Region_Code", "AM_Region_Name", "Country", "Site Code", "Site Name", "ORGANIZATION_ID", "Region Code"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Removed Other Columns", each ([AM_Region_Code] <> null))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

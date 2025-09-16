@@ -1,0 +1,87 @@
+table 'D_Date WO Completion'
+	lineageTag: 2b71ca38-d208-4f08-b647-7462cc0951e5
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e543e92-f265-42a1-b3ed-196b3f66c7cf
+		summarizeBy: count
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateType
+		dataType: string
+		lineageTag: fece2ee8-99e8-4563-a374-06d2708ba147
+		summarizeBy: none
+		sourceColumn: DateType
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: fdcc90ac-1e19-406f-b070-8e44d1c4a004
+		summarizeBy: none
+		sourceColumn: FullDate
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column YearMonth
+		dataType: string
+		lineageTag: d0482f04-02c0-4815-a692-28ffc4bcdd4a
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYear
+		dataType: string
+		lineageTag: a9c59a16-5f9f-417f-b776-c6be3e46e464
+		summarizeBy: none
+		sourceColumn: MonthYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalYearMonthYYYYMM
+		dataType: string
+		lineageTag: 57e8ae07-bf61-48dc-97a2-d6093b879d9a
+		summarizeBy: none
+		sourceColumn: FiscalYearMonthYYYYMM
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: a80e0438-661c-4ffd-886d-300660e1cc11
+		summarizeBy: sum
+		sourceColumn: YearMonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'D_Date WO Completion-56a63476-d121-4cc1-9d32-d15ec1a83c38' = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    DWH_D_Date = Source{[Schema="DWH",Item="D_Date"]}[Data],
+				    #"Filtered Rows1" = Table.SelectRows(DWH_D_Date, each [YearNum] <= Date.Year(DateTime.LocalNow())  and [YearNum] >= Date.Year(DateTime.LocalNow())-2 and [YearMonth] <= Number.ToText(Date.Year(DateTime.LocalNow()) *100 + Date.Month(DateTime.LocalNow()))),
+				    #"Added Custom" = Table.AddColumn(#"Filtered Rows1", "Start of Week", each Date.StartOfWeek([FullDate],1)),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Custom", "YearMonth", "YearMonth - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"YearMonth - Copy", "YearMonthNumber"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"YearMonthNumber", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Date_DD_MMM_YYYY", "YearNum", "YearBeginDate", "YearEndDate", "DayNumOfWeek", "DayNumOfMonth", "DayNumOfQuarter", "DayNumOfYear", "DayOfWeekName", "DayOfWeekAbbreviation", "JulianDayNumOfYear", "JulianJDEDate", "IsWeekday", "IsFederalUSHoliday", "HolidayDescription", "IsLastDayOfWeek", "IsLastDayOfMonth", "IsLastDayOfQuarter", "IsLastDayOfYear", "WeekOfYearBeginDate", "WeekOfYearEndDate", "WeekOfMonthBeginDate", "WeekOfMonthEndDate", "WeekOfQuarterBeginDate", "WeekOfQuarterEndDate", "WeekNumOfMonth", "WeekNumOfQuarter", "WeekNumOfYear", "MonthName", "MonthNameAbbreviation", "MonthBeginDate", "MonthEndDate", "MonthNumOfYear", "QuarterNumOfYear", "QuarterBeginDate", "QuarterEndDate", "QuarterFormatYYYYQQ", "QuarterFormatQQ", "FiscalYearQuarterYYYYQQ", "Start of Week"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Columns",{"DateKey", "DateType", "FullDate", "YearMonth", "MonthYear", "FiscalYearMonthYYYYMM", "YearMonthNumber"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

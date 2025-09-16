@@ -1,0 +1,153 @@
+/// SELECT * FROM DWH.F_WorkOrder_Costs where Year_Month >= '202101' - Parameter value
+table F_WorkOrder_Costs
+	lineageTag: 3dd103b1-1ba0-4333-b8c5-fc4c68b6e2c5
+
+	/// IF (
+	///     '_Currency Prompt'[CurrencyPrompt] = "USD",
+	///     SUM ( F_WorkOrder_Costs[WO Amount USD] ),
+	///     SUM ( F_WorkOrder_Costs[WO Amount Local] )
+	/// )
+	measure 'WO Amount' =
+			
+			IF (
+			    '_Currency Prompt'[CurrencyPrompt] = "USD",
+			    SUM ( F_WorkOrder_Costs[WO Amount USD] ),
+			    SUM ( F_WorkOrder_Costs[WO Amount Local] )
+			)
+		formatString: 0.00
+		lineageTag: e80ff25a-b272-40ab-afad-99a5a4a9706d
+
+		changedProperty = FormatString
+
+	column 'Year Month'
+		dataType: string
+		lineageTag: 0e85f02c-b049-4d88-8d04-68c9103f255d
+		summarizeBy: none
+		sourceColumn: Year Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		lineageTag: d1fef7c0-14de-4c41-ac9f-db9056152bfc
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: aa0eb160-85c9-4433-805c-150009dc8afc
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_Account
+		dataType: string
+		lineageTag: e77b07c1-239f-4dca-9b98-15b29bde5be0
+		summarizeBy: none
+		sourceColumn: KEY_GL_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Amount Local'
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 401af981-4c12-4188-a109-ee33c1267796
+		summarizeBy: sum
+		sourceColumn: WO Amount Local
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Amount USD'
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 04ccbf2e-1389-463b-bcee-dc751c5ec32a
+		summarizeBy: sum
+		sourceColumn: WO Amount USD
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Month_Num_Key = F_WorkOrder_Costs[Year Month] & "01"
+		dataType: string
+		lineageTag: a769367b-4604-443c-81ea-fcfbe371c942
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Date' = LOOKUPVALUE(D_Date[FullDate],D_Date[DateKey],F_WorkOrder_Costs[Month_Num_Key])
+		formatString: Short Date
+		lineageTag: 0c3920f6-5811-448f-b271-823eb11991d3
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: 71956307-efd9-4742-93af-93b418382098
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WorkOrder
+		dataType: string
+		lineageTag: e29dbe34-1a82-4b86-b56c-7e2150a3b283
+		summarizeBy: none
+		sourceColumn: KEY_WorkOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Local_Currency
+		dataType: string
+		lineageTag: 560ceaa9-c627-48cc-8373-7aefada7ed28
+		summarizeBy: none
+		sourceColumn: Local_Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Completion date' = LOOKUPVALUE(D_WorkOrder[WorkOrder_Completion_Date],D_WorkOrder[KEY_WorkOrder],F_WorkOrder_Costs[KEY_WorkOrder])
+		formatString: Short Date
+		lineageTag: ee61e4bf-b880-4195-9b89-8f60556316b3
+		summarizeBy: none
+
+		changedProperty = FormatString
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Workorder date MMM-YY' = format([WO Date],"MMM-YY")
+		lineageTag: 1819840f-1fc5-46d5-b6d5-4be075be5f45
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WO Date_YYYY' = format([WO Date],"YYYY")
+		lineageTag: cb3e1012-2bee-4af1-8ae3-889921317351
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_WorkOrder_Costs-b5a9d5c6-b9e9-40b2-91b0-a0d4e23532b3 = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source = ```
+				let
+				    // SELECT * FROM DWH.F_WorkOrder_Costs where Year_Month >= '202101' - Parameter value 
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="SELECT * FROM DWH.F_WorkOrder_Costs where Year_Month >= '"&P_YYYYMM_From&"'"]),
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Year_Month", "KEY_Site", "KEY_Activity", "KEY_Asset", "KEY_WorkOrder", "KEY_GL_Account", "Local_Currency", "Amount_Local", "Amount_USD"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Other Columns",{{"Amount_USD", "WO Amount USD"}, {"Year_Month", "Year Month"}, {"Amount_Local", "WO Amount Local"}})
+				in
+				    #"Renamed Columns"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

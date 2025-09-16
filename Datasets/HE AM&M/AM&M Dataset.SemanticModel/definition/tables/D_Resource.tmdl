@@ -1,0 +1,52 @@
+table D_Resource
+	lineageTag: a964a394-1bed-431c-b368-109d544e78c3
+
+	column KEY_Resource
+		dataType: string
+		lineageTag: f77c9460-253f-47c3-b9a1-86d720a17c24
+		summarizeBy: none
+		sourceColumn: KEY_Resource
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resource_ID
+		dataType: double
+		lineageTag: 8acf34ab-c469-4931-9579-75163e79d506
+		summarizeBy: none
+		sourceColumn: Resource_ID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Resource_Name
+		dataType: string
+		lineageTag: 90ebc61e-e1ec-45f3-8d1b-f3798206ff39
+		summarizeBy: none
+		sourceColumn: Resource_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 57b893ea-5cf9-412f-a37c-e6f591705a61
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Resource = m
+		mode: import
+		queryGroup: 'DWH Dimensions'
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    DWH_D_Resource = Source{[Schema="DWH",Item="D_Resource"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(DWH_D_Resource,{"KEY_Resource", "Resource_ID", "Resource_Name", "SourceSystemID"})
+				in
+				    #"Removed Other Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

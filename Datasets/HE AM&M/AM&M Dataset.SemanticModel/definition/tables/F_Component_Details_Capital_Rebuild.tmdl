@@ -1,0 +1,264 @@
+table F_Component_Details_Capital_Rebuild
+	lineageTag: cb6057dc-8655-43fa-864b-cf37ebe146c7
+
+	measure 'Remaining Life' =
+			
+			VAR TotalLifeExpectancy =
+			    SUM ( F_Component_Details_Capital_Rebuild[Life_Expectancy] )
+			VAR TotalSMUHoursLD =
+			    SUM ( F_Component_Details_Capital_Rebuild[SMU_Hours_LD] )
+			RETURN
+			    IF ( TotalLifeExpectancy = 0, BLANK (), TotalLifeExpectancy - TotalSMUHoursLD )
+			// If(SUM(F_Component_Details_Capital_Rebuild[Life_Expectancy])= 0,Blank(),SUM(F_Component_Details_Capital_Rebuild[Life_Expectancy])) - SUM(F_Component_Details_Capital_Rebuild[SMU_Hours_LD])
+		formatString: 0
+		lineageTag: b42c8a11-2408-49d3-8606-e9eff3b1de91
+
+	measure 'SMU Per Day' =
+			
+			DIVIDE ( SUM ( F_Component_Details_Capital_Rebuild[SMU_HOURS_13_NEW] ), 365 )
+		formatString: 0.0000
+		lineageTag: c5af444d-b91a-4a7d-9c29-a56d532635dd
+
+	measure 'Days to ChangeOut' =
+			
+			VAR RemainingLife = [Remaining Life]
+			VAR SMUPerDay = [SMU Per Day]
+			RETURN
+			    IF (
+			        SMUPerDay = 0,
+			        BLANK (),
+			        IF ( RemainingLife < 0, 0, RemainingLife / SMUPerDay )
+			    )
+			/*
+			VAR RemainingLife = [Remaining Life]
+			RETURN
+			IF(RemainingLife < 0, 0, RemainingLife / [SMU Per Day])
+			*/
+			//[Remaining Life]/[SMU Per Day]
+		lineageTag: 264d8feb-99ed-401d-bb60-99f7bc866513
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SMU Per Day(LTD)' =
+			
+			DIVIDE (
+			    SUM ( F_Component_Details_Capital_Rebuild[SMU_Hours_LD] ),
+			    SUM ( F_Component_Details_Capital_Rebuild[DayDifference_InceptionDate] )
+			)
+		formatString: 0.0000
+		lineageTag: b5efea60-fd55-4ee4-b5de-1fa1fc65b435
+
+	measure 'Days to changeOut(LTD)' =
+			
+			VAR RemainingLife = [Remaining Life]
+			VAR SMUPerDay = [SMU Per Day(LTD)]
+			RETURN
+			    IF ( SMUPerDay = 0, BLANK (), DIVIDE ( RemainingLife, SMUPerDay ) )
+		lineageTag: c142309d-020c-45df-82c1-b3a5009a45f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Predicted ChangeOut(LTD)' =
+			
+			VAR DaysToAdd = [Days to changeOut(LTD)]
+			RETURN
+			    IF ( ISBLANK ( DaysToAdd ), BLANK (), TODAY () + DaysToAdd )
+		formatString: DD-MMM-YYYY
+		lineageTag: 4bec61d8-ded8-4f57-9843-ca56c8184ec8
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column Record_Type
+		dataType: string
+		lineageTag: f2d3aa1a-bb5b-4ed5-9b9c-c896e5820e06
+		summarizeBy: none
+		sourceColumn: Record_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		lineageTag: d4c7082e-cc72-4e6b-a891-3d456a52fe78
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Asset
+		dataType: string
+		lineageTag: e84f0c61-1144-4955-9715-45801aa323d1
+		summarizeBy: none
+		sourceColumn: KEY_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: 002099fd-44ff-49be-9c5c-7cf7556ca408
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Component_Name
+		dataType: string
+		lineageTag: df8794e4-01f2-4b34-8ac5-b75a6e410bd3
+		summarizeBy: none
+		sourceColumn: Component_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Component_Type
+		dataType: string
+		lineageTag: 4e28fc15-73b3-4e5e-94c4-b3265b9ee2dd
+		summarizeBy: none
+		sourceColumn: Component_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Component_Prompt
+		dataType: string
+		lineageTag: c6f86ab8-0a4d-4e22-8e90-0c2d8435edeb
+		summarizeBy: none
+		sourceColumn: Component_Prompt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Component_Status
+		dataType: string
+		lineageTag: 9687e1ac-6a4d-43dd-8830-24c645d7fea2
+		summarizeBy: none
+		sourceColumn: Component_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Component
+		dataType: string
+		lineageTag: a19fb945-3ec3-48f5-96ea-735f91a9f856
+		summarizeBy: none
+		sourceColumn: Is_Component
+
+		annotation SummarizationSetBy = Automatic
+
+	column Inception_Date
+		dataType: dateTime
+		formatString: DD-MMM-YYYY
+		lineageTag: b9a12202-3c4a-42ce-9287-74a73eab602f
+		summarizeBy: none
+		sourceColumn: Inception_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column End_Dated_Date
+		dataType: dateTime
+		formatString: DD-MMM-YYYY
+		lineageTag: a45c5678-17fc-4a4c-b2f1-04f4b7017fac
+		summarizeBy: none
+		sourceColumn: End_Dated_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SMU_Hours_LD
+		dataType: int64
+		formatString: 0
+		lineageTag: efa8d949-e92c-40ba-b8e0-4f27869b8e53
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_LD
+
+		annotation SummarizationSetBy = Automatic
+
+	column Life_Expectancy
+		dataType: int64
+		formatString: 0
+		lineageTag: 21982e3d-3035-44b7-b69a-bcf3e6f5c04e
+		summarizeBy: sum
+		sourceColumn: Life_Expectancy
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: e023c6ae-79fa-45ae-9c86-a87009853e0d
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Predicted ChangeOut' =
+			/*
+			VAR DaysToAdd = [Days to ChangeOut]
+			VAR PredictedDate = IF(ISBLANK(DaysToAdd), BLANK(), TODAY() + DaysToAdd)
+			RETURN
+			IF(ISBLANK(PredictedDate), BLANK(), FORMAT(PredictedDate, "DD-MMM-YYYY"))
+			*/
+			
+			
+			VAR DaysToAdd = [Days to ChangeOut]
+			RETURN
+			IF(ISBLANK(DaysToAdd), BLANK(), TODAY() + DaysToAdd)
+			
+			
+			//Today() + [Days to ChangeOut]
+		formatString: DD-MMM-YYYY
+		lineageTag: c2ccebee-e348-48c0-8af0-73091e75f14e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column DayDifference_InceptionDate = ```
+			DATEDIFF(F_Component_Details_Capital_Rebuild[Inception_Date], TODAY(), DAY)
+			
+			```
+		formatString: 0
+		lineageTag: 5b69dad8-86b1-4c46-8812-a38ec96c2aff
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_Hours_13
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ca60885-4fb4-4893-8c92-cf8ee5ded472
+		summarizeBy: sum
+		sourceColumn: SMU_Hours_13
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_HOURS_13_NEW
+		dataType: int64
+		formatString: 0
+		lineageTag: d9cc33fc-0c97-4bfc-b4c7-f0437e20cd19
+		summarizeBy: sum
+		sourceColumn: SMU_HOURS_13_NEW
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Component_Details_Capital_Rebuild = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source = ```
+				let
+				    // Select query 
+				    // from Union tables 
+				    // PBI_V_D_Assets and  DWH.F_Component_Details  and StagingFiles.Oracle_Golive_Dates
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="select Record_Type,KEY_Asset,KEY_Site,Asset_Number,Component_Name,#(lf)Component_Type, Component_Prompt,Component_Status,Is_Component,End_Dated_Date,Inception_Date,Life_Expectancy,SMU_Hours_LD,#(lf)SMU_Hours_13,SMU_Hours_13 SMU_HOURS_13_NEW ,SourceSystemID from DWH.F_Component_Details#(lf)Where sourcesystemID in ('27')#(lf)Union#(lf)select f.Record_Type, a.KEY_Asset,#(lf)a.key_site,#(lf)a.Asset_Number,#(lf)ISNull (f.Component_Name,A.asset_number + '-FRAME') Component_Name,#(lf)ISNULL(f.component_type,a.site_Code_org + a.Asset_Number) Component_Type,#(lf)f.Component_Prompt,#(lf)f.Component_Status,#(lf)f.Is_Component,#(lf)f.End_Dated_Date,#(lf)f.Inception_Date,#(lf)f.Life_Expectancy,#(lf)f.SMU_Hours_LD,#(lf)f.SMU_Hours_13,#(lf)f.SMU_Hours_13 SMU_HOURS_13_NEW ,#(lf)f.SourceSystemID#(lf)from PBI.V_D_Assets a#(lf)Left outer Join DWH.F_Component_Details f on a.key_asset = f.KEY_Asset  #(lf)Where 1=1 #(lf)and a.sourcesystemID not in ('27','28') And  SUBSTRING(a.KEY_Site,1,2) NOT IN (SELECT Country_Code FROM StagingFiles.Oracle_Golive_Dates)#(lf)#(lf)UNION#(lf)select Record_Type,KEY_Asset,KEY_Site,Asset_Number,Component_Name,#(lf)Component_Type, Component_Prompt,Component_Status,Is_Component,End_Dated_Date,Inception_Date,Life_Expectancy,SMU_Hours_LD,#(lf)SMU_Hours_13,SMU_HOURS_13_NEW ,SourceSystemID from (#(lf)SELECT F.*,ISNULL(R.SMU_HOURS_13,0) SMU_HOURS_13_NEW FROM DWH.F_Component_Details F#(lf)LEFT OUTER JOIN #(lf)(SELECT Record_Type,Asset_Number,Component_Name,ISNULL(SUM(SMU_Hours_13),0) SMU_HOURS_13#(lf)FROM DWH.F_Component_Details#(lf)WHERE SourceSystemID  = '28'#(lf)OR SUBSTRING(KEY_Site,1,2) IN (SELECT Country_Code FROM StagingFiles.Oracle_Golive_Dates)#(lf)#(lf)GROUP BY Record_Type,Asset_Number,Component_Name#(lf)) R ON F.Record_Type = R.Record_Type#(lf)AND F.Asset_Number = R.Asset_Number#(lf)AND F.Component_Name = R.Component_Name#(lf)WHERE 1=1#(lf)AND SourceSystemID = '28') c"]),
+				    #"Filtered Rows1" = Table.SelectRows(Source, each ([Component_Status] <> "OBSELETE")),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows1",{{"Inception_Date", type date}, {"End_Dated_Date", type date}})
+				in
+				    #"Changed Type"
+				```
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

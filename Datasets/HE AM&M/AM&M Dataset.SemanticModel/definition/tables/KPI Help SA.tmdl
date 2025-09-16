@@ -1,0 +1,48 @@
+table 'KPI Help SA'
+	lineageTag: 274dafa8-58ef-4de0-8451-dba999af375b
+
+	column KPI
+		dataType: string
+		lineageTag: a6396d6a-e462-41fc-82a9-5f330a5f8ce2
+		summarizeBy: none
+		sourceColumn: KPI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Measure
+		dataType: string
+		lineageTag: 4a99e6b9-b175-47cf-8a9d-3ac87e3777f0
+		summarizeBy: none
+		sourceColumn: Measure
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Description'
+		dataType: string
+		lineageTag: cbeb30a3-ec57-448e-ba21-7360edb48a74
+		summarizeBy: none
+		sourceColumn: Measure Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Calculation'
+		dataType: string
+		lineageTag: d8948b93-b3ba-453e-8ca6-8d42d0b078ce
+		summarizeBy: none
+		sourceColumn: Measure Calculation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'KPI Help SA-ed9c5517-7630-4097-ad2e-3388712bf29d' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("tZFBS8NAFIT/yhDxVhB/gIca8SI2QoUcSpFt8moW033l7SaSf+8mjdgkrawUb8vM7OzH7GoVLUlqnRHmWVaJyppoFl0h5t2+1Mo4pIkXYq78kbdH+jM5EmyUpRwpywcSyUnscfiJmrfW6hx8FiTUX/upeSzVO3CHWyiT9+59V9o53ojWszOQA4QB5kVwoc8v2Pz3TsMnLtnqlZ0qR5C9FgJ1rngs4RpefdC1ttqzD5ZIE2ya6acteBK7wUEcZcMZ4kqE2vHZuOJUZMsyCQWDQBu4gmCppMx56dAQjvciVGuu7O98k9SfAfffDbu2oc2dwl5/AQ==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [KPI = _t, Measure = _t, #"Measure Description" = _t, #"Measure Calculation" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"KPI", type text}, {"Measure", type text}, {"Measure Description", type text}, {"Measure Calculation", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

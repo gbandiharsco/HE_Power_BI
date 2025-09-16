@@ -1,0 +1,108 @@
+table F_HP_Forecast
+	lineageTag: edee9a8c-83fe-45f3-bda0-65067ff8b179
+
+	column Entity
+		dataType: string
+		lineageTag: 76b53cdd-e428-4d33-bf09-87a1638410b1
+		summarizeBy: none
+		sourceColumn: Entity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Code'
+		dataType: string
+		lineageTag: 71db8498-64a7-4f28-9f5f-f0135fd3d439
+		summarizeBy: none
+		sourceColumn: Activity Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Version
+		dataType: string
+		lineageTag: 80ed8486-7513-403c-bbc3-e5be245133b2
+		summarizeBy: none
+		sourceColumn: Version
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearMonth
+		dataType: string
+		lineageTag: 8f216ea4-35f6-4ed8-99c0-46fa14c1a82a
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Scenario
+		dataType: string
+		lineageTag: 77b2143c-57cf-4d4e-97b1-bb507f2e8016
+		summarizeBy: none
+		sourceColumn: Scenario
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Account Code'
+		dataType: string
+		lineageTag: b2d1b891-f7fc-413d-bbe7-58bb92239cf9
+		summarizeBy: none
+		sourceColumn: Account Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Group'
+		dataType: string
+		lineageTag: 40563693-6bde-4490-bcf4-45dc0ac18be2
+		summarizeBy: none
+		sourceColumn: GL Account Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Forecast Value Local'
+		dataType: double
+		lineageTag: 482d0808-1fd5-4f23-963c-14de554a3ea2
+		summarizeBy: sum
+		sourceColumn: Forecast Value Local
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Forecast Value USD'
+		dataType: double
+		lineageTag: 9749bcbe-95e0-4c66-a966-f9ef07e2d487
+		summarizeBy: sum
+		sourceColumn: Forecast Value USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Month_Num_Key = F_HP_Forecast[YearMonth] & "01"
+		lineageTag: 146b6b33-5dee-413a-9aad-28f9ac09c971
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column table_sk
+		dataType: string
+		lineageTag: 68cae300-ba82-42f3-9f35-f3b51bdd637f
+		summarizeBy: none
+		sourceColumn: table_sk
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_HP_Forecast-358dfebc-2899-49bc-8d19-69ecebda4b9e = m
+		mode: import
+		queryGroup: 'DWH Facts'
+		source =
+				let
+				    Source = Sql.Database(#"P_ServerName", #"P_DatabaseName"),
+				    F_HP_Forecast = Source{[Schema="DWH",Item="F_HP_Forecast"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(F_HP_Forecast,{{"Value_Local", "Forecast Value Local"}, {"Value_USD", "Forecast Value USD"}, {"GL_Account_Group", "GL Account Group"}, {"Activity_Code", "Activity Code"}, {"Account_Code", "Account Code"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

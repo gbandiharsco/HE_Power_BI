@@ -1,0 +1,27 @@
+table 'Slicer Table for ACH Measures'
+	lineageTag: 388da5a0-4681-4d47-bd24-563a71939b53
+
+	measure 'User Selection' =
+			
+			SELECTEDVALUE ( 'Slicer Table for ACH Measures'[Value] )
+		lineageTag: c09c0b40-9eb9-4116-ba9d-01dec4c94df4
+
+	column Value
+		lineageTag: a072d475-3d81-4b20-87e1-08612f1349c5
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Slicer Table for ACH Measures-4cd24b91-776e-4618-9491-511d312e4e67' = calculated
+		mode: import
+		source =
+				
+				{
+				"Costs",
+				"Cost Per Hour",
+				"Cost Per Quantity"
+				}
+
+	annotation PBI_Id = cb3f1a1f72ae4f098f16e975b725cf49
+

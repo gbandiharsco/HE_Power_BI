@@ -1,0 +1,134 @@
+table 'AMAX Work Order Master'
+	lineageTag: c3865e48-cff1-4277-94b3-df7413c9432a
+
+	column WorkOrderId
+		dataType: int64
+		formatString: 0
+		lineageTag: b5b012c6-9a07-4539-b8b4-62e8ee6fbfda
+		summarizeBy: count
+		sourceColumn: WorkOrderId
+
+		annotation SummarizationSetBy = Automatic
+
+	column WORefNumber
+		dataType: string
+		lineageTag: 95d57531-d5f9-4204-b19c-5c00bde172aa
+		summarizeBy: none
+		sourceColumn: WORefNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column WOPriority
+		dataType: string
+		lineageTag: db8c4f9e-2852-4012-9b32-9d7bf7827799
+		summarizeBy: none
+		sourceColumn: WOPriority
+
+		annotation SummarizationSetBy = Automatic
+
+	column WODescription
+		dataType: string
+		lineageTag: 34299c14-5624-43c2-8072-c55f99fe68eb
+		summarizeBy: none
+		sourceColumn: WODescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column SiteId
+		dataType: string
+		lineageTag: 66cc08a0-90b4-46d8-9bd3-7c86eb39d234
+		summarizeBy: none
+		sourceColumn: SiteId
+
+		annotation SummarizationSetBy = Automatic
+
+	column SiteCode
+		dataType: string
+		lineageTag: 33a03bc6-a061-4082-bab8-be9f61b09939
+		summarizeBy: none
+		sourceColumn: SiteCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssetId
+		dataType: string
+		lineageTag: 226fe325-8cbc-4c45-ae9d-80c294f94f91
+		summarizeBy: none
+		sourceColumn: AssetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column AssetNumber
+		dataType: string
+		lineageTag: 33d5b7ae-c380-4fc1-8fcd-585557dacce2
+		summarizeBy: none
+		sourceColumn: AssetNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column WODuration
+		dataType: string
+		lineageTag: 79eb4fe2-256b-4ae3-ac14-c641a243ea02
+		summarizeBy: none
+		sourceColumn: WODuration
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsCompleted
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 527d05c5-2754-4062-aa15-66e381478253
+		summarizeBy: none
+		sourceColumn: IsCompleted
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 4dfaaff8-9d39-41c7-9af2-e463bd179ae5
+		summarizeBy: none
+		sourceColumn: UpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 668c0910-e6d1-4ad2-bcc4-8f4c52c4d387
+		summarizeBy: none
+		sourceColumn: UpdatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column SiteWOKey
+		dataType: string
+		lineageTag: 59ad884f-3c59-445f-9741-ac97696f7da1
+		summarizeBy: none
+		sourceColumn: SiteWOKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WO
+		dataType: string
+		lineageTag: f2c8b952-087e-4732-8334-08fda20679f3
+		summarizeBy: none
+		sourceColumn: WO
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'AMAX Work Order Master-010a20a5-7762-44a6-be29-47fbb9cb2b8a' = m
+		mode: import
+		queryGroup: 'Scheduled Compliance'
+		source =
+				let
+				   Source = Sql.Database(pAMAXServer, pAMAXDb),
+				  #"Navigation 1" = Source{[Schema = "dbo", Item = "tbl_AmaxWorkOrderMaster"]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(#"Navigation 1", "SiteWOKey", each Text.Combine({[SiteCode], [WORefNumber]}, ""), type text),
+				    #"Added Custom" = Table.AddColumn(#"Inserted Merged Column", "WO", each "WO")
+				in
+				    #"Added Custom"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
