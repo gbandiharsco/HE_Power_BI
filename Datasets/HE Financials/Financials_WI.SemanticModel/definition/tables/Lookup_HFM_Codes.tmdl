@@ -1,0 +1,64 @@
+table Lookup_HFM_Codes
+	lineageTag: ea518362-be2b-482f-adf0-f64e18d3ae9e
+
+	column source
+		dataType: string
+		lineageTag: a85555b9-a73d-49a1-b602-ef2d81893e80
+		summarizeBy: none
+		sourceColumn: source
+
+		annotation SummarizationSetBy = Automatic
+
+	column source_description
+		dataType: string
+		lineageTag: 73718a04-860f-4859-92f0-588360aa0b40
+		summarizeBy: none
+		sourceColumn: source_description
+
+		annotation SummarizationSetBy = Automatic
+
+	column target_hfm_account
+		dataType: int64
+		formatString: 0
+		lineageTag: 3822699b-8c3d-4669-9217-58431982b318
+		summarizeBy: none
+		sourceColumn: target_hfm_account
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source_1
+		dataType: string
+		lineageTag: 6ee46292-a547-437a-8116-4ecec3750093
+		summarizeBy: none
+		sourceColumn: Source_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source_2
+		dataType: string
+		lineageTag: 78375482-e374-4d8e-8a03-4bb7c6bdd188
+		summarizeBy: none
+		sourceColumn: Source_2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Lookup_HFM_Codes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="select * FROM DWH_stg_misc.stg_lookup_hfm_codes WHERE source is not null"]),
+				    #"Added Custom" = Table.AddColumn(Source, "Source_1", each Text.TrimStart([source],"0")),
+				    #"Added Custom1" = Table.AddColumn(#"Added Custom", "Source_2", each let
+				    noAsterisk = if Text.EndsWith([source], "*") then Text.Start([source], Text.Length([source]) - 1) else [source],
+				    noLeadingZeros = Text.TrimStart(noAsterisk, "0")
+				in
+				    noLeadingZeros)
+				in
+				    #"Added Custom1"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,233 @@
+table 'PBI V_D_GL_Account'
+	lineageTag: 846a6b31-cea7-4a72-a9f9-17597cf34132
+
+	column GL_Entity
+		dataType: string
+		lineageTag: 353aeabb-7fc2-4da6-a622-7d3c0416b02d
+		summarizeBy: none
+		sourceColumn: GL_Entity
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Location
+		dataType: string
+		lineageTag: ccbe9ef5-bb03-4083-ab83-8ecff60ea5c7
+		summarizeBy: none
+		sourceColumn: GL_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Activity
+		dataType: string
+		lineageTag: 75367553-ef2b-47fb-b817-12c39f3437b1
+		summarizeBy: none
+		sourceColumn: GL_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Activity_Desc
+		dataType: string
+		lineageTag: cb9da1b2-dc67-4fe2-8702-319cbaa9567d
+		summarizeBy: none
+		sourceColumn: GL_Activity_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Number
+		dataType: string
+		lineageTag: 851736a0-ed64-4d75-b879-98c78c778c29
+		summarizeBy: none
+		sourceColumn: GL_Account_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_ID
+		dataType: string
+		lineageTag: da1e4c9e-7472-4b6e-a511-72d7a16d8b6b
+		summarizeBy: none
+		sourceColumn: GL_Account_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Business_Unit
+		dataType: string
+		lineageTag: 15539055-a05e-49bd-bd5c-b30902358d10
+		summarizeBy: none
+		sourceColumn: GL_Business_Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Object_Account
+		dataType: string
+		lineageTag: ff18d300-6ee3-4e3d-b7fc-5c66c4fae25f
+		summarizeBy: none
+		sourceColumn: GL_Object_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Desc
+		dataType: string
+		lineageTag: f163878f-74cb-44ab-9a99-30b050d1c97e
+		summarizeBy: none
+		sourceColumn: GL_Account_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Subsidary
+		dataType: string
+		lineageTag: d42241e1-ad0f-46e1-a62a-a9d0e90e66fc
+		summarizeBy: none
+		sourceColumn: GL_Subsidary
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Currency_Code
+		dataType: string
+		lineageTag: 93b6a874-23bc-4d42-8fa5-916d6222b222
+		summarizeBy: none
+		sourceColumn: GL_Currency_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column High_Level_Account_Type
+		dataType: string
+		lineageTag: 9c31b3cb-c17d-4e3a-8424-0fa00677107a
+		summarizeBy: none
+		sourceColumn: High_Level_Account_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Number_OneChart
+		dataType: string
+		lineageTag: c894a828-6425-4785-8bae-a4be73f4a3d2
+		summarizeBy: none
+		sourceColumn: GL_Account_Number_OneChart
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Number_ASLEE
+		dataType: string
+		lineageTag: 139ace6c-ae83-4d57-9c63-90ed2f4307e9
+		summarizeBy: none
+		sourceColumn: GL_Account_Number_ASLEE
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Group
+		dataType: string
+		lineageTag: 8ab1ce30-f881-4be4-8935-04b874b66922
+		summarizeBy: none
+		sourceColumn: GL_Account_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Group_Sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ce80cd9-cc41-496a-9ed9-369edb021eec
+		summarizeBy: sum
+		sourceColumn: GL_Account_Group_Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Sub_Group
+		dataType: string
+		lineageTag: 76d5e149-7294-4d0f-b1a9-9baa34f6931c
+		summarizeBy: none
+		sourceColumn: GL_Account_Sub_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Operating_Group
+		dataType: string
+		lineageTag: 0884612b-c153-48c4-90ec-e9a538eeb983
+		summarizeBy: none
+		sourceColumn: GL_Operating_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: ad155a48-7d64-4911-b74c-3f2339fccd8c
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT
+		dataType: string
+		lineageTag: 614ed260-8e35-497d-b29e-6d4ee8fd534c
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Merged Columns' = CONCATENATE(CONCATENATE(CONCATENATE('PBI V_D_GL_Account'[GL_Entity]&".",'PBI V_D_GL_Account'[GL_Location]&"."),CONCATENATE('PBI V_D_GL_Account'[GL_Activity]&".",'PBI V_D_GL_Account'[GL_Account_Number_OneChart]&" - ")),'PBI V_D_GL_Account'[GL_Account_Desc])
+		lineageTag: 5e725516-c713-45d5-999b-2f31421c7e2e
+		summarizeBy: none
+		sortByColumn: GL_Account_Group_Sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'segment Columns' = CONCATENATE(CONCATENATE('PBI V_D_GL_Account'[GL_Entity]&".",'PBI V_D_GL_Account'[GL_Location]&"."),CONCATENATE('PBI V_D_GL_Account'[GL_Activity]&".",'PBI V_D_GL_Account'[GL_Account_Number_OneChart]))
+		lineageTag: 8eb0f71f-9a82-4c57-b64d-760363be1d07
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column WIP_Account
+		dataType: string
+		lineageTag: bad30327-06a2-4ced-b416-e9f7cdc4d29f
+		summarizeBy: none
+		sourceColumn: WIP_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Object Account Series' =
+			
+			
+			var cond = SWITCH(TRUE(),
+			    LEFT('PBI V_D_GL_Account'[GL_Object_Account],1) = "3","3",
+			    LEFT('PBI V_D_GL_Account'[GL_Object_Account],1) = "6","6",
+			    LEFT('PBI V_D_GL_Account'[GL_Object_Account],1) = "9","9",
+			    LEFT('PBI V_D_GL_Account'[GL_Object_Account],2) = "12","12"
+			)
+			
+			RETURN
+			IF(cond = BLANK(), "Other than 3,6,9,12 series", cond)
+		lineageTag: 1b9c0e83-1572-4c72-a8e4-bc28d61a102e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Inter_Company
+		dataType: string
+		lineageTag: d43eaf25-a7bf-471a-ae91-c9295c86da28
+		summarizeBy: none
+		sourceColumn: GL_Inter_Company
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Finance_Location
+		dataType: string
+		lineageTag: 3c814c27-e7d0-4d9c-9019-3e4674c9a14f
+		summarizeBy: none
+		sourceColumn: Key_Finance_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_GL_Account' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    PBI_V_D_GL_Account_PL = Source{[Schema="PBI",Item="V_D_GL_Account_Weekly_Indicator"]}[Data]
+				in
+				    PBI_V_D_GL_Account_PL
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

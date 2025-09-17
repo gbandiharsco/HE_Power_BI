@@ -1,0 +1,179 @@
+table 'ICP - Summary'
+	lineageTag: 31ea2003-85d4-4900-a6d4-2803e69ba24c
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 92de7ea4-bc3e-4b3e-9da2-50511500cc30
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period_Name
+		dataType: string
+		lineageTag: a8345df7-615f-4bcf-a540-ade6ea4bcab0
+		summarizeBy: none
+		sourceColumn: Period_Name
+		sortByColumn: Year
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ledger_Name
+		dataType: string
+		lineageTag: f7aa57c2-91d5-41cb-8192-d4df11deceb8
+		summarizeBy: none
+		sourceColumn: Ledger_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Company
+		dataType: string
+		lineageTag: 76494215-3254-4f58-bb4d-ea31a64ab52f
+		summarizeBy: none
+		sourceColumn: KEY_Company
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Object_Account
+		dataType: string
+		lineageTag: 3708e680-af4e-4261-8e21-4d0f1479e1ff
+		summarizeBy: none
+		sourceColumn: GL_Object_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column INTER_COMPANY
+		dataType: string
+		lineageTag: 9103a47d-3a47-401a-a12a-b525e1f3d8f3
+		summarizeBy: none
+		sourceColumn: INTER_COMPANY
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Finance_Location
+		dataType: string
+		lineageTag: 236a5180-89c3-407d-9f99-4239013380d5
+		summarizeBy: none
+		sourceColumn: KEY_Finance_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD_Amount_Local
+		dataType: double
+		lineageTag: d9ff35bd-3d3d-4897-8b56-485c3819cbbc
+		summarizeBy: sum
+		sourceColumn: MTD_Amount_Local
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_Amount_USD
+		dataType: double
+		lineageTag: 955fdfc3-e453-47af-a361-595cf97a82da
+		summarizeBy: sum
+		sourceColumn: MTD_Amount_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_Amount_Local
+		dataType: double
+		lineageTag: b4d365f0-f9dc-4b09-88bd-162a6f643dc1
+		summarizeBy: sum
+		sourceColumn: YTD_Amount_Local
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_Amount_USD
+		dataType: double
+		lineageTag: aa85d983-06ff-436a-879d-eaf95e71c5ea
+		summarizeBy: sum
+		sourceColumn: YTD_Amount_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Period_Sort_Key
+		dataType: int64
+		formatString: 0
+		lineageTag: d523dc5b-aa95-48d9-9ab6-fd220b355118
+		summarizeBy: count
+		sourceColumn: Period_Sort_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 94972557-8ed4-47a4-8329-70cd8fc500a2
+		summarizeBy: none
+		sourceColumn: GL_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column GL_Account_Desc
+		dataType: string
+		lineageTag: 5df0fcfd-b0eb-4d59-bae6-985fbea96d54
+		summarizeBy: none
+		sourceColumn: GL_Account_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Object Account Series' =
+			
+			
+			var cond = SWITCH(TRUE(),
+			    LEFT('ICP - Summary'[GL_Object_Account] ,1) = "3","3",
+			    LEFT('ICP - Summary'[GL_Object_Account] ,1) = "6","6",
+			    LEFT('ICP - Summary'[GL_Object_Account] ,1) = "9","9",
+			    LEFT('ICP - Summary'[GL_Object_Account] ,2) = "12","12"
+			)
+			
+			RETURN
+			IF(cond = BLANK(), "Other than 3,6,9,12 series", cond)
+		lineageTag: b8bdfdbe-f3b6-47cc-a3ea-bda68d3bd99b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Inter_Company_Oracle = ```
+			
+			IF(
+			    ISBLANK('ICP - Summary'[INTER_COMPANY])  || 
+			    'ICP - Summary'[INTER_COMPANY] = ""  ||
+			    'ICP - Summary'[INTER_COMPANY] = "00000" , "N", "Y")
+			
+			```
+		lineageTag: 1605c5ea-0a41-47e3-84a4-9dcdd9b70d9b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT
+		dataType: string
+		lineageTag: 7a95fca5-b828-4aeb-98ec-b2700b779d96
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'ICP - Summary' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="select * from PBI.V_Weekly_Indicator_Summary_Rolling_Years"])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
