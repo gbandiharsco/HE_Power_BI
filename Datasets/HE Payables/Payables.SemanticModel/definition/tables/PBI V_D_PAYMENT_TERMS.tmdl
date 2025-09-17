@@ -1,0 +1,43 @@
+table 'PBI V_D_PAYMENT_TERMS'
+	lineageTag: d06e2ee5-ba28-441b-9288-a2418331d51a
+
+	column Description
+		dataType: string
+		lineageTag: be9d0a33-b576-42ab-8b16-0d1badef8dbf
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Pay_Term
+		dataType: string
+		isHidden
+		lineageTag: 1c47190a-6e89-46e8-bc2c-0e22524c7e5b
+		summarizeBy: none
+		sourceColumn: Key_Pay_Term
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Name
+		dataType: string
+		lineageTag: 90dbb790-42e6-4f82-9c85-f196a8882c60
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_PAYMENT_TERMS' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_PAYMENT_TERMS = Source{[Schema="PBI",Item="V_D_PAYMENT_TERMS"]}[Data]
+				in
+				    PBI_V_D_PAYMENT_TERMS
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

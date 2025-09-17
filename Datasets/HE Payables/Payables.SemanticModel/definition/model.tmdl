@@ -1,0 +1,53 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.146.1026.0 (25.08)+fb98ab832373de81dccd5c01cd96306a48477556
+
+annotation PBI_QueryOrder = ["P_Server","P_Database","PBI V_F_AP_Invoice_Dist","PBI V_F_AP_INVOICE_PAYMENTS","PBI V_F_PURCHASE_GRNI","PBI V_D_GL_Account","PBI V_D_EMPLOYEE","PBI V_D_Finance_Location","PBI V_D_Inventory_Org","PBI V_D_OPERATING_UNIT","PBI V_D_PAYMENT_TERMS","PBI V_D_PRODUCT","PBI V_D_SUPPLIER","PBI V_D_USER","PBI V_F_AP_INVOICES","PBI V_DG_AP_INVOICES","PBI V_DG_AP_INVOICE_HOLDS_MAX","Date Range","PBI V_DG_PURCHASE_ORDER_LINES","PBI V_D_Date","DWH D_Security OU","DWH D_Security ORG","PBI V_DG_Expense_Audit","_Currency","PBI V_D_Status_P2P","PBI V_D_Types_P2P","PBI V_F_AP_Invoices_WAVG_Days","PBI V_D_BANK","PBI V_F_Open_PO","Table"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'PBI V_F_AP_Invoice_Dist'
+ref table 'PBI V_F_AP_INVOICE_PAYMENTS'
+ref table 'PBI V_F_PURCHASE_GRNI'
+ref table 'PBI V_D_GL_Account'
+ref table 'PBI V_D_EMPLOYEE'
+ref table 'PBI V_D_Finance_Location'
+ref table 'PBI V_D_Inventory_Org'
+ref table 'PBI V_D_OPERATING_UNIT'
+ref table 'PBI V_D_PAYMENT_TERMS'
+ref table 'PBI V_D_PRODUCT'
+ref table 'PBI V_D_SUPPLIER'
+ref table 'PBI V_D_USER'
+ref table 'PBI V_F_AP_INVOICES'
+ref table 'PBI V_DG_AP_INVOICES'
+ref table 'PBI V_DG_AP_INVOICE_HOLDS_MAX'
+ref table 'PBI V_DG_PURCHASE_ORDER_LINES'
+ref table 'PBI V_D_Date'
+ref table 'DWH D_Security OU'
+ref table 'DWH D_Security ORG'
+ref table _Currency
+ref table 'Allowed Days'
+ref table 'PBI V_DG_Expense_Audit'
+ref table 'PBI V_D_Status_P2P'
+ref table 'PBI V_D_Types_P2P'
+ref table '.Measures'
+ref table 'PBI V_F_AP_Invoices_WAVG_Days'
+ref table 'PBI V_D_BANK'
+ref table 'PBI V_F_Open_PO'
+ref table Parameter
+ref table 'Parameter 2'
+ref table Table
+
+ref role Admin
+ref role Viewer
+
+ref cultureInfo en-US
+

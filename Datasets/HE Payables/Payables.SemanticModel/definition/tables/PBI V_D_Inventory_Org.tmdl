@@ -1,0 +1,132 @@
+table 'PBI V_D_Inventory_Org'
+	lineageTag: f8f23750-336b-4ede-bcf4-50d12e3ac116
+
+	column 'Site Code Name'
+		dataType: string
+		lineageTag: 327a0011-6db8-41d6-9211-68b0e6a72763
+		summarizeBy: none
+		sourceColumn: Site Code Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Source
+		dataType: string
+		lineageTag: 0c34d32c-90bd-489c-86a5-6f4cc76a53d1
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site
+		dataType: string
+		isHidden
+		lineageTag: cebaa119-8ff9-4c77-b712-503a178dc4f7
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Division Code'
+		dataType: string
+		lineageTag: a4178f94-e9b2-4033-8127-bce48c678477
+		summarizeBy: none
+		sourceColumn: Division Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Division Name'
+		dataType: string
+		lineageTag: 0f8f27ff-76a5-4c4f-9300-91d9e3803793
+		summarizeBy: none
+		sourceColumn: Division Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region Code'
+		dataType: string
+		lineageTag: 52d1c00b-e964-4814-924c-4d4908a074ed
+		summarizeBy: none
+		sourceColumn: Region Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region Name'
+		dataType: string
+		lineageTag: ff2cbd28-0362-4826-ab07-82730e7e3ccc
+		summarizeBy: none
+		sourceColumn: Region Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country Code'
+		dataType: string
+		lineageTag: 847e6d1b-7d4d-4ffe-a0de-0940eaa478d7
+		summarizeBy: none
+		sourceColumn: Country Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country Name'
+		dataType: string
+		lineageTag: 2220b422-0f62-49e2-b1b0-81d7f2696346
+		summarizeBy: none
+		sourceColumn: Country Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site Code'
+		dataType: string
+		lineageTag: ae5b8558-e45f-4746-b432-45a03798279f
+		summarizeBy: none
+		sourceColumn: Site Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Site Name'
+		dataType: string
+		lineageTag: 543d7c41-66ea-4ecb-9217-cee346c683e6
+		summarizeBy: none
+		sourceColumn: Site Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsEnabled
+		dataType: string
+		lineageTag: 9ea619da-3737-47dc-8ce5-99647e614432
+		summarizeBy: none
+		sourceColumn: IsEnabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Process Enabled Flag'
+		dataType: string
+		lineageTag: 54de4175-0ab6-422d-a368-68514eb015e7
+		summarizeBy: none
+		sourceColumn: Process Enabled Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 2b1d034c-076b-4b40-9c4f-375e84a6c19d
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_Inventory_Org' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_Inventory_Org = Source{[Schema="PBI",Item="V_D_Inventory_Org"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_D_Inventory_Org,{{"SITE_CODE_NAME", "Site Code Name"}, {"SOURCE", "Source"}, {"Division_Code", "Division Code"}, {"Division_Name", "Division Name"}, {"Region_Code", "Region Code"}, {"Region_Name", "Region Name"}, {"Country_Code", "Country Code"}, {"Country_Name", "Country Name"}, {"Site_Code", "Site Code"}, {"Site_Name", "Site Name"}, {"Process_Enabled_Flag", "Process Enabled Flag"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,27 @@
+table _Currency
+	lineageTag: 7e97ad6f-790c-42e9-bbb7-43bb06d8ca51
+
+	measure CurrencyPrompt = if(HASONEVALUE('_Currency'[Currency]),VALUES('_Currency'[Currency]),"Local")
+		lineageTag: 7ada0861-ed84-4e26-9e79-16f0232c58fa
+
+	column Currency
+		dataType: string
+		lineageTag: 0ec1ec5f-adbc-42af-ab76-aa8d4800e4d7
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Currency = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8slPTsxRitWJVgoNdlGKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Currency = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Currency", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

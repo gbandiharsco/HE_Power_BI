@@ -1,0 +1,52 @@
+table 'PBI V_D_EMPLOYEE'
+	lineageTag: 51cadc03-0d8e-4ef6-a992-359fe33d3462
+
+	column KEY_Employee
+		dataType: string
+		isHidden
+		lineageTag: 04b4a8bf-7ea7-453d-b19d-288d29eef528
+		summarizeBy: none
+		sourceColumn: KEY_Employee
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Id'
+		dataType: string
+		lineageTag: fa310216-0a66-46f7-a92b-6a82d57db151
+		summarizeBy: none
+		sourceColumn: Employee Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full Name'
+		dataType: string
+		lineageTag: f8a2b890-b7ca-40e2-bf3b-355df7a6bca5
+		summarizeBy: none
+		sourceColumn: Full Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee Number'
+		dataType: string
+		lineageTag: 47dcf19c-2096-4d3b-81c6-ec5a72beb875
+		summarizeBy: none
+		sourceColumn: Employee Number
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_EMPLOYEE' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_EMPLOYEE = Source{[Schema="PBI",Item="V_D_EMPLOYEE"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_D_EMPLOYEE,{{"Employee_Number", "Employee Number"}, {"Full_Name", "Full Name"}, {"Employee_Id", "Employee Id"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

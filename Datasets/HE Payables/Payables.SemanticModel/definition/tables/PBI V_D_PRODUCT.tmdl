@@ -1,0 +1,124 @@
+table 'PBI V_D_PRODUCT'
+	lineageTag: 19b63448-a9a2-4d74-bbed-01bef25aa005
+
+	column 'Product Number Name'
+		dataType: string
+		lineageTag: dba213cf-9d7d-4eec-93d8-264b28a25f43
+		summarizeBy: none
+		sourceColumn: Product Number Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Product
+		dataType: string
+		isHidden
+		lineageTag: c43bcd71-57bc-4b36-a506-d141658c94ef
+		summarizeBy: none
+		sourceColumn: KEY_Product
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Number'
+		dataType: string
+		lineageTag: e7341570-413d-4070-af4c-721d7ad5946e
+		summarizeBy: none
+		sourceColumn: Product Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Name'
+		dataType: string
+		lineageTag: 2faf133e-a196-4312-91b0-2dc167e2fc88
+		summarizeBy: none
+		sourceColumn: Product Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'UNSPSC Segment'
+		dataType: string
+		lineageTag: e4700f62-699b-43d7-a683-b9e9ea0989eb
+		summarizeBy: none
+		sourceColumn: UNSPSC Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'UNSPSC Family'
+		dataType: string
+		lineageTag: bb9793f5-82ec-4121-bd76-0312f0dc5b4e
+		summarizeBy: none
+		sourceColumn: UNSPSC Family
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'UNSPSC Class'
+		dataType: string
+		lineageTag: 1421a655-da53-4d79-b789-d33f8a5c6e5a
+		summarizeBy: none
+		sourceColumn: UNSPSC Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'UNSPSC Commodity'
+		dataType: string
+		lineageTag: 24477393-db86-43a7-b818-34c1e1f823c9
+		summarizeBy: none
+		sourceColumn: UNSPSC Commodity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Inventory Item ID'
+		dataType: string
+		lineageTag: 427b4560-c362-48bc-9ad5-2a30a3bfb897
+		summarizeBy: none
+		sourceColumn: Inventory Item ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Primary UOM Code'
+		dataType: string
+		lineageTag: 778ae65a-7747-40ed-afaa-135c88326bae
+		summarizeBy: none
+		sourceColumn: Primary UOM Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Standard UOM Code'
+		dataType: string
+		lineageTag: f289de99-36af-41ac-828d-5aa99d6a181c
+		summarizeBy: none
+		sourceColumn: Standard UOM Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Flag'
+		dataType: string
+		lineageTag: 529121e3-27bf-44af-93ed-572c996ebbbb
+		summarizeBy: none
+		sourceColumn: Current Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 09919714-1dd5-4246-9cdc-768b37db1c73
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_PRODUCT' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_PRODUCT = Source{[Schema="PBI",Item="V_D_PRODUCT"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_D_PRODUCT,{{"PRODUCT_NUMBER_NAME", "Product Number Name"}, {"Product_Number", "Product Number"}, {"Product_Name", "Product Name"}, {"UNSPSC_Segment", "UNSPSC Segment"}, {"UNSPSC_Family", "UNSPSC Family"}, {"UNSPSC_Class", "UNSPSC Class"}, {"UNSPSC_Commodity", "UNSPSC Commodity"}, {"Inventory_Item_Id", "Inventory Item ID"}, {"Primary_UOM_Code", "Primary UOM Code"}, {"Standard_UOM_Code", "Standard UOM Code"}, {"Current_Flag", "Current Flag"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

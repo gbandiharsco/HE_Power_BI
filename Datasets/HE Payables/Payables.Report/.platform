@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Payables"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ee1131be-45d1-4439-9f5b-b0bb4290af45"
+  }
+}

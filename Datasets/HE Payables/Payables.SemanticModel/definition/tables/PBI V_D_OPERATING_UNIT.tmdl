@@ -1,0 +1,127 @@
+table 'PBI V_D_OPERATING_UNIT'
+	lineageTag: f39d94fd-3edb-4445-b62f-7e1744d37755
+
+	column Key_Operating_Unit
+		dataType: string
+		isHidden
+		lineageTag: 0a88e0e4-37b0-499a-b99d-694164482f9e
+		summarizeBy: none
+		sourceColumn: Key_Operating_Unit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating Unit'
+		dataType: double
+		lineageTag: afd59c72-6d97-40a1-91c2-820c963a989a
+		summarizeBy: sum
+		sourceColumn: Operating Unit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Operating Unit Name'
+		dataType: string
+		lineageTag: 9735b2ca-c26c-412d-b74c-5753dfdb016d
+		summarizeBy: none
+		sourceColumn: Operating Unit Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ST Address1'
+		dataType: string
+		lineageTag: 81539b4f-7ecd-4635-9bac-5f9fc705aa31
+		summarizeBy: none
+		sourceColumn: ST Address1
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'ST Address2'
+		dataType: string
+		lineageTag: 084757d1-b868-4552-b5f3-3fbbfabae45b
+		summarizeBy: none
+		sourceColumn: ST Address2
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 25a80779-d313-44d9-8f76-f3506ab2e97f
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column County
+		dataType: string
+		lineageTag: cb8a23bf-3246-47ab-98bc-620062b1923f
+		summarizeBy: none
+		sourceColumn: County
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Postal Code'
+		dataType: string
+		lineageTag: d3ab991c-68ff-4f96-b691-44e94fd8e294
+		summarizeBy: none
+		sourceColumn: Postal Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'State Code'
+		dataType: string
+		lineageTag: d9a5a586-f5d8-42a0-a6ee-4191bc43c963
+		summarizeBy: none
+		sourceColumn: State Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country Code'
+		dataType: string
+		lineageTag: 8ff546a6-354b-40f7-a3df-9daadfc80c93
+		summarizeBy: none
+		sourceColumn: Country Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Country Name'
+		dataType: string
+		lineageTag: 39966fde-832e-4f08-9896-3e831ad6f935
+		summarizeBy: none
+		sourceColumn: Country Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region Name'
+		dataType: string
+		lineageTag: 0559f387-5df5-4598-8de9-51f969345384
+		summarizeBy: none
+		sourceColumn: Region Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 296bd503-80cb-440c-868a-6bffc4c98693
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_OPERATING_UNIT' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_OPERATING_UNIT = Source{[Schema="PBI",Item="V_D_OPERATING_UNIT"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_D_OPERATING_UNIT,{{"Operating_Unit", "Operating Unit"}, {"Operating_Unit_Name", "Operating Unit Name"}, {"ST_Address1", "ST Address1"}, {"ST_Address2", "ST Address2"}, {"Postal_Code", "Postal Code"}, {"State_Code", "State Code"}, {"Country_Code", "Country Code"}, {"Country_Name", "Country Name"}, {"Region_Name", "Region Name"}, {"Last_Refresh_Date", "Last Refresh Date"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Last Refresh Date"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
