@@ -1,0 +1,23 @@
+name: Block Non-Test PRs to Main
+
+on:
+  pull_request:
+    branches:
+      - main
+      - test
+
+jobs:
+  validate-source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Block PRs to main unless from test
+        if: github.base_ref == 'main' && github.head_ref != 'test'
+        run: |
+          echo "Only pull requests from 'test' branch are allowed to merge into 'main'."
+          exit 1
+
+      - name: Block PRs to test unless from development
+        if: github.base_ref == 'test' && github.head_ref != 'development'
+        run: |
+          echo "Only pull requests from 'development' branch are allowed to merge into 'test'."
+          exit 1
