@@ -1,0 +1,467 @@
+table 'PBI V_F_AP_Invoice_Dist'
+	lineageTag: 0e2de09b-6f3f-4106-8a42-a91692984398
+
+	column 'Vat Code'
+		dataType: string
+		lineageTag: f617c07f-554b-4a3c-82ea-c944fe723b49
+		summarizeBy: none
+		sourceColumn: Vat Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Voucher Number'
+		dataType: string
+		lineageTag: 7770e85b-4d2c-414e-a334-f02a53e798e0
+		summarizeBy: none
+		sourceColumn: Voucher Number
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 741fcdcb-5651-4b8c-90f3-2de8d2b3222c
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dist Amount'
+		dataType: double
+		lineageTag: 40a36d9b-b7a5-4306-8a76-b4b1e6dd0f8f
+		summarizeBy: sum
+		sourceColumn: Dist Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'invoice Line Number'
+		dataType: string
+		lineageTag: 42960608-1832-4e3a-9c3c-d2cf6dccee22
+		summarizeBy: none
+		sourceColumn: invoice Line Number
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Dist Amount USD'
+		dataType: double
+		lineageTag: 837fd0a2-2731-4c62-a24a-f89f78fec2a8
+		summarizeBy: sum
+		sourceColumn: Invoice Dist Amount USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'invoice Number'
+		dataType: string
+		lineageTag: ea5e9c1b-2923-4951-b721-8609386fa7a2
+		summarizeBy: none
+		sourceColumn: invoice Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO Line Number'
+		dataType: string
+		lineageTag: 7c6938cd-5fb1-4ba8-8e6e-b52a4030b326
+		summarizeBy: none
+		sourceColumn: PO Line Number
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO Number'
+		dataType: string
+		lineageTag: 9c6351c0-9185-4359-98e2-bffebd815c73
+		summarizeBy: none
+		sourceColumn: PO Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_ORG
+		dataType: string
+		isHidden
+		lineageTag: e57fe92f-3220-441d-8df0-ef72b0cfa6a0
+		summarizeBy: none
+		sourceColumn: KEY_ORG
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_SUPPLIER_ACCOUNT
+		dataType: string
+		isHidden
+		lineageTag: 184fc5c5-5f3c-413f-b836-f3dc2373ed00
+		summarizeBy: none
+		sourceColumn: KEY_SUPPLIER_ACCOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PRODUCT
+		dataType: string
+		isHidden
+		lineageTag: f29db252-7832-4e67-93c9-599414f9f72e
+		summarizeBy: none
+		sourceColumn: KEY_PRODUCT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT
+		dataType: string
+		isHidden
+		lineageTag: 820b8167-0eeb-44b6-a97f-ff6232b83072
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_FINANCE_LOCATION
+		dataType: string
+		isHidden
+		lineageTag: 7e4f55fe-be14-4881-bb6e-90d98013d43b
+		summarizeBy: none
+		sourceColumn: KEY_FINANCE_LOCATION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_DIST_TYPE
+		dataType: string
+		isHidden
+		lineageTag: c11bc314-7055-488f-ba17-ed348b98cfbf
+		summarizeBy: none
+		sourceColumn: KEY_INV_DIST_TYPE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_DIST_CREATED_BY
+		dataType: string
+		isHidden
+		lineageTag: fb010934-3ca2-4306-85f6-caff7592794a
+		summarizeBy: none
+		sourceColumn: KEY_INV_DIST_CREATED_BY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_DIST_LAST_UPD_BY
+		dataType: string
+		isHidden
+		lineageTag: 594239c9-749c-4986-965f-86f9bab48dd7
+		summarizeBy: none
+		sourceColumn: KEY_INV_DIST_LAST_UPD_BY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_DIST_CREATED_DT
+		dataType: string
+		isHidden
+		lineageTag: 38fac128-0fe1-411b-a634-3c91971400a5
+		summarizeBy: none
+		sourceColumn: KEY_INV_DIST_CREATED_DT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_DIST_LAST_UPD_DT
+		dataType: string
+		isHidden
+		lineageTag: 5a6ec42f-6fc3-4548-96c1-cfef398ee7da
+		summarizeBy: none
+		sourceColumn: KEY_INV_DIST_LAST_UPD_DT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_DIST_ACCOUNTING_DT
+		dataType: string
+		lineageTag: ab5e55d2-ef8b-4252-bc25-621a45d982bf
+		summarizeBy: none
+		sourceColumn: KEY_INV_DIST_ACCOUNTING_DT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_AFI_NUMBER
+		dataType: string
+		isHidden
+		lineageTag: ba179045-6d44-4360-a9b2-d1dfb6c57542
+		summarizeBy: none
+		sourceColumn: KEY_AFI_NUMBER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_SITE
+		dataType: string
+		isHidden
+		lineageTag: 4e4eec26-8cdc-4977-abdf-0dea805e92a8
+		summarizeBy: none
+		sourceColumn: KEY_SITE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INVOICE
+		dataType: string
+		isHidden
+		lineageTag: 91575c3c-4b1d-491a-8db7-8b8d7f0873e4
+		summarizeBy: none
+		sourceColumn: KEY_INVOICE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INVOICE_DIST
+		dataType: string
+		isHidden
+		lineageTag: 9748c36d-f1f3-4eb9-9ff4-df5e09f56eb4
+		summarizeBy: none
+		sourceColumn: KEY_INVOICE_DIST
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PO_DIST
+		dataType: string
+		isHidden
+		lineageTag: 5fc0cd6b-1a51-4b18-adbe-a21adfd2527e
+		summarizeBy: none
+		sourceColumn: KEY_PO_DIST
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PO_LINES
+		dataType: string
+		isHidden
+		lineageTag: b068c340-4749-4996-92dd-061008c2feec
+		summarizeBy: none
+		sourceColumn: KEY_PO_LINES
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_STATUS
+		dataType: string
+		isHidden
+		lineageTag: 5f9395eb-f545-43d5-8e71-eb8337af7ebb
+		summarizeBy: none
+		sourceColumn: KEY_INV_STATUS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Desc'
+		dataType: string
+		lineageTag: 7e17cce0-f16c-4cbc-ab70-208e4ec7cd53
+		summarizeBy: none
+		sourceColumn: Status Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Status Code'
+		dataType: string
+		lineageTag: 419603de-be4e-4216-9444-c36446ed60f1
+		summarizeBy: none
+		sourceColumn: Invoice Status Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PAYMENT_TERMS
+		dataType: string
+		isHidden
+		lineageTag: bedd5c6a-ff44-4726-aaee-34b870162493
+		summarizeBy: none
+		sourceColumn: KEY_PAYMENT_TERMS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column AFI
+		dataType: string
+		lineageTag: 30fdfaa8-b9ff-404b-91b7-87b635bdce1e
+		summarizeBy: none
+		sourceColumn: AFI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Invoice_Count
+		dataType: string
+		lineageTag: 6bf81282-3c94-42ec-944f-12b3907081b0
+		summarizeBy: none
+		sourceColumn: Invoice_Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column Inv_with_PO
+		dataType: string
+		lineageTag: 1727bea5-bace-4714-86d8-cfa20d46521b
+		summarizeBy: none
+		sourceColumn: Inv_with_PO
+
+		annotation SummarizationSetBy = Automatic
+
+	column Invoice_created_by = LOOKUPVALUE('PBI V_D_USER'[FullName],'PBI V_D_USER'[Key_User],'PBI V_F_AP_Invoice_Dist'[KEY_INV_DIST_CREATED_BY])
+		lineageTag: 05ceb719-f4ec-4d8c-b12d-f268e7824d9d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Invoice_type_lookup_code = LOOKUPVALUE('PBI V_DG_AP_INVOICES'[INVOICE_TYPE_LOOKUP_CODE],'PBI V_DG_AP_INVOICES'[KEY_INVOICE],'PBI V_F_AP_Invoice_Dist'[KEY_INVOICE])
+		lineageTag: bd548ca7-b205-4207-9600-537458a9fef8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_invoices = ```
+			'PBI V_F_AP_Invoice_Dist'[invoice Number] & 'PBI V_F_AP_Invoice_Dist'[Voucher Number]
+			
+			```
+		lineageTag: 74f46faa-f8ae-4b9f-a3e4-2cba113202af
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendor_Type = LOOKUPVALUE('PBI V_D_SUPPLIER'[VENDOR_TYPE],'PBI V_D_SUPPLIER'[Key_Supplier],'PBI V_F_AP_Invoice_Dist'[KEY_SUPPLIER_ACCOUNT])
+		lineageTag: 05ef3568-c10f-415b-8bc8-29bb5c1e7ef9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT_LBLTY
+		dataType: string
+		lineageTag: 42983f51-da11-48ca-bc75-10e83a6d533c
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT_LBLTY
+
+		annotation SummarizationSetBy = Automatic
+
+	column iExpense_Audited_By = LOOKUPVALUE('PBI V_DG_Expense_Audit'[FULL_NAME],'PBI V_DG_Expense_Audit'[key_invoice],'PBI V_F_AP_Invoice_Dist'[KEY_INVOICE])
+		lineageTag: 5a8c5745-3d36-4c40-99de-354603748b1b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column FTE =
+			SWITCH(
+			    'PBI V_F_AP_Invoice_Dist'[iExpense_Audited_By],BLANK(),'PBI V_F_AP_Invoice_Dist'[Invoice_created_by],'PBI V_F_AP_Invoice_Dist'[iExpense_Audited_By])
+		lineageTag: 7793ce15-4046-4021-9fd2-a05dd4597e8a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column INV_DIST_NUM
+		dataType: double
+		lineageTag: 98ab737b-6894-4d74-88bd-cc946d6a9124
+		summarizeBy: sum
+		sourceColumn: INV_DIST_NUM
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Charge Account' = LOOKUPVALUE('PBI V_D_GL_Account'[GL Segment 1 to 8],'PBI V_D_GL_Account'[KEY_GL_ACCOUNT],'PBI V_F_AP_Invoice_Dist'[KEY_GL_ACCOUNT])
+		lineageTag: 2a36ab54-f1f0-4b3b-8c08-263e6c9b6e6b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column UNIT_MEAS_LOOKUP_CODE
+		dataType: string
+		lineageTag: 355899ab-8f9b-44f9-a7a0-057b2529bf76
+		summarizeBy: none
+		sourceColumn: UNIT_MEAS_LOOKUP_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DIST_QTY_INVOICED
+		dataType: double
+		lineageTag: 8b2b0af1-1691-4133-8454-47a7bc0c9bbb
+		summarizeBy: sum
+		sourceColumn: DIST_QTY_INVOICED
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Recipient_Location
+		dataType: string
+		lineageTag: 546e263f-d440-4365-8097-6403e44c6165
+		summarizeBy: none
+		sourceColumn: Recipient_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Receipt Location' =
+			
+			var LKP = LOOKUPVALUE('PBI V_D_OPERATING_UNIT'[Operating Unit Name],'PBI V_D_OPERATING_UNIT'[Key_Operating_Unit],'PBI V_F_AP_Invoice_Dist'[KEY_ORG])
+			var RL = IF('PBI V_F_AP_Invoice_Dist'[Recipient_Location] = "",LKP,'PBI V_F_AP_Invoice_Dist'[Recipient_Location])
+			RETURN RL
+		lineageTag: 663790a5-8610-48a1-82f5-28567bf86229
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column site = LOOKUPVALUE('PBI V_D_Inventory_Org'[Site Code Name],'PBI V_D_Inventory_Org'[KEY_Site],'PBI V_F_AP_Invoice_Dist'[KEY_SITE])
+		lineageTag: 4ad54309-b382-46a9-849f-1ba89bb035d3
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Blank = " "
+		lineageTag: 95df843b-f3d4-4d69-b050-8469443fd045
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mex_UUID
+		dataType: string
+		lineageTag: 4f013edc-bfe5-40ba-b7ab-40ca91954d2b
+		summarizeBy: none
+		sourceColumn: Mex_UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_F_AP_Invoice_Dist' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database, [Query="select * from [PBI].[V_F_AP_Invoice_Dist]"]),
+				    #"Renamed Columns" = Table.RenameColumns(Source,{{"VAT_CODE", "Vat Code"}, {"VOUCHER_NUMBER", "Voucher Number"}, {"DESCRIPTION", "Description"}, {"DIST_AMOUNT", "Dist Amount"}, {"INV_LINE_NUM", "invoice Line Number"}, {"INVOICE_DIST_AMOUNT_USD", "Invoice Dist Amount USD"}, {"INVOICE_NUM", "invoice Number"}, {"PO_LINE_NUM", "PO Line Number"}, {"PO_NUM", "PO Number"}, {"STATUS_DESC", "Status Desc"}, {"Invoice_Status_Code", "Invoice Status Code"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

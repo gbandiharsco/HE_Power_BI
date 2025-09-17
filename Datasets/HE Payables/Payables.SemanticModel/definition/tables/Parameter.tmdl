@@ -1,0 +1,54 @@
+table Parameter
+	lineageTag: 5ee9d5c1-c2dd-4a4f-a6de-7875bd8fe1b5
+
+	column Parameter
+		lineageTag: 82ba9c1b-2901-42fc-8a99-2a4b022cbcce
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 6f2481b9-1686-47be-9d01-bde0f2ad86a1
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: c45c369d-2415-4e45-bde8-f135f76f40e0
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parameter = calculated
+		mode: import
+		source =
+				{
+				    ("AFI #", NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[AFI_Number]), 0),
+				    ("PO #", NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[PO NUMBER]), 1),
+				    ("Site", NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[site]), 2),
+				    ("Requestor", NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[Requestor]), 3),
+				    ("Accountable Flag",NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[Accounted_Flag]),4),
+				    ("MEX UUID",NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[Mex_UUID]),5),
+				    ("Payment Creation Date", NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[Paid Date]),6),
+				    ("", NAMEOF('PBI V_F_AP_INVOICE_PAYMENTS'[Blank]), 7)
+				}
+
+	annotation PBI_Id = 75c52249f6234a208ce8296cdc7407d4
+

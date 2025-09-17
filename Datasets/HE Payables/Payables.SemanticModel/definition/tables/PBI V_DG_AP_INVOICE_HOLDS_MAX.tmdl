@@ -1,0 +1,82 @@
+table 'PBI V_DG_AP_INVOICE_HOLDS_MAX'
+	lineageTag: 11cd4272-8c87-4d1a-b556-e22188763bf2
+
+	column KEY_INVOICE
+		dataType: string
+		isHidden
+		lineageTag: f53190a6-0077-4097-aecd-098fa5df7382
+		summarizeBy: none
+		sourceColumn: KEY_INVOICE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Reason'
+		dataType: string
+		lineageTag: 90f0349e-e3f1-4a6c-9d3d-f89294467c9e
+		summarizeBy: none
+		sourceColumn: Release Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 5afb29e8-63cc-4c98-8318-a9e27df6a673
+		summarizeBy: none
+		sourceColumn: Release Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Relase Lookup Code'
+		dataType: string
+		lineageTag: 869a519f-500b-4679-8ae4-f4115afde616
+		summarizeBy: none
+		sourceColumn: Relase Lookup Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hold Reason'
+		dataType: string
+		lineageTag: c62573ca-d9ba-446a-99e8-9a7b897736f0
+		summarizeBy: none
+		sourceColumn: Hold Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hold Lookup code'
+		dataType: string
+		lineageTag: fa759549-e960-4c71-af2b-553483af5576
+		summarizeBy: none
+		sourceColumn: Hold Lookup code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hold Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 40e9ad63-f04d-401c-bc10-f89c2de2770c
+		summarizeBy: none
+		sourceColumn: Hold Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition 'PBI V_DG_AP_INVOICE_HOLDS_MAX' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_DG_AP_INVOICE_HOLDS_MAX = Source{[Schema="PBI",Item="V_DG_AP_INVOICE_HOLDS_MAX"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_DG_AP_INVOICE_HOLDS_MAX,{{"HOLD_DATE", "Hold Date"}, {"HOLD_LOOKUP_CODE", "Hold Lookup code"}, {"HOLD_REASON", "Hold Reason"}, {"Release_Date", "Release Date"}, {"RELEASE_LOOKUP_CODE", "Relase Lookup Code"}, {"RELEASE_REASON", "Release Reason"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

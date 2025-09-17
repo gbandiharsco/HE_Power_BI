@@ -1,0 +1,21 @@
+expression P_Server = "HSCUSEA2SQLD001.database.windows.net" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {"HSCUSEA2SQLD001.database.windows.net", "HSCUSEA2SQLQ001.database.windows.net", "HSCUSEA2SQLP001.database.windows.net"}]
+	lineageTag: 69a0bf2f-7fce-456e-9a21-4bd25e46d3b5
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression P_Database = "DWHDEV1" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Text", List = {"DWHDEV1", "DWHTST1", "DWHPRD1"}]
+	lineageTag: 73ae71fb-f1d7-491c-bb8e-b655198388cc
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression 'Date Range' = #date(2021, 1, 1) meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = "Date"]
+	lineageTag: 81467ecc-4f2a-48fc-9a7a-859f092752a0
+
+	annotation PBI_ResultType = Date
+
+	annotation PBI_NavigationStepName = Navigation
+

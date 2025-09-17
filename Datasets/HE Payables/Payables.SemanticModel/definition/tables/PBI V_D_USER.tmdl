@@ -1,0 +1,90 @@
+table 'PBI V_D_USER'
+	lineageTag: 950cdf57-880f-498f-bc9c-a4d3f5c8b4a6
+
+	column Key_User
+		dataType: string
+		isHidden
+		lineageTag: 936a3e32-6ee5-4256-8853-251d8f983442
+		summarizeBy: none
+		sourceColumn: Key_User
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Full Name'
+		dataType: string
+		lineageTag: a4eeeddd-99e2-4c18-a6ed-d54ea9f7b1c1
+		summarizeBy: none
+		sourceColumn: Full Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee ID'
+		dataType: string
+		lineageTag: f2c599b0-fb29-446d-ad01-6b8543158e52
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Id'
+		dataType: string
+		lineageTag: 5c91822e-dafb-48b3-b568-f1793b20042f
+		summarizeBy: none
+		sourceColumn: User Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Name'
+		dataType: string
+		lineageTag: 599b0cc7-114c-4f89-9829-c360aa08da82
+		summarizeBy: none
+		sourceColumn: User Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'First Name'
+		dataType: string
+		lineageTag: a407f10a-b094-4553-a77e-e5deea2f6de3
+		summarizeBy: none
+		sourceColumn: First Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Name'
+		dataType: string
+		lineageTag: 738055b4-7c2d-4f4e-b245-1c5562f70cdf
+		summarizeBy: none
+		sourceColumn: Last Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Email Address'
+		dataType: string
+		lineageTag: 1d1ce371-0b81-4717-85f0-d9d15d809096
+		summarizeBy: none
+		sourceColumn: Email Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column FullName = IF('PBI V_D_USER'[Full Name] = "",'PBI V_D_USER'[User Id],'PBI V_D_USER'[Full Name])
+		lineageTag: b0548e65-4124-47c6-98cd-6a44a21324e4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_USER' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_USER = Source{[Schema="PBI",Item="V_D_USER"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_D_USER,{{"Email_Address", "Email Address"}, {"Employee_ID", "Employee ID"}, {"Full_Name", "Full Name"}, {"User_Id", "User Id"}, {"User_Name", "User Name"}, {"First_Name", "First Name"}, {"Last_Name", "Last Name"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

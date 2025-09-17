@@ -1,0 +1,148 @@
+relationship 24d830e0-143e-4df1-a90c-4bae6e90060d
+	fromColumn: 'PBI V_F_PURCHASE_GRNI'.KEY_BUYER
+	toColumn: 'PBI V_D_EMPLOYEE'.KEY_Employee
+
+relationship f22f752d-9950-496b-8b08-a13d0b76817a
+	fromColumn: 'PBI V_F_PURCHASE_GRNI'.KEY_GL_ACCOUNT
+	toColumn: 'PBI V_D_GL_Account'.KEY_GL_ACCOUNT
+
+relationship ecdd5d69-331d-458e-985a-e58831e825e8
+	fromColumn: 'PBI V_F_PURCHASE_GRNI'.KEY_SUPPLIER
+	toColumn: 'PBI V_D_SUPPLIER'.Key_Supplier
+
+relationship f73ba325-8a92-4241-b4d2-cdc72354aa85
+	fromColumn: 'PBI V_F_PURCHASE_GRNI'.KEY_FINANCE_LOCATION
+	toColumn: 'PBI V_D_Finance_Location'.KEY_Finance_Location
+
+relationship 35484eae-dc21-48db-b07b-07142dd82f4e
+	fromColumn: 'PBI V_F_PURCHASE_GRNI'.KEY_INT_ORG
+	toColumn: 'PBI V_D_OPERATING_UNIT'.Key_Operating_Unit
+
+relationship a52273d3-0198-4421-9e8e-d5c4ea0ecc11
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_SUPPLIER
+	toColumn: 'PBI V_D_SUPPLIER'.Key_Supplier
+
+relationship dae6aa40-e31a-4d5f-92e6-f9b72d263020
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_INT_ORG
+	toColumn: 'PBI V_D_OPERATING_UNIT'.Key_Operating_Unit
+
+relationship 8c61fbab-5668-4a4a-86ad-5fe607116308
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_PAY_TERM
+	toColumn: 'PBI V_D_PAYMENT_TERMS'.Key_Pay_Term
+
+relationship 3cf4bb6b-b259-4a0e-be20-92d1d090cc23
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_PAYMENT_LASTUPD_BY
+	toColumn: 'PBI V_D_USER'.Key_User
+
+relationship 8b4d9a4e-0d01-4600-acd2-15fc28593133
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_GL_ACCOUNT
+	toColumn: 'PBI V_D_GL_Account'.KEY_GL_ACCOUNT
+
+relationship 64b8be94-9e3f-4b8f-86fd-9300ff2b3767
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_FINANCE_LOCATION
+	toColumn: 'PBI V_D_Finance_Location'.KEY_Finance_Location
+
+relationship 9bba6d03-fae3-4aef-a2b0-8f5a6321b750
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_INVOICE
+	toColumn: 'PBI V_DG_AP_INVOICES'.KEY_INVOICE
+
+relationship ca5525d5-7601-4ae6-8aed-73c316a79af3
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_SUPPLIER_ACCOUNT
+	toColumn: 'PBI V_D_SUPPLIER'.Key_Supplier
+
+relationship 6f9aefe3-42f8-4fe1-9edd-d5d60435e15d
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_INVOICE
+	toColumn: 'PBI V_DG_AP_INVOICES'.KEY_INVOICE
+
+relationship cdefa3c3-7ea5-4efc-8072-fd241d9d2a6b
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_ORG
+	toColumn: 'PBI V_D_OPERATING_UNIT'.Key_Operating_Unit
+
+relationship 98e2ef15-7528-4956-b7c8-e73485f38e39
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_PRODUCT
+	toColumn: 'PBI V_D_PRODUCT'.KEY_Product
+
+relationship e0f1062b-8f8a-4af9-87f7-bb30bdc81a51
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_INV_DIST_CREATED_BY
+	toColumn: 'PBI V_D_USER'.Key_User
+
+relationship c0bcf173-057a-4cf6-ba38-7c6d1785fae4
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_FINANCE_LOCATION
+	toColumn: 'PBI V_D_Finance_Location'.KEY_Finance_Location
+
+relationship 4bacd92f-0688-485c-83a4-f9321a0297d4
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_PAYMENT_TERMS
+	toColumn: 'PBI V_D_PAYMENT_TERMS'.Key_Pay_Term
+
+relationship 59417522-1fae-465c-b152-3019ab8864b0
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_PO_DIST
+	toColumn: 'PBI V_DG_PURCHASE_ORDER_LINES'.KEY_PO_DIST
+
+relationship 2ddcf7ff-cd54-4894-94be-899e8aaa951a
+	fromColumn: 'PBI V_F_PURCHASE_GRNI'.'Last Receipt Date'
+	toColumn: 'PBI V_D_Date'.FullDate
+
+relationship e1df42e7-f5c7-4a96-bb1f-b2a5614035f8
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.'Due Date'
+	toColumn: 'PBI V_D_Date'.FullDate
+
+relationship 3d04144b-225d-42d4-9850-4170dc4fef7e
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: 'DWH D_Security ORG'.VALUE
+	toColumn: 'PBI V_D_Inventory_Org'.KEY_Site
+
+relationship 15b4441b-53ec-4b32-a074-4535a11bdf25
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: 'DWH D_Security OU'.VALUE
+	toColumn: 'PBI V_D_OPERATING_UNIT'.Key_Operating_Unit
+
+relationship 8dc1bdc4-6847-452e-a92e-505baff3c594
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_GL_ACCOUNT
+	toColumn: 'PBI V_D_GL_Account'.KEY_GL_ACCOUNT
+
+relationship c7ceed02-acd6-4903-b753-68e667ee0eb8
+	fromColumn: 'PBI V_F_PURCHASE_GRNI'.KEY_BUYER
+	toColumn: 'PBI V_D_USER'.Key_User
+
+relationship 513427e2-2fdb-46c8-83d4-82da1643ff50
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_INVOICE
+	toColumn: 'PBI V_DG_Expense_Audit'.key_invoice
+
+relationship 52a12b2d-ff9d-4555-b9b8-300dbdc1d579
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_INV_STATUS
+	toColumn: 'PBI V_D_Status_P2P'.KEY_STATUS
+
+relationship af1164ac-439e-4148-84f0-8ad1a19377dd
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.KEY_STATUS
+	toColumn: 'PBI V_D_Status_P2P'.KEY_STATUS
+
+relationship 6a3988f0-f765-4d86-90ee-94553cfb292f
+	fromColumn: 'PBI V_F_AP_Invoice_Dist'.KEY_INV_DIST_TYPE
+	toColumn: 'PBI V_D_Types_P2P'.Key_Type
+
+relationship ca4d9098-2a81-d240-7e46-15ee08b8b27b
+	fromColumn: 'PBI V_F_AP_Invoices_WAVG_Days'.Key_Pay_Term
+	toColumn: 'PBI V_D_PAYMENT_TERMS'.Key_Pay_Term
+
+relationship c9584cee-9458-d6e1-d5a9-e9b5579f4927
+	fromColumn: 'PBI V_F_AP_Invoices_WAVG_Days'.KEY_Int_Org
+	toColumn: 'PBI V_D_OPERATING_UNIT'.Key_Operating_Unit
+
+relationship fe2c801a-42c6-b5d3-fdab-b38fc009417c
+	fromColumn: 'PBI V_F_AP_Invoices_WAVG_Days'.KEY_Supplier_Account
+	toColumn: 'PBI V_D_SUPPLIER'.Key_Supplier
+
+relationship d02ad95e-6e81-5e03-4e90-7a6732e39af1
+	fromColumn: 'PBI V_F_AP_INVOICE_PAYMENTS'.Key_External_Bank
+	toColumn: 'PBI V_D_BANK'.KEY_BANK
+
+relationship d95b1f00-d902-6461-c2be-bf28dc769586
+	fromColumn: 'PBI V_F_Open_PO'.key_site
+	toColumn: 'PBI V_D_Inventory_Org'.KEY_Site
+
+relationship AutoDetected_570c56e6-b69c-457d-a501-a38e7bb418fa
+	fromColumn: 'PBI V_F_Open_PO'.key_product
+	toColumn: 'PBI V_D_PRODUCT'.KEY_Product
+

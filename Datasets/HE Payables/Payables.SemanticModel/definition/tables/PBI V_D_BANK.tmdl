@@ -1,0 +1,62 @@
+table 'PBI V_D_BANK'
+	lineageTag: 7a6fb5dc-180b-4719-8db8-7dd5279c643a
+
+	column KEY_BANK
+		dataType: string
+		lineageTag: 6b1d4457-7fdd-4cd5-b266-6e797191ba23
+		summarizeBy: none
+		sourceColumn: KEY_BANK
+
+		annotation SummarizationSetBy = Automatic
+
+	column BANK_NAME
+		dataType: string
+		lineageTag: 4f198e54-305b-4b9d-84c9-e81d9ab42328
+		summarizeBy: none
+		sourceColumn: BANK_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column BANK_NUMBER
+		dataType: string
+		lineageTag: 8aaec701-99dc-44ec-959e-1a741ca27927
+		summarizeBy: none
+		sourceColumn: BANK_NUMBER
+
+		annotation SummarizationSetBy = Automatic
+
+	column BRANCH_NUMBER
+		dataType: string
+		lineageTag: 7f57f402-9a65-43cc-b1fc-52b293e5489b
+		summarizeBy: none
+		sourceColumn: BRANCH_NUMBER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACCOUNT_NUMBER
+		dataType: string
+		lineageTag: 8ffe914c-f7e4-4d93-8f02-921553dede02
+		summarizeBy: none
+		sourceColumn: ACCOUNT_NUMBER
+
+		annotation SummarizationSetBy = Automatic
+
+	column check_digits
+		dataType: string
+		lineageTag: ab560243-1ad8-4ce5-94cd-7a8bc7d3d05b
+		summarizeBy: none
+		sourceColumn: check_digits
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_BANK' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_BANK = Source{[Schema="PBI",Item="V_D_BANK"]}[Data]
+				in
+				    PBI_V_D_BANK
+
+	annotation PBI_ResultType = Table
+

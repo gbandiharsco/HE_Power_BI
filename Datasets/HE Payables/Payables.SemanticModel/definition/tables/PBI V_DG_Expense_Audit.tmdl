@@ -1,0 +1,73 @@
+table 'PBI V_DG_Expense_Audit'
+	lineageTag: 4d840a84-f55a-4f4f-9d41-0a33fc6eafa7
+
+	column EXPENSE_INVOICE_NUM
+		dataType: string
+		lineageTag: e1b5c063-3e27-406e-bf41-8e9ed775b6c1
+		summarizeBy: none
+		sourceColumn: EXPENSE_INVOICE_NUM
+
+		annotation SummarizationSetBy = Automatic
+
+	column LAST_AUDITED_BY
+		dataType: string
+		lineageTag: 8a7e79fc-0fb6-4b94-98a6-5e86f2b4d34f
+		summarizeBy: none
+		sourceColumn: LAST_AUDITED_BY
+
+		annotation SummarizationSetBy = Automatic
+
+	column FIRST_NAME
+		dataType: string
+		lineageTag: 10da6bf4-3789-482f-b14f-98ecddf6f59f
+		summarizeBy: none
+		sourceColumn: FIRST_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LAST_NAME
+		dataType: string
+		lineageTag: 6786541b-6a63-4a79-8c65-a43f8126d41c
+		summarizeBy: none
+		sourceColumn: LAST_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column FULL_NAME
+		dataType: string
+		lineageTag: 2d96b30b-d7fe-41bf-a23f-7e4f9ced187c
+		summarizeBy: none
+		sourceColumn: FULL_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column key_user
+		dataType: string
+		lineageTag: 29d5e149-8784-4159-85cf-e86fb04505e5
+		summarizeBy: none
+		sourceColumn: key_user
+
+		annotation SummarizationSetBy = Automatic
+
+	column key_invoice
+		dataType: string
+		lineageTag: 30c79cf1-18fd-4c16-a8e9-a38f232c8d0b
+		summarizeBy: none
+		sourceColumn: key_invoice
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_DG_Expense_Audit' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_PAYMENT_TERMS = Source{[Schema="PBI",Item="V_Audit_Expense_F"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(PBI_V_D_PAYMENT_TERMS, each ([key_invoice] <> "~MissingKey~"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+
