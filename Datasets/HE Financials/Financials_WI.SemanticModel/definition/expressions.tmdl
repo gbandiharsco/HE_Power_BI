@@ -1,0 +1,28 @@
+expression P_ServerName = "hscusea2sqlQ001.database.windows.net" meta [IsParameterQuery=true, List={"hscusea2sqlD001.database.windows.net", "hscusea2sqlQ001.database.windows.net", "hscusea2sqlP001.database.windows.net"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: e7493c53-635d-4475-8989-94dff7c21c1c
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression P_DatabaseName = "DWHTST1" meta [IsParameterQuery=true, List={"DWHDEV1", "DWHTST1", "DWHPRD1"}, DefaultValue=..., Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b3cc0b71-3681-4f06-a7f4-0d0cf0a0258a
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression RangeStart = #datetime(2023, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 5765d895-fb5f-4dec-9ffe-545a1ad07b44
+
+	annotation PBI_ResultType = DateTime
+
+	annotation PBI_NavigationStepName = Navigation
+
+expression RangeEnd = #datetime(2026, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 006cf52e-4373-4bab-a7af-2ccef63029b5
+
+	annotation PBI_ResultType = DateTime
+
+	annotation PBI_NavigationStepName = Navigation
+

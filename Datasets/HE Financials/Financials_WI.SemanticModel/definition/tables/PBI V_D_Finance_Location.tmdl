@@ -1,0 +1,126 @@
+table 'PBI V_D_Finance_Location'
+	lineageTag: f2701187-2b8f-46f6-b431-348bae898979
+
+	column KEY_Finance_Location
+		dataType: string
+		lineageTag: d75cb65e-b387-4ed1-ad22-10792916c41e
+		summarizeBy: none
+		sourceColumn: KEY_Finance_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division_Code
+		dataType: string
+		lineageTag: e7b0ee98-a115-4731-b537-396875e4c6ac
+		summarizeBy: none
+		sourceColumn: Division_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division_Name
+		dataType: string
+		lineageTag: efb716d2-e7f0-491b-a012-6d34886d42f3
+		summarizeBy: none
+		sourceColumn: Division_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_Code
+		dataType: string
+		lineageTag: d22051bd-7461-48d6-b0e7-12bbb52bffc1
+		summarizeBy: none
+		sourceColumn: Region_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_Name
+		dataType: string
+		lineageTag: ec3d0fb2-5dbf-419a-adb0-815ff8c001be
+		summarizeBy: none
+		sourceColumn: Region_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Code
+		dataType: string
+		lineageTag: b9c7e37c-68f7-4cea-9787-2c1a9d169f07
+		summarizeBy: none
+		sourceColumn: Country_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Name
+		dataType: string
+		lineageTag: bb4c0ea9-d49f-4e77-8d1e-677218d1d8ad
+		summarizeBy: none
+		sourceColumn: Country_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Entity_Code
+		dataType: string
+		lineageTag: b318db10-265c-4fdf-a225-b94daf51405e
+		summarizeBy: none
+		sourceColumn: Entity_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Entity_Name
+		dataType: string
+		lineageTag: 6c078276-44c9-49fe-8e27-f5320355ae6c
+		summarizeBy: none
+		sourceColumn: Entity_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Finance_Location_Code
+		dataType: string
+		lineageTag: ae252f94-33d8-4f28-8bad-cce7c0ca00f4
+		summarizeBy: none
+		sourceColumn: Finance_Location_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Finance_Location_Name
+		dataType: string
+		lineageTag: 9ef4949e-a7ce-419a-b6d5-62164fe8fe9b
+		summarizeBy: none
+		sourceColumn: Finance_Location_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Code_Name
+		dataType: string
+		lineageTag: d0757be7-d5e7-4545-ae4f-bef32713a8ec
+		summarizeBy: none
+		sourceColumn: Country_Code_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Entity_Code_Name
+		dataType: string
+		lineageTag: f22f3b52-3597-4d70-8377-db31bd592be7
+		summarizeBy: none
+		sourceColumn: Entity_Code_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Finance_Location_Code_Name
+		dataType: string
+		lineageTag: 2fd7f3b5-eb19-4d28-b1ac-e383611a9c43
+		summarizeBy: none
+		sourceColumn: Finance_Location_Code_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_Finance_Location' = m
+		mode: import
+		source =
+				let
+				   Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    DWH_D_Finance_Location = Source{[Schema="PBI",Item="V_D_Finance_Location"]}[Data]
+				in
+				    DWH_D_Finance_Location
+
+	annotation PBI_ResultType = Table
+

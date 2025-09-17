@@ -1,0 +1,126 @@
+table 'PBI V_D_Ledger'
+	lineageTag: 25d18ab2-103f-4804-91aa-0b8d1eb8b041
+
+	column Key_Ledger
+		dataType: string
+		lineageTag: 9cf7748b-8a0c-483a-aa19-a66ea84cd21f
+		summarizeBy: none
+		sourceColumn: Key_Ledger
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ledger_ID
+		dataType: double
+		lineageTag: 1ed0619f-944d-4177-84a9-61e5dc2def62
+		summarizeBy: count
+		sourceColumn: Ledger_ID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Ledger_Name
+		dataType: string
+		lineageTag: 658bc409-ccdc-4b7c-a723-56246f69b05d
+		summarizeBy: none
+		sourceColumn: Ledger_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Currency_Code
+		dataType: string
+		lineageTag: e3d73106-eb38-4c31-9ee5-5d2dbd03db1f
+		summarizeBy: none
+		sourceColumn: Currency_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Chart_Of_Accounts
+		dataType: double
+		lineageTag: 05c25807-1e15-4321-a685-f847f4a57060
+		summarizeBy: sum
+		sourceColumn: Chart_Of_Accounts
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Ledger_Category_Code
+		dataType: string
+		lineageTag: 5d28d71c-ac33-4dac-ab10-69abb0bf1ab9
+		summarizeBy: none
+		sourceColumn: Ledger_Category_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Primary_Flag
+		dataType: string
+		lineageTag: d6fd4948-1ca8-472e-abb6-65b8e18e3880
+		summarizeBy: none
+		sourceColumn: Primary_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column USGAAP_Flag
+		dataType: string
+		lineageTag: 9445f70e-d1da-41ce-8797-99eccc2048f5
+		summarizeBy: none
+		sourceColumn: USGAAP_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Last_Update_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 95101540-9013-4184-929f-4189de3c11a7
+		summarizeBy: none
+		sourceColumn: Last_Update_Date
+
+		variation Variation
+			isDefault
+			relationship: cc540a20-27c7-4224-85fe-3ca71f00f4ea
+			defaultHierarchy: LocalDateTable_9b26639a-7d4a-4dd5-986b-bcf0c6250ac4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 568aae46-2d31-43da-9d1a-498fb7a1d19a
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ledger
+		dataType: string
+		lineageTag: 044f6c2e-fafd-4a86-9fba-ce385e32dc97
+		summarizeBy: none
+		sourceColumn: Ledger
+
+		annotation SummarizationSetBy = Automatic
+
+	column Filter_Ledger_Name
+		dataType: string
+		lineageTag: 011c6a2e-e47f-47e4-8a70-56ebd33b6aa7
+		summarizeBy: none
+		sourceColumn: Filter_Ledger_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_Ledger' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    PBI_V_D_Ledger = Source{[Schema="PBI",Item="V_D_Ledger"]}[Data],
+				    #"Added Conditional Column" = Table.AddColumn(PBI_V_D_Ledger, "Ledger", each if [Ledger_ID] = null then "Null" else [Key_Ledger]),
+				    #"Added Conditional Column1" = Table.AddColumn(#"Added Conditional Column", "Filter_Ledger_Name", each if [Ledger_Name] = "MET BR BRL Primary Ledger" then "FILTEROUT" else if [Ledger_Name] = "MET BR BRL Secondary Ledger" then "FILTEROUT" else [Ledger_Name])
+				in
+				    #"Added Conditional Column1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

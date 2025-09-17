@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
+  "version": "4.0",
+  "datasetReference": {
+    "byConnection": {
+      "connectionString": "Data Source=\"powerbi://api.powerbi.com/v1.0/myorg/HE Financials [Development]\";initial catalog=Financials_WI;access mode=readonly;integrated security=ClaimsToken;semanticmodelid=538e2f58-9403-455e-93f6-5165c3c76b8c"
+    }
+  }
+}

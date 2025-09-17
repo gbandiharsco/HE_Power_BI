@@ -1,0 +1,514 @@
+table 'PBI V_D_Asset'
+	lineageTag: 95545e24-ee09-4d77-8d1a-6c02c8bce456
+
+	column KEY_Site
+		dataType: string
+		lineageTag: c35ecd82-3b24-4076-a244-e0c1c9cadf09
+		summarizeBy: none
+		sourceColumn: KEY_Site
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_ASSET
+		dataType: string
+		lineageTag: 09014e79-5d46-49d7-afc7-72eccf93bb5b
+		summarizeBy: none
+		sourceColumn: KEY_ASSET
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_FA_Asset
+		dataType: string
+		lineageTag: 93138a95-f985-4913-96f2-b3f20a3916f2
+		summarizeBy: none
+		sourceColumn: KEY_FA_Asset
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_ID
+		dataType: string
+		lineageTag: 28ffd4ef-ef2c-4915-b132-8a1edbf09ac0
+		summarizeBy: none
+		sourceColumn: Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Number
+		dataType: string
+		lineageTag: fb78ff41-eef6-41b9-98fe-ac2e2985d44b
+		summarizeBy: none
+		sourceColumn: Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Desc
+		dataType: string
+		lineageTag: 7f477b84-f1b2-452a-bcc9-4119cd279a54
+		summarizeBy: none
+		sourceColumn: Asset_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Group
+		dataType: string
+		lineageTag: a93fe109-6247-4c2b-81ac-875b70fb9aa0
+		summarizeBy: none
+		sourceColumn: Asset_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Group_Name
+		dataType: string
+		lineageTag: 6130652c-a2ba-42b6-b4fd-f9e2b502bb55
+		summarizeBy: none
+		sourceColumn: Asset_Group_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Category_Code
+		dataType: string
+		lineageTag: 83335623-56fa-4055-a745-58cc6aaafa1c
+		summarizeBy: none
+		sourceColumn: Asset_Category_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Category_Desc
+		dataType: string
+		lineageTag: 794f5757-d2bd-42e7-ab4f-dee24e512c9d
+		summarizeBy: none
+		sourceColumn: Asset_Category_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Activity
+		dataType: string
+		lineageTag: e0523b39-aafa-4ff7-9494-f7a9e10229ab
+		summarizeBy: none
+		sourceColumn: KEY_Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Status_Code
+		dataType: string
+		lineageTag: 4d2a6f69-c360-4a37-bb3f-9e3623429335
+		summarizeBy: none
+		sourceColumn: Asset_Status_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Status_Desc
+		dataType: string
+		lineageTag: a6f43173-c2d3-4da6-8f68-bb70e498b0fd
+		summarizeBy: none
+		sourceColumn: Asset_Status_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Equipment_Sub_Class_Code
+		dataType: string
+		lineageTag: 7b8d5c67-3201-4f24-8837-f711b5db2315
+		summarizeBy: none
+		sourceColumn: Equipment_Sub_Class_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Equipment_Sub_Class_Desc
+		dataType: string
+		lineageTag: b61b4ed9-30f3-4ac7-92c4-7928c30d10a2
+		summarizeBy: none
+		sourceColumn: Equipment_Sub_Class_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Account_Class_Code
+		dataType: string
+		lineageTag: 39c7c07b-7972-49f8-8697-00ff8baf4539
+		summarizeBy: none
+		sourceColumn: Account_Class_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Account_Class_Desc
+		dataType: string
+		lineageTag: ec7517d1-8cc2-483a-8ae0-0544f60ca26f
+		summarizeBy: none
+		sourceColumn: Account_Class_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manufacturer
+		dataType: string
+		lineageTag: 885b2a2d-6dc0-492f-9dcb-309e581ac5b2
+		summarizeBy: none
+		sourceColumn: Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: ae2ef176-4e40-4bc9-aad5-a68eb80c74dd
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column Serial_Number
+		dataType: string
+		lineageTag: e314c9af-ff0c-469c-8019-99b4ef382086
+		summarizeBy: none
+		sourceColumn: Serial_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMU_FLAG
+		dataType: string
+		lineageTag: 09dc60f9-a5cd-49c8-8236-60e43d054980
+		summarizeBy: none
+		sourceColumn: SMU_FLAG
+
+		annotation SummarizationSetBy = Automatic
+
+	column Yearbuilt
+		dataType: string
+		lineageTag: 2b74b224-0746-4303-a1c8-ba7e7115fdb8
+		summarizeBy: none
+		sourceColumn: Yearbuilt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Acquired_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cd196d55-6f55-47af-98de-96f925a6b996
+		summarizeBy: none
+		sourceColumn: Acquired_Date
+
+		variation Variation
+			isDefault
+			relationship: f7e6d948-934b-4274-b164-74e1809ca172
+			defaultHierarchy: LocalDateTable_5d1ed377-35d5-4e3d-86c2-89547f643254.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diposed_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 065d971b-f5d3-481a-87d9-c25d8674d00d
+		summarizeBy: none
+		sourceColumn: Diposed_Date
+
+		variation Variation
+			isDefault
+			relationship: a4bd54b5-a1e6-49b4-9e1e-6a55ea942584
+			defaultHierarchy: LocalDateTable_aae27fed-e60d-4a90-b24c-2db480dc5d5c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Equipment_Type
+		dataType: string
+		lineageTag: 7ba0a36f-ffd0-4680-aea8-29433c7233f9
+		summarizeBy: none
+		sourceColumn: Asset_Equipment_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Operating_Activity_Code
+		dataType: string
+		lineageTag: e6925e13-1a88-40ee-9ff6-d9fa5a44466b
+		summarizeBy: none
+		sourceColumn: Operating_Activity_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Operating_Activity_Desc
+		dataType: string
+		lineageTag: 2e1fec01-c086-4bbf-b9ec-e47065f01ab5
+		summarizeBy: none
+		sourceColumn: Operating_Activity_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Active
+		dataType: string
+		lineageTag: 08b5cf79-d257-4846-99fa-97c7a5bee367
+		summarizeBy: none
+		sourceColumn: Is_Active
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Disposed
+		dataType: string
+		lineageTag: 6cdf3a76-34c1-478d-a8cd-42cb1f2fc0d8
+		summarizeBy: none
+		sourceColumn: Is_Disposed
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		lineageTag: d61b509f-a972-4ccd-a0c7-4310642ac6c6
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 23687b84-fa0c-4403-bcf1-c99bc287c038
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Maintainable_Flag
+		dataType: string
+		lineageTag: 1956ce3b-32ae-4a2a-8b86-2d7244365ddc
+		summarizeBy: none
+		sourceColumn: Maintainable_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Criticality
+		dataType: string
+		lineageTag: 318fdd5e-ac50-4c9c-8f6e-abce8ed8a552
+		summarizeBy: none
+		sourceColumn: Asset_Criticality
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Cost_Type_Id
+		dataType: string
+		lineageTag: 20eef07e-15ce-43a1-acdb-ce8637c56b44
+		summarizeBy: none
+		sourceColumn: Asset_Cost_Type_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Cost_Type_Code
+		dataType: string
+		lineageTag: 12e27a14-9e05-4122-8ac5-9face941705b
+		summarizeBy: none
+		sourceColumn: Asset_Cost_Type_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Asset_Cost_Type_Desc
+		dataType: string
+		lineageTag: 6bed22e7-a819-4556-b3a0-b4bd52ba1c5f
+		summarizeBy: none
+		sourceColumn: Asset_Cost_Type_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Parent
+		dataType: string
+		lineageTag: 2d0a3d81-c331-4789-9761-382048a7502e
+		summarizeBy: none
+		sourceColumn: Is_Parent
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Id
+		dataType: string
+		lineageTag: 60e77fca-2335-4abf-af65-43ab06d422b8
+		summarizeBy: none
+		sourceColumn: P_Asset_Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Number
+		dataType: string
+		lineageTag: c04c1209-11de-47a2-b4ae-b087389d0869
+		summarizeBy: none
+		sourceColumn: P_Asset_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Desc
+		dataType: string
+		lineageTag: 958a9d5e-2018-48b7-8bad-6d0008d06b89
+		summarizeBy: none
+		sourceColumn: P_Asset_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Category_Code
+		dataType: string
+		lineageTag: 41615394-33af-47c3-8ec7-2215deb3781f
+		summarizeBy: none
+		sourceColumn: P_Asset_Category_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Category_Desc
+		dataType: string
+		lineageTag: 29e1f049-55d1-4749-b2a2-286aaf1260ad
+		summarizeBy: none
+		sourceColumn: P_Asset_Category_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Equipment_Sub_Class_Code
+		dataType: string
+		lineageTag: 1b4d14ec-df8d-422d-b120-9017fade27fb
+		summarizeBy: none
+		sourceColumn: P_Equipment_Sub_Class_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Equipment_Sub_Class_Desc
+		dataType: string
+		lineageTag: eb2d0ed9-a6cb-4cca-9a57-647a00e745bd
+		summarizeBy: none
+		sourceColumn: P_Equipment_Sub_Class_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Manufacturer
+		dataType: string
+		lineageTag: 6eb6fab4-2b95-4c7f-a7b4-8da05ce472a0
+		summarizeBy: none
+		sourceColumn: P_Manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Model
+		dataType: string
+		lineageTag: 37ef5669-b95a-4d26-bf5e-c9937678fde3
+		summarizeBy: none
+		sourceColumn: P_Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Asset_Equipment_Type
+		dataType: string
+		lineageTag: fc7b07f0-ebaf-434f-b0c4-03cdfa52c917
+		summarizeBy: none
+		sourceColumn: P_Asset_Equipment_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Asset_ID
+		dataType: string
+		lineageTag: 2ea45cb3-1f57-4464-b35e-df1617c0219c
+		summarizeBy: none
+		sourceColumn: FA_Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_FA_Asset_ID
+		dataType: string
+		lineageTag: f3be7870-29ac-4ee9-bd0f-724ef33e5b85
+		summarizeBy: none
+		sourceColumn: P_FA_Asset_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column P_Maintainable_Flag
+		dataType: string
+		lineageTag: cc15d608-2acf-468c-b5f4-5be75d581d61
+		summarizeBy: none
+		sourceColumn: P_Maintainable_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Equipment_Status
+		dataType: string
+		lineageTag: cb636e22-7735-4d25-8363-8129b4cd9f99
+		summarizeBy: none
+		sourceColumn: FA_Equipment_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column FA_Status_Group
+		dataType: string
+		lineageTag: 71bad7aa-b571-4e0e-b9e4-fc3515258785
+		summarizeBy: none
+		sourceColumn: FA_Status_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column Acquisition_Type_Code
+		dataType: string
+		lineageTag: 465c4092-b229-46fa-a06d-3d595feaac7b
+		summarizeBy: none
+		sourceColumn: Acquisition_Type_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Acquisition_Type_Desc
+		dataType: string
+		lineageTag: 52a7bdaa-5f3c-4580-8d64-c0c5b746a553
+		summarizeBy: none
+		sourceColumn: Acquisition_Type_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_Code_Org
+		dataType: string
+		lineageTag: e78a204a-2033-4afc-9b3b-c2a3e1d965e9
+		summarizeBy: none
+		sourceColumn: Region_Code_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region_Name_Org
+		dataType: string
+		lineageTag: cb245fef-c2cb-41f8-9f87-80b33347a762
+		summarizeBy: none
+		sourceColumn: Region_Name_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Code_Org
+		dataType: string
+		lineageTag: bf51628d-0be6-4d79-839c-779bceb82f56
+		summarizeBy: none
+		sourceColumn: Country_Code_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country_Name_Org
+		dataType: string
+		lineageTag: f00177a1-1383-4f58-88b1-d356bd1b2f13
+		summarizeBy: none
+		sourceColumn: Country_Name_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_Code_Org
+		dataType: string
+		lineageTag: 47bf624a-40d9-475f-974d-243f7090b4d7
+		summarizeBy: none
+		sourceColumn: Site_Code_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_Name_Org
+		dataType: string
+		lineageTag: 0409cb6e-c3c8-48a1-b2e6-c8509d62b58b
+		summarizeBy: none
+		sourceColumn: Site_Name_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Site_Org
+		dataType: string
+		lineageTag: 20fd9533-a175-485d-a2d7-1ddb31922c89
+		summarizeBy: none
+		sourceColumn: KEY_Site_Org
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_Asset' = m
+		mode: import
+		source =
+				let
+				   Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    PBI_V_D_Asset = Source{[Schema="PBI",Item="V_D_Asset"]}[Data]
+				in
+				    PBI_V_D_Asset
+
+	annotation PBI_ResultType = Table
+

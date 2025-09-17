@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "HE ICP"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d74265d1-db8d-4511-9805-b950a7d3d439"
+  }
+}

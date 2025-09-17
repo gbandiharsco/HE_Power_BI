@@ -1,0 +1,37 @@
+table 'DWH D_Security Fin Loc'
+	lineageTag: 15d752dd-3710-448d-9d44-4a8dd19dc15f
+
+	column TYPE
+		dataType: string
+		lineageTag: 40d3b5db-27ce-40e2-b4d5-435b3cd9d484
+		summarizeBy: none
+		sourceColumn: TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column USER_ID
+		dataType: string
+		lineageTag: ba89c671-50d7-4e28-8025-dadf6ff96ddb
+		summarizeBy: none
+		sourceColumn: USER_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VALUE
+		dataType: string
+		lineageTag: 3fdc7c40-a23e-4915-8cc0-95c1c379d2c5
+		summarizeBy: none
+		sourceColumn: VALUE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DWH D_Security Fin Loc' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName, [Query="select [_].[TYPE],#(lf)    [_].[USER_ID],#(lf)    [_].[VALUE]#(lf)from #(lf)(#(lf)    select [TYPE],#(lf)        [USER_ID],#(lf)        [VALUE]#(lf)    from [DWH].[D_Security] as [$Table]#(lf)) as [_]#(lf)where [_].[TYPE] = 'FINLC' and ([_].[VALUE] <> '000' or [_].[VALUE] is null)"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+
