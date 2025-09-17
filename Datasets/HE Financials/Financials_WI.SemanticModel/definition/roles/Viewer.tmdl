@@ -1,0 +1,7 @@
+role Viewer
+	modelPermission: read
+
+	tablePermission 'DWH D_Security Fin Loc' = [USER_ID] = UPPER(LEFT(USERPRINCIPALNAME(),FIND("@",USERPRINCIPALNAME())-1))
+
+	annotation PBI_Id = cb512f7546fd4beea726c135b320c226
+

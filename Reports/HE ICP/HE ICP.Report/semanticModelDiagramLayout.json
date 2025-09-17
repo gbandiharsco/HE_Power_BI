@@ -1,0 +1,271 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1431.2564886979267,
+            "y": 575.25338849402078
+          },
+          "nodeIndex": "_Currency Prompt",
+          "nodeLineageTag": "b465dbe2-b50d-4712-8224-d3e70cb05956",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 620.84459083355057,
+            "y": 859.4196727029364
+          },
+          "nodeIndex": "DWH D_Date",
+          "nodeLineageTag": "14bb6e83-a93e-4871-9e32-e727ce14ab23",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 336.1391680843318,
+            "y": 803.90564135075306
+          },
+          "nodeIndex": "DWH D_Security Fin Loc",
+          "nodeLineageTag": "15d752dd-3710-448d-9d44-4a8dd19dc15f",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 653.94148762692475,
+            "y": 250.16336360161404
+          },
+          "nodeIndex": "ICP - Summary",
+          "nodeLineageTag": "31ea2003-85d4-4900-a6d4-2803e69ba24c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1715.2564886979267,
+            "y": 563.25338849402078
+          },
+          "nodeIndex": "Include Column",
+          "nodeLineageTag": "fbf85a25-3ebd-4c7a-b55d-2efbb969a6e8",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1999.2564886979267,
+            "y": 563.25338849402078
+          },
+          "nodeIndex": "Include Columns",
+          "nodeLineageTag": "c048317f-b0c7-4df3-a473-32ec26448bdf",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1197.2564886979267,
+            "y": 928.50677698804168
+          },
+          "nodeIndex": "PBI V_D_Asset",
+          "nodeLineageTag": "95545e24-ee09-4d77-8d1a-6c02c8bce456",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 532.38063550091852
+          },
+          "nodeIndex": "PBI V_D_Finance_Location",
+          "nodeLineageTag": "f2701187-2b8f-46f6-b431-348bae898979",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 115.10193199428068,
+            "y": 180.67595602839992
+          },
+          "nodeIndex": "PBI V_D_GL_Account",
+          "nodeLineageTag": "846a6b31-cea7-4a72-a9f9-17597cf34132",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 940.91012208237532,
+            "y": -50
+          },
+          "nodeIndex": "PBI V_D_GL_Account_ICP",
+          "nodeLineageTag": "73f464c8-e259-4de1-a2cf-2c3cc33584da",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1194.6343829864725,
+            "y": 301.08968200493155
+          },
+          "nodeIndex": "PBI V_D_Ledger",
+          "nodeLineageTag": "25d18ab2-103f-4804-91aa-0b8d1eb8b041",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 907.81860470973572,
+            "y": 603.77716007707181
+          },
+          "nodeIndex": "PBI V_F_GL_XLA_ALL_Transactions_2_Years",
+          "nodeLineageTag": "2ebe9592-03ef-43a0-9422-22d23fc16b21",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 50
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 507.06065998257168,
+            "y": 494.46021144964169
+          },
+          "nodeIndex": "ICP - Summary",
+          "nodeLineageTag": "31ea2003-85d4-4900-a6d4-2803e69ba24c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 336.98951449838785,
+            "y": -3.1450392985098006
+          },
+          "nodeIndex": "PBI V_F_GL_XLA_ALL_Transactions_2_Years",
+          "nodeLineageTag": "2ebe9592-03ef-43a0-9422-22d23fc16b21",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 918.88429928795608,
+            "y": 438.23061999521889
+          },
+          "nodeIndex": "DWH D_Date",
+          "nodeLineageTag": "14bb6e83-a93e-4871-9e32-e727ce14ab23",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 862.06433473695245,
+            "y": 0
+          },
+          "nodeIndex": "PBI V_D_GL_Account",
+          "nodeLineageTag": "846a6b31-cea7-4a72-a9f9-17597cf34132",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 51,
+            "y": 412.79670413162262
+          },
+          "nodeIndex": "PBI V_D_GL_Account_ICP",
+          "nodeLineageTag": "73f464c8-e259-4de1-a2cf-2c3cc33584da",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 21
+          },
+          "nodeIndex": "PBI V_D_Ledger",
+          "nodeLineageTag": "25d18ab2-103f-4804-91aa-0b8d1eb8b041",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 1",
+  "defaultDiagram": "All tables"
+}

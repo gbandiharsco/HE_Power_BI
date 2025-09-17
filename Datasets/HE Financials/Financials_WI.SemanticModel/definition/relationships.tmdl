@@ -1,0 +1,68 @@
+relationship f7e6d948-934b-4274-b164-74e1809ca172
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PBI V_D_Asset'.Acquired_Date
+	toColumn: LocalDateTable_5d1ed377-35d5-4e3d-86c2-89547f643254.Date
+
+relationship a4bd54b5-a1e6-49b4-9e1e-6a55ea942584
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PBI V_D_Asset'.Diposed_Date
+	toColumn: LocalDateTable_aae27fed-e60d-4a90-b24c-2db480dc5d5c.Date
+
+relationship c55d8795-a6a6-437f-8bb5-ab999856e98b
+	fromColumn: 'PBI V_F_GL_XLA_ALL_Transactions_2_Years'.KEY_Asset
+	toColumn: 'PBI V_D_Asset'.KEY_ASSET
+
+relationship cc540a20-27c7-4224-85fe-3ca71f00f4ea
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PBI V_D_Ledger'.Last_Update_Date
+	toColumn: LocalDateTable_9b26639a-7d4a-4dd5-986b-bcf0c6250ac4.Date
+
+relationship 22348116-48f3-485e-820d-e4684b13cb94
+	fromColumn: 'PBI V_F_GL_XLA_ALL_Transactions_2_Years'.KEY_Ledger
+	toColumn: 'PBI V_D_Ledger'.Key_Ledger
+
+relationship fe75fe36-44de-4d50-927f-f5cebc22f84d
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: 'DWH D_Security Fin Loc'.VALUE
+	toColumn: 'PBI V_D_Finance_Location'.KEY_Finance_Location
+
+relationship AutoDetected_ab2ceb2f-9cd1-40c4-9884-023af05c5e5c
+	fromColumn: 'PBI V_F_GL_XLA_ALL_Transactions_2_Years'.KEY_GL_Account
+	toColumn: 'PBI V_D_GL_Account_ICP'.KEY_GL_ACCOUNT
+
+relationship e357bfe1-28c6-16db-fa52-757327011a8c
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'ICP - Summary'.GL_Date
+	toColumn: 'DWH D_Date'.Date_DD_MMM_YYYY
+
+relationship df3c613e-32fb-cf60-3d39-339b5a081e6a
+	fromColumn: 'PBI V_F_GL_XLA_ALL_Transactions_2_Years'.KEY_GL_Account
+	toColumn: 'PBI V_D_GL_Account'.KEY_GL_ACCOUNT
+
+relationship AutoDetected_27b0d23d-952a-483b-a91b-f9d7b45df2f6
+	fromColumn: 'ICP - Summary'.KEY_GL_ACCOUNT
+	toColumn: 'PBI V_D_GL_Account'.KEY_GL_ACCOUNT
+
+relationship AutoDetected_5a4abd47-903a-46df-b970-da0d4f8b4bf0
+	isActive: false
+	fromColumn: 'ICP - Summary'.KEY_GL_ACCOUNT
+	toColumn: 'PBI V_D_GL_Account_ICP'.KEY_GL_ACCOUNT
+
+relationship c5e1794b-b343-42ce-a295-c44e4b9952da
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'PBI V_F_GL_XLA_ALL_Transactions_2_Years'.TRANSACTION_DATE
+	toColumn: LocalDateTable_3c1bbad9-073d-424f-9051-4f6fe80ee3d1.Date
+
+relationship fe1c02d6-821c-ba51-a420-c4b1118fefba
+	fromColumn: 'PBI V_F_GL_XLA_ALL_Transactions_2_Years'.GL_Date
+	toColumn: 'DWH D_Date'.FullDate
+
+relationship AutoDetected_58906bdb-d945-42a3-90fe-1007cc0f53fe
+	fromColumn: 'PBI V_D_GL_Account'.Key_Finance_Location
+	toColumn: 'PBI V_D_Finance_Location'.KEY_Finance_Location
+
+relationship aa9784bb-9e6a-9931-e203-8bd7e476935d
+	fromColumn: 'PBI V_D_GL_Account'.GL_Account_Number
+	toColumn: Lookup_HFM_Codes.Source_2
+

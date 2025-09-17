@@ -1,0 +1,25 @@
+table '_Currency Prompt'
+	lineageTag: b465dbe2-b50d-4712-8224-d3e70cb05956
+
+	measure CurrencyPrompt = if(HASONEVALUE('_Currency Prompt'[Currency]),VALUES('_Currency Prompt'[Currency]),"Local")
+		lineageTag: febbea70-2fad-464c-8fd8-4a7c51ef3027
+
+	column Currency
+		dataType: string
+		lineageTag: 530f7174-53af-4675-aa6c-26ab942ef1b9
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_Currency Prompt' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_ServerName, P_DatabaseName),
+				    DWH_V_CurrencyPrompt = Source{[Schema="DWH",Item="V_CurrencyPrompt"]}[Data]
+				in
+				    DWH_V_CurrencyPrompt
+
+	annotation PBI_ResultType = Table
+

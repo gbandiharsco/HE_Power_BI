@@ -1,0 +1,50 @@
+table 'Include Column'
+	lineageTag: fbf85a25-3ebd-4c7a-b55d-2efbb969a6e8
+
+	column 'Include Column'
+		lineageTag: d1beceb2-fdab-4117-82a1-f460ce814749
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Include Column Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Include Column Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Include Column Fields'
+		isHidden
+		lineageTag: 1e019602-f3eb-4a60-9fd2-94f8d637aef1
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Include Column Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Include Column Order'
+		isHidden
+		formatString: 0
+		lineageTag: 3cf0800c-874b-40ef-8da4-8e4377b641bb
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Include Column' = calculated
+		mode: import
+		source =
+				{
+				    ("Country", NAMEOF('PBI V_D_Finance_Location'[Country_Name]), 0),
+				    ("JE Header ID", NAMEOF('PBI V_F_GL_XLA_ALL_Transactions_2_Years'[JE_Header_ID]), 1),
+				    ("Account Description", NAMEOF('PBI V_D_GL_Account'[GL_Account_Desc]), 2),
+				    (" ",NAMEOF('DWH D_Date'[Blank]),3)
+				}
+
+	annotation PBI_Id = c70900037fa84995a8685ed5307c7eac
+

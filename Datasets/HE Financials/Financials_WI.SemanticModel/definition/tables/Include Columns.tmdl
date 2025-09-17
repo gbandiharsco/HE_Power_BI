@@ -1,0 +1,57 @@
+table 'Include Columns'
+	lineageTag: c048317f-b0c7-4df3-a473-32ec26448bdf
+
+	column 'Include Columns'
+		lineageTag: 3a08c4a9-fb92-4ab0-aae6-b0380ac252f5
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Include Columns Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Include Columns Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Include Columns Fields'
+		isHidden
+		lineageTag: a3d5d8ad-36ba-4aea-827b-c871d62a084b
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Include Columns Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Include Columns Order'
+		isHidden
+		formatString: 0
+		lineageTag: f20fe5cf-4b70-4cfa-b840-4c60af6f00e5
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Include Columns' = calculated
+		mode: import
+		source =
+				{
+				    ("Document Number", NAMEOF('PBI V_F_GL_XLA_ALL_Transactions_2_Years'[Document_Number]), 0),
+				    ("Location Name", NAMEOF('PBI V_D_Finance_Location'[Finance_Location_Name]), 1),
+				    ("Country", NAMEOF('PBI V_D_Finance_Location'[Country_Name]), 2),
+				    ("Account Description", NAMEOF('PBI V_D_GL_Account'[GL_Account_Desc]), 3),
+				    ("JE Header ID", NAMEOF('PBI V_F_GL_XLA_ALL_Transactions_2_Years'[JE_Header_ID]), 4),
+				    (" ",NAMEOF('DWH D_Date'[Blank]),10),
+				    ("Activity Name",NAMEOF('PBI V_D_GL_Account'[GL_Activity_Desc]),5),
+				    ("Transaction Originator",NAMEOF('PBI V_F_GL_XLA_ALL_Transactions_2_Years'[Transaction_Type]), 6),
+				    ("Item Number",NAMEOF('PBI V_F_GL_XLA_ALL_Transactions_2_Years'[Part_Number]), 7),
+				    ("Transaction ID",NAMEOF('PBI V_F_GL_XLA_ALL_Transactions_2_Years'[Transaction_Id]), 8),
+				    ("PO Number",NAMEOF('PBI V_F_GL_XLA_ALL_Transactions_2_Years'[PO_Number]), 9)
+				}
+
+	annotation PBI_Id = ca16e30690fd4c2d81d929d11663638f
+

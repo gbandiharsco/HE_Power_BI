@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "HE Weekly Indicator"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "847c4d9d-0778-4e8b-9e8b-71ef4f80c37b"
+  }
+}
