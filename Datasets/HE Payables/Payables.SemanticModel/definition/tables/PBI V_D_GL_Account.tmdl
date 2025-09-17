@@ -1,0 +1,197 @@
+table 'PBI V_D_GL_Account'
+	lineageTag: 5ab53565-3eae-4f35-9112-97b0c7ba4432
+
+	column 'GL Entity'
+		dataType: string
+		lineageTag: 3352e4f1-0c29-420c-88d8-2d0fd558d6cd
+		summarizeBy: none
+		sourceColumn: GL Entity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Location'
+		dataType: string
+		lineageTag: 7e4d8f2f-a16c-4d2c-a2fc-0be02db3a526
+		summarizeBy: none
+		sourceColumn: GL Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Activity'
+		dataType: string
+		lineageTag: 90bd25d7-3d9a-4d04-9c36-5929278b3a80
+		summarizeBy: none
+		sourceColumn: GL Activity
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Number'
+		dataType: string
+		lineageTag: 7b00435e-2c5a-4484-8701-2bc3cce4845a
+		summarizeBy: none
+		sourceColumn: GL Account Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account ID'
+		dataType: string
+		lineageTag: ccf50ff8-b8b5-4f2c-ac25-61de6c695439
+		summarizeBy: none
+		sourceColumn: GL Account ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Business Unit'
+		dataType: string
+		lineageTag: c2c64a91-8dd9-4da9-a20b-b8849bd8464e
+		summarizeBy: none
+		sourceColumn: GL Business Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Object Account'
+		dataType: string
+		lineageTag: 79a853a4-402e-4e4f-b272-4ea7c7661a3f
+		summarizeBy: none
+		sourceColumn: GL Object Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Desc'
+		dataType: string
+		lineageTag: 35e4cc14-b0e8-4461-b20a-0f50d0ea14f7
+		summarizeBy: none
+		sourceColumn: GL Account Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Subsidary'
+		dataType: string
+		lineageTag: acb503ea-dd99-4d7b-8035-7ab4f1e8733e
+		summarizeBy: none
+		sourceColumn: GL Subsidary
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Currency Code'
+		dataType: string
+		lineageTag: 8c6d490f-7719-460f-9c1f-dd8032f6c226
+		summarizeBy: none
+		sourceColumn: GL Currency Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'High Level Account Type'
+		dataType: string
+		lineageTag: 6afac18e-74b8-4e72-8657-ec0e90fed8d4
+		summarizeBy: none
+		sourceColumn: High Level Account Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Number OneChart'
+		dataType: string
+		lineageTag: ceabc3dc-687e-40a9-bfe0-6559cbddd296
+		summarizeBy: none
+		sourceColumn: GL Account Number OneChart
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Number ASLEE'
+		dataType: string
+		lineageTag: 76c1381c-a161-478f-a353-25208d08e768
+		summarizeBy: none
+		sourceColumn: GL Account Number ASLEE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Group'
+		dataType: string
+		lineageTag: 3e1d251f-f88e-4051-877a-2f8cacd028f5
+		summarizeBy: none
+		sourceColumn: GL Account Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Group Sort'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a77796c-ac94-4ca7-8754-87228542aa43
+		summarizeBy: sum
+		sourceColumn: GL Account Group Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Account Sub Group'
+		dataType: string
+		lineageTag: 70ee832d-218b-4b8c-9a9b-3482725d946a
+		summarizeBy: none
+		sourceColumn: GL Account Sub Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Operating Group'
+		dataType: string
+		lineageTag: ef976531-4bf8-4a7c-a40e-98de17c70410
+		summarizeBy: none
+		sourceColumn: GL Operating Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 61ec0cd2-1e6d-4887-89c6-6ff7945c90b4
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT
+		dataType: string
+		isHidden
+		lineageTag: a0068bfd-b777-424a-9fc2-6854d8b9b858
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Activity Desc'
+		dataType: string
+		lineageTag: 22f1cc52-d447-40bc-ba50-b850939f3fd6
+		summarizeBy: none
+		sourceColumn: GL Activity Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL segment 1 to 4'
+		dataType: string
+		lineageTag: 26638f0d-2d23-45a0-8e5c-c65a07b0d968
+		summarizeBy: none
+		sourceColumn: GL segment 1 to 4
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Segment 1 to 8'
+		dataType: string
+		lineageTag: dd73aec4-ed4b-487d-9c54-2be25f35a309
+		summarizeBy: none
+		sourceColumn: GL Segment 1 to 8
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_GL_Account' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_GL_Account = Source{[Schema="PBI",Item="V_D_GL_Account_P2P"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_D_GL_Account,{{"GL_Entity", "GL Entity"}, {"GL_Location", "GL Location"}, {"GL_Activity", "GL Activity"}, {"GL_Account_Number", "GL Account Number"}, {"GL_Account_ID", "GL Account ID"}, {"GL_Business_Unit", "GL Business Unit"}, {"GL_Object_Account", "GL Object Account"}, {"GL_Account_Desc", "GL Account Desc"}, {"GL_Subsidary", "GL Subsidary"}, {"GL_Currency_Code", "GL Currency Code"}, {"High_Level_Account_Type", "High Level Account Type"}, {"GL_Account_Number_OneChart", "GL Account Number OneChart"}, {"GL_Account_Number_ASLEE", "GL Account Number ASLEE"}, {"GL_Account_Group", "GL Account Group"}, {"GL_Account_Group_Sort", "GL Account Group Sort"}, {"GL_Account_Sub_Group", "GL Account Sub Group"}, {"GL_Operating_Group", "GL Operating Group"}, {"GL_Activity_Desc", "GL Activity Desc"}, {"GL_Segment1_4", "GL segment 1 to 4"}, {"GL_Segment1_8", "GL Segment 1 to 8"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

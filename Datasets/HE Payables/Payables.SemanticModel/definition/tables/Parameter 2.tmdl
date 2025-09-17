@@ -1,0 +1,50 @@
+table 'Parameter 2'
+	lineageTag: 1160a241-73bb-484c-937e-f6747e3778f2
+
+	column Parameter
+		lineageTag: 5164a6b9-3071-4055-81a0-78e96e5db450
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Fields'
+		isHidden
+		lineageTag: 37ff640c-7bf5-4fb8-9b5e-3d7c107f3e21
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 2e7dbfd3-ec92-4891-8821-84c86f62e420
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Parameter 2' = calculated
+		mode: import
+		source =
+				{
+				    ("Site", NAMEOF('PBI V_F_AP_Invoice_Dist'[site]), 0),
+				    ("PO #", NAMEOF('PBI V_F_AP_Invoice_Dist'[PO Number]), 1),
+				    ("MEX UUID", NAMEOF('PBI V_F_AP_Invoice_Dist'[Mex_UUID]), 2),
+				    ("" , NAMEOF('PBI V_F_AP_Invoice_Dist'[Blank]), 3)
+				}
+
+	annotation PBI_Id = 64b74796233646bc986a1de878b3d48d
+

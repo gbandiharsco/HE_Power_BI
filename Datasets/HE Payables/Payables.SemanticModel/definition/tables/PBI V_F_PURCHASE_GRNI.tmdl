@@ -1,0 +1,271 @@
+table 'PBI V_F_PURCHASE_GRNI'
+	lineageTag: ac80eb3f-8d34-4b24-892c-104a90554a02
+
+	column 'Age Group'
+		dataType: string
+		lineageTag: e25c46a5-04ec-422e-8486-4ff46e809552
+		summarizeBy: none
+		sourceColumn: Age Group
+		sortByColumn: 'Age Group Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age Group Sort'
+		dataType: string
+		lineageTag: 94573229-05ef-4c3c-bc5a-382c4b5f63e9
+		summarizeBy: none
+		sourceColumn: Age Group Sort
+
+		changedProperty = SortByColumn
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: c6b4ecf6-06a5-4fcb-b092-a5d1faec8c4d
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO Number'
+		dataType: string
+		lineageTag: 7b07bc8c-f63b-4521-9adb-0c0950132ad9
+		summarizeBy: none
+		sourceColumn: PO Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Receipt Number'
+		dataType: string
+		lineageTag: 184e2e12-f5b8-4d06-bdbd-c02333274072
+		summarizeBy: none
+		sourceColumn: Receipt Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age In Days'
+		dataType: int64
+		formatString: 0
+		lineageTag: 45a8f25f-15a6-4556-9437-b4e64a47d5c1
+		summarizeBy: sum
+		sourceColumn: Age In Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount
+		dataType: double
+		lineageTag: f2374e58-1418-4424-a2d2-3f8ce14f7a32
+		summarizeBy: sum
+		sourceColumn: Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Last Receipt Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 7a855b65-932a-4ec6-a83a-87de62a39741
+		summarizeBy: none
+		sourceColumn: Last Receipt Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Local Currency'
+		dataType: string
+		lineageTag: 588d5fe8-335f-4207-a4d1-b77e58db3414
+		summarizeBy: none
+		sourceColumn: Local Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 68524229-8e2c-4266-81f0-d8b4a199d99e
+		summarizeBy: none
+		sourceColumn: PO Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'PO Dist Num'
+		dataType: double
+		lineageTag: 36bb720c-e944-42e0-aca0-b00964a67002
+		summarizeBy: sum
+		sourceColumn: PO Dist Num
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'PO Line Num'
+		dataType: string
+		lineageTag: 1e87dc08-4499-4945-bd50-b675862ffe35
+		summarizeBy: none
+		sourceColumn: PO Line Num
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Po Release Num'
+		dataType: double
+		lineageTag: 7ac3ee52-cba1-4454-aa33-0b1708dbcc38
+		summarizeBy: sum
+		sourceColumn: Po Release Num
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Qty Billed'
+		dataType: double
+		lineageTag: 309370c3-5250-4498-ae4a-a8570e18a58d
+		summarizeBy: sum
+		sourceColumn: Qty Billed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Qty Rcvd Not Vouchered'
+		dataType: string
+		lineageTag: 21b08609-2061-4bd9-afc6-053c46e5c0f8
+		summarizeBy: none
+		sourceColumn: Qty Rcvd Not Vouchered
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Shipment Number'
+		dataType: string
+		lineageTag: b6a9d753-ec17-40d5-abd0-53db982b0d47
+		summarizeBy: none
+		sourceColumn: Shipment Number
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT
+		dataType: string
+		isHidden
+		lineageTag: d3b1edb3-bdc0-4bab-94d6-a88b9a520407
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_FINANCE_LOCATION
+		dataType: string
+		isHidden
+		lineageTag: 515bb1a0-3868-419a-a557-9f9d17b9e514
+		summarizeBy: none
+		sourceColumn: KEY_FINANCE_LOCATION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_SITE
+		dataType: string
+		isHidden
+		lineageTag: 9b71d3df-7934-4dde-bbe8-8d575ddc3aeb
+		summarizeBy: none
+		sourceColumn: KEY_SITE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_SHIP_TO_SITE
+		dataType: string
+		isHidden
+		lineageTag: b4f3a63e-173e-4a26-a81a-99bd76ced323
+		summarizeBy: none
+		sourceColumn: KEY_SHIP_TO_SITE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INT_ORG
+		dataType: string
+		isHidden
+		lineageTag: 27b85b2b-b083-470d-bd0a-ba5b8e3cdce3
+		summarizeBy: none
+		sourceColumn: KEY_INT_ORG
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_BUYER
+		dataType: string
+		isHidden
+		lineageTag: 1a1110cd-9e74-4d8d-a20a-dfe0d9aaa60e
+		summarizeBy: none
+		sourceColumn: KEY_BUYER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_REQUESTOR
+		dataType: string
+		isHidden
+		lineageTag: b8f43e44-78a7-4985-84c6-393c614c05da
+		summarizeBy: none
+		sourceColumn: KEY_REQUESTOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_SUPPLIER
+		dataType: string
+		isHidden
+		lineageTag: ad8d9894-13b0-4d9d-be03-834bb0ee00ce
+		summarizeBy: none
+		sourceColumn: KEY_SUPPLIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Requester Name'
+		dataType: string
+		lineageTag: 4bab96dd-d814-412f-9626-da697e035cfd
+		summarizeBy: none
+		sourceColumn: Requester Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_F_PURCHASE_GRNI' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_F_PURCHASE_GRNI = Source{[Schema="PBI",Item="V_F_PURCHASE_GRNI"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_F_PURCHASE_GRNI,{{"AGE_GROUP", "Age Group"}, {"AGE_GROUP_SORT", "Age Group Sort"}, {"TYPE", "Type"}, {"PO_NUM", "PO Number"}, {"RECEIPT_NUM", "Receipt Number"}, {"AGE_IN_DAYS", "Age In Days"}, {"AMOUNT", "Amount"}, {"LAST_RECEIPT_DATE", "Last Receipt Date"}, {"LOCAL_CURRENCY", "Local Currency"}, {"PO_DATE", "PO Date"}, {"PO_DIST_NUM", "PO Dist Num"}, {"PO_LINE_NUM", "PO Line Num"}, {"PO_RELEASE_NUM", "Po Release Num"}, {"QTY_BILLED", "Qty Billed"}, {"QTY_RCVD_NOT_VOUCHERED", "Qty Rcvd Not Vouchered"}, {"SHIPMENT_NUM", "Shipment Number"}, {"Requester_Name", "Requester Name"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

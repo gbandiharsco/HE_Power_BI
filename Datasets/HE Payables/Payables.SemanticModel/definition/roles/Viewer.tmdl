@@ -1,0 +1,9 @@
+role Viewer
+	modelPermission: read
+
+	tablePermission 'DWH D_Security ORG' = [USER_ID] = UPPER(LEFT(USERPRINCIPALNAME(),FIND("@",USERPRINCIPALNAME())-1))
+
+	tablePermission 'DWH D_Security OU' = [USER_ID] = UPPER(LEFT(USERPRINCIPALNAME(),FIND("@",USERPRINCIPALNAME())-1))
+
+	annotation PBI_Id = 73c24f4d563848d1b629e04d359c4a28
+

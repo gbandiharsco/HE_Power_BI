@@ -1,0 +1,91 @@
+table 'PBI V_D_SUPPLIER'
+	lineageTag: 1428adf1-cb51-4c15-b372-10c2fed0a739
+
+	column City
+		dataType: string
+		lineageTag: b46c05c3-a500-445b-bd1c-6abe2b14fc9c
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Supplier Name'
+		dataType: string
+		lineageTag: c4d56afb-6f06-4cea-9686-6612439b6c16
+		summarizeBy: none
+		sourceColumn: Supplier Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Supplier Number'
+		dataType: string
+		lineageTag: d6897da3-5eb4-4a3b-bd6a-d99f98114467
+		summarizeBy: none
+		sourceColumn: Supplier Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Supplier
+		dataType: string
+		lineageTag: 59d674cf-44e0-4f17-9cf4-7489b335d77c
+		summarizeBy: none
+		sourceColumn: Key_Supplier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VENDOR_TYPE
+		dataType: string
+		lineageTag: b76380a9-ca42-4a68-82fe-b54be4692208
+		summarizeBy: none
+		sourceColumn: VENDOR_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ATTRIBUTE11
+		dataType: string
+		lineageTag: b5f4d271-2d72-4792-b153-27b05a27ac3e
+		summarizeBy: none
+		sourceColumn: ATTRIBUTE11
+
+		annotation SummarizationSetBy = Automatic
+
+	column ATTRIBUTE12
+		dataType: string
+		lineageTag: c5537946-6db7-4864-8476-c5eaa254ee47
+		summarizeBy: none
+		sourceColumn: ATTRIBUTE12
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUPPLIER_SITE_CODE
+		dataType: string
+		lineageTag: 47a1fd01-1625-4fe4-b7b4-db6fdbdaa3e0
+		summarizeBy: none
+		sourceColumn: SUPPLIER_SITE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column CNPJ
+		dataType: string
+		lineageTag: 6886a967-8b38-4f28-bef3-3fa8254916af
+		summarizeBy: none
+		sourceColumn: CNPJ
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_SUPPLIER' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_SUPPLIER = Source{[Schema="PBI",Item="V_D_SUPPLIER"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PBI_V_D_SUPPLIER,{{"Supplier_Name", "Supplier Name"}, {"Supplier_Number", "Supplier Number"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

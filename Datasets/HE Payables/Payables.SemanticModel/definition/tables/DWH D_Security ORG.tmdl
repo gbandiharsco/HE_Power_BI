@@ -1,0 +1,42 @@
+table 'DWH D_Security ORG'
+	lineageTag: e134c643-b1d2-42a2-b2df-9a558d32d029
+
+	column TYPE
+		dataType: string
+		lineageTag: 45b85a72-f4fc-4649-8f0e-49127f5d7ddb
+		summarizeBy: none
+		sourceColumn: TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column USER_ID
+		dataType: string
+		lineageTag: d7fe796d-b294-4cb1-ae7b-fe8d9bf74a5f
+		summarizeBy: none
+		sourceColumn: USER_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VALUE
+		dataType: string
+		lineageTag: 47789b29-e4b7-4753-99fe-f2f25f898b33
+		summarizeBy: none
+		sourceColumn: VALUE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'DWH D_Security ORG' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_USER = Source{[Schema="PBI",Item="V_D_Security"]}[Data],
+				    #"Removed Columns" = Table.RemoveColumns(PBI_V_D_USER,{"DESCRIPTION"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each ([TYPE] = "IVORG") and ([VALUE] <> "000"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

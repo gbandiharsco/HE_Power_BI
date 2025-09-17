@@ -1,0 +1,529 @@
+table 'PBI V_DG_PURCHASE_ORDER_LINES'
+	lineageTag: 9691b54a-3dfb-405c-bce4-b32a5e80b030
+
+	column AFI
+		dataType: string
+		lineageTag: 1e61627a-ec4f-4808-a290-e3ea04665daf
+		summarizeBy: none
+		sourceColumn: AFI
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGREEMENT
+		dataType: string
+		lineageTag: e0c14a64-4ed9-426c-9736-ee1e83ba853e
+		summarizeBy: none
+		sourceColumn: AGREEMENT
+
+		annotation SummarizationSetBy = Automatic
+
+	column BUYER_NAME
+		dataType: string
+		lineageTag: 0076de52-927e-4cee-9954-c65a5652ba99
+		summarizeBy: none
+		sourceColumn: BUYER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LINE_TEXT
+		dataType: string
+		lineageTag: ef0d0687-e070-4f44-bc1a-9e9f4044dbf2
+		summarizeBy: none
+		sourceColumn: LINE_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column REQUESTOR
+		dataType: string
+		lineageTag: 1f1f44e9-a4b7-4406-b617-03adcf68cc4c
+		summarizeBy: none
+		sourceColumn: REQUESTOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column UOM
+		dataType: string
+		lineageTag: 3f7d57e8-5a4a-4918-9627-e496d6cf4503
+		summarizeBy: none
+		sourceColumn: UOM
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item_Number
+		dataType: string
+		lineageTag: 68e6dfff-c288-408f-a6e7-a764ac665e24
+		summarizeBy: none
+		sourceColumn: Item_Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_FINANCE_LOCATION
+		dataType: string
+		isHidden
+		lineageTag: e5591212-1e0e-4582-b74b-ac56703ef7c5
+		summarizeBy: none
+		sourceColumn: KEY_FINANCE_LOCATION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_SITE
+		dataType: string
+		isHidden
+		lineageTag: 53b1a8e3-6ff8-4387-b8a7-893c50fc00cc
+		summarizeBy: none
+		sourceColumn: KEY_SITE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_WORKORDER
+		dataType: string
+		isHidden
+		lineageTag: df82039c-129a-42e2-bcd8-21f2f71fc0ba
+		summarizeBy: none
+		sourceColumn: KEY_WORKORDER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_SUPPLIER
+		dataType: string
+		isHidden
+		lineageTag: 4ec92056-27e9-4e41-a56f-fe27a53e9e93
+		summarizeBy: none
+		sourceColumn: KEY_SUPPLIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_TERMS
+		dataType: string
+		isHidden
+		lineageTag: 28a69de7-de88-42e3-905e-2eb0bf4e129e
+		summarizeBy: none
+		sourceColumn: KEY_TERMS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_ACTIVITY
+		dataType: string
+		isHidden
+		lineageTag: 2dc497c0-c683-486f-b2df-cac3edd34b32
+		summarizeBy: none
+		sourceColumn: KEY_ACTIVITY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_ASSET
+		dataType: string
+		isHidden
+		lineageTag: 4445a7d1-014e-4cb6-9044-504f6e82519b
+		summarizeBy: none
+		sourceColumn: KEY_ASSET
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PRODUCT
+		dataType: string
+		isHidden
+		lineageTag: 65329922-126d-47e2-ba07-26c73b9446ef
+		summarizeBy: none
+		sourceColumn: KEY_PRODUCT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PO
+		dataType: string
+		isHidden
+		lineageTag: bca9c02b-a7f9-4b3b-915e-312745801ad8
+		summarizeBy: none
+		sourceColumn: KEY_PO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_PO_DIST
+		dataType: string
+		isHidden
+		lineageTag: 5733494a-e56d-4723-974f-aca0cd86185f
+		summarizeBy: none
+		sourceColumn: KEY_PO_DIST
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: fb769cc1-3e57-426c-8c2d-67c3eb1601b9
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_GL_ACCOUNT
+		dataType: string
+		lineageTag: 02d4900e-a9e5-4a0f-9417-58573359beb8
+		summarizeBy: none
+		sourceColumn: KEY_GL_ACCOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Creation_Method
+		dataType: string
+		lineageTag: fb0a5a6a-c7d0-4873-b7d2-d35bc5578820
+		summarizeBy: none
+		sourceColumn: Document_Creation_Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column Amount_Doc
+		dataType: double
+		lineageTag: 163be009-0fb7-4293-b9f8-075d293931cf
+		summarizeBy: none
+		sourceColumn: Amount_Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMOUNT_LOCAL
+		dataType: double
+		lineageTag: 834667fe-e61d-47c6-8c74-7277d11e759d
+		summarizeBy: none
+		sourceColumn: AMOUNT_LOCAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OPEN_AMOUNT_LOCAL
+		dataType: double
+		lineageTag: a37e3ed4-6704-4694-8dd9-4e7dc1a4fdf8
+		summarizeBy: none
+		sourceColumn: OPEN_AMOUNT_LOCAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AMOUNT_USD
+		dataType: double
+		lineageTag: c44175e2-017d-4eea-92fb-a5419907b052
+		summarizeBy: none
+		sourceColumn: AMOUNT_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OPEN_AMOUNT_USD
+		dataType: double
+		lineageTag: 84d534f6-db45-4ea1-b6f5-f78d930c07ba
+		summarizeBy: none
+		sourceColumn: OPEN_AMOUNT_USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LOCAL_CURRENCY
+		dataType: string
+		lineageTag: 2921b0ba-a867-4d3a-b238-1d0befba53cb
+		summarizeBy: none
+		sourceColumn: LOCAL_CURRENCY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Currency
+		dataType: string
+		lineageTag: 76ed9085-c699-45eb-a6b3-d6313c8e596b
+		summarizeBy: none
+		sourceColumn: Document_Currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOTE_TO_BUYER
+		dataType: string
+		lineageTag: 9e6c2f27-4742-4a81-9f6e-01e8d096dd9d
+		summarizeBy: none
+		sourceColumn: NOTE_TO_BUYER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 63b43059-8c0a-4ddf-832a-ca881d55b3f8
+		summarizeBy: none
+		sourceColumn: PO Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column PO_EXCHANGE_RATE
+		dataType: double
+		lineageTag: 3c0f5679-294e-4ac8-b057-abde71396a4e
+		summarizeBy: none
+		sourceColumn: PO_EXCHANGE_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PO_LINE
+		dataType: string
+		lineageTag: e87fea0e-7445-4f8f-be40-105905d297f6
+		summarizeBy: none
+		sourceColumn: PO_LINE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PO_NUMBER
+		dataType: string
+		lineageTag: 3f6d984a-40c5-4977-8a7c-da6d08656d8c
+		summarizeBy: none
+		sourceColumn: PO_NUMBER
+
+		annotation SummarizationSetBy = Automatic
+
+	column PO_YEARMONTH
+		dataType: string
+		lineageTag: dd4e8db0-48fb-426b-aac7-aca4ad5bd4f8
+		summarizeBy: none
+		sourceColumn: PO_YEARMONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column PREPAROR
+		dataType: string
+		lineageTag: 25b66bbf-8910-4d72-9e31-6f37d33a8ea8
+		summarizeBy: none
+		sourceColumn: PREPAROR
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROMISED_DATE
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 1d707742-5439-4e25-b4fe-3f411699d2b7
+		summarizeBy: none
+		sourceColumn: PROMISED_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column QUANTITY
+		dataType: double
+		lineageTag: 3d071660-297d-4d66-b3b3-c80dfd3a025e
+		summarizeBy: none
+		sourceColumn: QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OPEN_QUANTITY
+		dataType: double
+		lineageTag: 58ab0f89-1810-4f09-beb2-4ed7d247f3a8
+		summarizeBy: none
+		sourceColumn: OPEN_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REQUISITION_DATE
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: c26f7af5-135e-49b7-8e2b-7b061cc3f874
+		summarizeBy: none
+		sourceColumn: REQUISITION_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column REQUISITION_DESCRIPTION
+		dataType: string
+		lineageTag: 4882afa9-c739-4be0-a513-f1283476a18a
+		summarizeBy: none
+		sourceColumn: REQUISITION_DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column REQUISITION_NUMBER
+		dataType: string
+		lineageTag: b2ff32bb-7165-4af3-b206-26235d25c7ae
+		summarizeBy: none
+		sourceColumn: REQUISITION_NUMBER
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATUS
+		dataType: string
+		lineageTag: 9c9679aa-9a1e-4946-8089-1dde341247f4
+		summarizeBy: none
+		sourceColumn: STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Approval_Status
+		dataType: string
+		lineageTag: 1050ff76-b8b0-49ed-b5b3-f732c1ff213c
+		summarizeBy: none
+		sourceColumn: Approval_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column PO_Closure_Status
+		dataType: string
+		lineageTag: 2a23fa0d-02b7-490f-b1b3-a1e2b3f8dcbb
+		summarizeBy: none
+		sourceColumn: PO_Closure_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUPPLIER_PRODUCT
+		dataType: string
+		lineageTag: 850b5447-b4f5-45b7-a80b-1d6f865d347e
+		summarizeBy: none
+		sourceColumn: SUPPLIER_PRODUCT
+
+		annotation SummarizationSetBy = Automatic
+
+	column TYPE
+		dataType: string
+		lineageTag: e27bdeee-ffcf-43ec-9905-295a77ab460d
+		summarizeBy: none
+		sourceColumn: TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column UNIT_PRICE_LOCAL
+		dataType: double
+		lineageTag: b9547ebd-ee7b-4567-a057-dd30b9d0d597
+		summarizeBy: none
+		sourceColumn: UNIT_PRICE_LOCAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column URGENT_FLAG
+		dataType: string
+		lineageTag: ff65e87a-b192-41d8-a828-b108199dd542
+		summarizeBy: none
+		sourceColumn: URGENT_FLAG
+
+		annotation SummarizationSetBy = Automatic
+
+	column PO_Date
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 0be5831a-735c-4ecd-9f21-486bc25b0cae
+		summarizeBy: none
+		sourceColumn: PO_Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column GL_Natural_Account
+		dataType: string
+		lineageTag: 34b5f18a-9e11-41a4-a8c0-7e7ca6559868
+		summarizeBy: none
+		sourceColumn: GL_Natural_Account
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revision_Num
+		dataType: double
+		lineageTag: 48cb3ef4-fb9e-483d-9959-c04f8725d065
+		summarizeBy: none
+		sourceColumn: Revision_Num
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Matching_type
+		dataType: string
+		lineageTag: f901ff06-9572-4817-9d3f-52714391904a
+		summarizeBy: none
+		sourceColumn: Matching_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Month Prompt PO Period' =
+			IF(
+			    MONTH('PBI V_DG_PURCHASE_ORDER_LINES'[PO Date]) = MONTH(TODAY()) && YEAR('PBI V_DG_PURCHASE_ORDER_LINES'[PO_Date]) = YEAR(TODAY()),
+			    "Current Month",
+			    FORMAT('PBI V_DG_PURCHASE_ORDER_LINES'[PO Date], "MMM-YY"))
+		lineageTag: 2093c5b8-6c2b-459e-a48b-21b0416d4fd9
+		summarizeBy: none
+		sortByColumn: 'PO Period Sort'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PO Period Sort' = LOOKUPVALUE('PBI V_D_Date'[YearMonth],'PBI V_D_Date'[FullDate],'PBI V_DG_PURCHASE_ORDER_LINES'[PO Date])
+		lineageTag: e84464b8-8651-45ea-a76f-84b99b249ec7
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Aging_Order
+		dataType: string
+		lineageTag: 335fdcd3-3aae-4cbc-8686-5fd171605ee3
+		summarizeBy: none
+		sourceColumn: Aging_Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column PO_Date_Aging
+		dataType: string
+		lineageTag: 5a087d68-e6f4-4baa-90a4-058390079829
+		summarizeBy: none
+		sourceColumn: PO_Date_Aging
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_DG_PURCHASE_ORDER_LINES' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_F_PURCHASE_ORDER_LINES = Source{[Schema="PBI",Item="V_F_PURCHASE_ORDER_LINES"]}[Data]
+				in
+				    PBI_V_F_PURCHASE_ORDER_LINES
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,18 @@
+table 'Allowed Days'
+	lineageTag: 2a25f4e7-cc48-4ab7-8c22-41d712fdcc62
+
+	column Value
+		formatString: 0
+		lineageTag: 2f188b6b-401c-47bb-80ae-60a415c58a78
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Allowed Days' = calculated
+		mode: import
+		source = GENERATESERIES(0,300,1)
+
+	annotation PBI_Id = 7e0db27b23a34e96a09d359c4b698b11
+

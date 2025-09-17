@@ -1,0 +1,691 @@
+table 'PBI V_F_AP_INVOICES'
+	lineageTag: d4c3fc17-406c-42ce-96ed-b419066ff883
+
+	column Key_ENTITY
+		dataType: string
+		isHidden
+		lineageTag: 40459355-93b6-4c0e-80c4-a3fcf6e6cc3d
+		summarizeBy: none
+		sourceColumn: Key_ENTITY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Int_Org
+		dataType: string
+		isHidden
+		lineageTag: cd2e0fc2-292a-4958-9c2e-3d55e8030d1e
+		summarizeBy: none
+		sourceColumn: KEY_Int_Org
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INVOICE
+		dataType: string
+		isHidden
+		lineageTag: e2dd0323-0422-4b91-8d79-44838937a103
+		summarizeBy: none
+		sourceColumn: KEY_INVOICE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Pay_Term
+		dataType: string
+		isHidden
+		lineageTag: 2cb61bb4-ddaa-4c3a-9653-73f4bb6c24a5
+		summarizeBy: none
+		sourceColumn: Key_Pay_Term
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Status
+		dataType: string
+		isHidden
+		lineageTag: ed016b0f-ec83-41ef-a524-74d7ba0da637
+		summarizeBy: none
+		sourceColumn: Key_Status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Supplier
+		dataType: string
+		isHidden
+		lineageTag: 556dedd8-c1ef-4104-b32c-1cd15a079da9
+		summarizeBy: none
+		sourceColumn: KEY_Supplier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_Supplier_Account
+		dataType: string
+		isHidden
+		lineageTag: 2040e767-3ba8-4017-b78f-7c6d67755f94
+		summarizeBy: none
+		sourceColumn: KEY_Supplier_Account
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Amount Paid Doc'
+		dataType: double
+		lineageTag: f5a8b9bd-a2a0-4417-a640-a9cc49125538
+		summarizeBy: sum
+		sourceColumn: Amount Paid Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Amount Paid Loc'
+		dataType: double
+		lineageTag: d3dcf14e-96f8-485f-aa22-3ff3396a81e4
+		summarizeBy: sum
+		sourceColumn: Amount Paid Loc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Payment Month'
+		dataType: string
+		lineageTag: 2c3cee8b-a7b8-41a1-87de-a4fb2b6938b0
+		summarizeBy: none
+		sourceColumn: Payment Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wavg Contractual Sup'
+		dataType: double
+		lineageTag: 93356ee0-acb6-41be-9de8-3a9d55645f89
+		summarizeBy: sum
+		sourceColumn: Wavg Contractual Sup
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Wavg Contractual'
+		dataType: double
+		lineageTag: 7accde94-336e-41e1-b433-7c84fe943497
+		summarizeBy: sum
+		sourceColumn: Wavg Contractual
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Wavg Late Pay Sup'
+		dataType: double
+		lineageTag: 9f879146-9916-424e-81f5-f3ed4f4a245a
+		summarizeBy: sum
+		sourceColumn: Wavg Late Pay Sup
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Wavg Late Pay'
+		dataType: double
+		lineageTag: 6a04c5bd-d27a-42b3-946a-6009f82c96dc
+		summarizeBy: sum
+		sourceColumn: Wavg Late Pay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Wavg Pay Sup'
+		dataType: double
+		lineageTag: db2928da-9298-4750-8e47-3e0c0d6059e8
+		summarizeBy: sum
+		sourceColumn: Wavg Pay Sup
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Wavg Pay'
+		dataType: double
+		lineageTag: 007bb1ce-c89a-4a72-9137-3bd386fe8a62
+		summarizeBy: sum
+		sourceColumn: Wavg Pay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Spend Type'
+		dataType: string
+		lineageTag: 8bf2dfa5-19de-4def-9585-130d02fcd349
+		summarizeBy: none
+		sourceColumn: Spend Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Terms Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 2fa795c0-ed82-42d1-8a18-50001e01f5ec
+		summarizeBy: none
+		sourceColumn: Terms Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Payment Method code'
+		dataType: string
+		lineageTag: 4b2ac51d-d83a-4bc9-b3c7-9c7bfafce991
+		summarizeBy: none
+		sourceColumn: Payment Method code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Recived Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 640a8555-201c-4e94-9f9a-b6f5fb5393ec
+		summarizeBy: none
+		sourceColumn: Invoice Recived Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Inoice Type Lookup Code'
+		dataType: string
+		lineageTag: 4860963d-a417-48ec-b847-306137a8ebfc
+		summarizeBy: none
+		sourceColumn: Inoice Type Lookup Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pay Group Lookup Code'
+		dataType: string
+		lineageTag: 746dfde1-dc1d-400d-a2cc-893b5138bc41
+		summarizeBy: none
+		sourceColumn: Pay Group Lookup Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Amount Doc'
+		dataType: double
+		lineageTag: f0e08cef-039f-4213-afe5-d34e00150914
+		summarizeBy: sum
+		sourceColumn: Invoice Amount Doc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Invoice Amount Loc'
+		dataType: double
+		lineageTag: 5e44226a-e811-447b-97aa-0f275ab2d168
+		summarizeBy: sum
+		sourceColumn: Invoice Amount Loc
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Invoice Amount USD'
+		dataType: double
+		lineageTag: 8d65b37c-0ce0-483a-a9c2-f57e94dceade
+		summarizeBy: sum
+		sourceColumn: Invoice Amount USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Invoice Cretion Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 43acb639-ffde-4c98-8da9-d0fcb2872a09
+		summarizeBy: none
+		sourceColumn: Invoice Cretion Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Invoice Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 23096c66-d382-4db3-85f8-8bc3b3275988
+		summarizeBy: none
+		sourceColumn: Invoice Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Invoice Num'
+		dataType: string
+		lineageTag: 73b73dd7-1e8c-4645-b34b-99a77ff8d3c1
+		summarizeBy: none
+		sourceColumn: Invoice Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Amount Paid USD'
+		dataType: double
+		lineageTag: c037943a-1e58-4b70-9911-fab9573d5de0
+		summarizeBy: sum
+		sourceColumn: Amount Paid USD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Attachement Flag'
+		dataType: string
+		lineageTag: fd7d087c-c39c-43ae-9550-94689ea5b86a
+		summarizeBy: none
+		sourceColumn: Attachement Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Check Number'
+		dataType: string
+		lineageTag: 81df03bf-28bd-45ba-8b83-bb6abc43dcec
+		summarizeBy: none
+		sourceColumn: Check Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 09dfe104-bce8-4582-9bd0-7178ae8aaf24
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Doc Currency Code'
+		dataType: string
+		lineageTag: d56ac4fc-bd31-4958-8b3e-51133dc1056d
+		summarizeBy: none
+		sourceColumn: Doc Currency Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Due Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 2280d78a-efc7-4a90-ad54-c416011c0f1c
+		summarizeBy: none
+		sourceColumn: Due Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'GL Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 1233f7bd-ca96-4e52-b6e7-81a3d52d9284
+		summarizeBy: none
+		sourceColumn: GL Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Payment Status Flag'
+		dataType: string
+		lineageTag: 6449e56e-d082-49b0-b0e3-d726dddc23f1
+		summarizeBy: none
+		sourceColumn: Payment Status Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentStatus
+		dataType: string
+		lineageTag: bc3e136e-0f40-4014-a639-255d21def610
+		summarizeBy: none
+		sourceColumn: PaymentStatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Period'
+		dataType: string
+		lineageTag: c5c2236c-4a55-48b4-8030-a781dbb267fa
+		summarizeBy: none
+		sourceColumn: Invoice Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Due Period'
+		dataType: string
+		lineageTag: 42ef1650-cffb-4a03-8894-cde0cef170fa
+		summarizeBy: none
+		sourceColumn: Due Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GL Period'
+		dataType: string
+		lineageTag: 2a109240-912f-42ec-aa96-8d57e053888a
+		summarizeBy: none
+		sourceColumn: GL Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column RemainingAmount
+		dataType: double
+		lineageTag: 0cbcd5f9-b3e7-40f4-9ec5-4e165e0d87bd
+		summarizeBy: sum
+		sourceColumn: RemainingAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Payment Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 30e8f8a5-0f08-4590-9e10-d02ff35c7a94
+		summarizeBy: none
+		sourceColumn: Payment Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Payment Period'
+		dataType: string
+		lineageTag: 0e05fb89-3d5e-47f0-b3c9-937cbb0cf898
+		summarizeBy: none
+		sourceColumn: Payment Period
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Released'
+		dataType: string
+		lineageTag: 0148b1bd-cc3c-4d10-9d58-032ac915021f
+		summarizeBy: none
+		sourceColumn: Is Released
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hold Exists'
+		dataType: string
+		lineageTag: 79aad258-8750-42ac-841c-37c4daf1cfc9
+		summarizeBy: none
+		sourceColumn: Hold Exists
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hold Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 88714fbd-dba2-4e38-a63e-6be147ad2c45
+		summarizeBy: none
+		sourceColumn: Hold Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Release Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c7c53e28-2525-435f-b1bc-ab817b9f36f1
+		summarizeBy: none
+		sourceColumn: Release Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Voucher Number'
+		dataType: string
+		lineageTag: f64d87c4-7d0c-492e-9c9d-634a57c2d283
+		summarizeBy: none
+		sourceColumn: Voucher Number
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Matched Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 0e22ac93-9d98-428e-9708-39bf7df4a4b5
+		summarizeBy: none
+		sourceColumn: Invoice Matched Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column SOURCE
+		dataType: string
+		lineageTag: 0f2d1dd4-a895-46ea-ac7e-f6a0e818e7b7
+		summarizeBy: none
+		sourceColumn: SOURCE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ATTRIBUTE4
+		dataType: string
+		lineageTag: bee761a6-018b-4998-bb49-7235c12da99a
+		summarizeBy: none
+		sourceColumn: ATTRIBUTE4
+
+		annotation SummarizationSetBy = Automatic
+
+	column EARLY_Vs_LATE
+		dataType: string
+		lineageTag: 9f655e4b-9b68-4d83-aeb4-9273641c6e02
+		summarizeBy: none
+		sourceColumn: EARLY_Vs_LATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_btw_pay_due
+		dataType: double
+		lineageTag: a0edc226-b60b-449a-be14-4bc8066dd165
+		summarizeBy: sum
+		sourceColumn: days_btw_pay_due
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Early_Vs_Late_ondue
+		dataType: string
+		lineageTag: a2f49f7c-1d61-4216-a4d5-bffc522840b4
+		summarizeBy: none
+		sourceColumn: Early_Vs_Late_ondue
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_invoices
+		dataType: string
+		lineageTag: 1bd42767-aecd-4ab5-8bde-6925f2f40852
+		summarizeBy: none
+		sourceColumn: Total_invoices
+
+		annotation SummarizationSetBy = Automatic
+
+	column Invoice_Status_Code
+		dataType: string
+		lineageTag: a5c5f89b-d687-4518-91c1-5ebaeb8b9648
+		summarizeBy: none
+		sourceColumn: Invoice_Status_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 58f7e114-1545-450b-8165-632358f2950b
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	column RemainingAmountUSD
+		dataType: double
+		lineageTag: dfeca604-229e-427c-a0d5-c876c67f0a5b
+		summarizeBy: sum
+		sourceColumn: RemainingAmountUSD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RemainingAmountLOC
+		dataType: double
+		lineageTag: bc8ad59f-48aa-4794-b3ef-6046ab051d1f
+		summarizeBy: sum
+		sourceColumn: RemainingAmountLOC
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column KEY_GL_Account_LBLTY
+		dataType: string
+		lineageTag: 9661be31-6004-4bc5-9c13-231c48dff312
+		summarizeBy: none
+		sourceColumn: KEY_GL_Account_LBLTY
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_CREATED_BY
+		dataType: string
+		lineageTag: 8ebdaea0-c7e4-45e7-b60b-85c3cce2ff68
+		summarizeBy: none
+		sourceColumn: KEY_INV_CREATED_BY
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_INV_LAST_UPD_BY
+		dataType: string
+		lineageTag: c4986568-a2bf-421b-bcd4-c9bd3683ad2d
+		summarizeBy: none
+		sourceColumn: KEY_INV_LAST_UPD_BY
+
+		annotation SummarizationSetBy = Automatic
+
+	column STATUS_DESC
+		dataType: string
+		lineageTag: 6845aeae-9ade-456b-a0f0-560d91469569
+		summarizeBy: none
+		sourceColumn: STATUS_DESC
+
+		annotation SummarizationSetBy = Automatic
+
+	column INVOICE_STATUS
+		dataType: string
+		lineageTag: c79c5c39-8672-4d09-ac89-6f0f243a9421
+		summarizeBy: none
+		sourceColumn: INVOICE_STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column PAYMENT_CURRENCY_CODE
+		dataType: string
+		lineageTag: eb9366ce-ee22-48e9-9bfa-016e8cdde934
+		summarizeBy: none
+		sourceColumn: PAYMENT_CURRENCY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column Invoice_Count
+		dataType: double
+		lineageTag: 40ff66db-bdbb-4bc0-b437-d0593cfe81b0
+		summarizeBy: sum
+		sourceColumn: Invoice_Count
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Contractual_Terms
+		dataType: double
+		lineageTag: 7f04559c-99b3-418d-8d03-8e984a53ed3d
+		summarizeBy: sum
+		sourceColumn: Contractual_Terms
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column No_of_days_from_Inv
+		dataType: double
+		lineageTag: fe4d97c1-b015-494a-a2fc-9b0a5ddc5a3b
+		summarizeBy: sum
+		sourceColumn: No_of_days_from_Inv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column No_of_late_Day_to_pay
+		dataType: double
+		lineageTag: 3079a493-20fc-4941-a5d7-8080caeafead
+		summarizeBy: sum
+		sourceColumn: No_of_late_Day_to_pay
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column requestor
+		dataType: string
+		lineageTag: 9d2622fe-74f4-4210-999c-5d03da77176d
+		summarizeBy: none
+		sourceColumn: requestor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Accounted_Flag
+		dataType: string
+		lineageTag: 8fa2b0c4-76e3-4eb4-8cae-f6ecc53ec8e3
+		summarizeBy: none
+		sourceColumn: Accounted_Flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mex_UUID
+		dataType: string
+		lineageTag: bf6bb66f-1cef-47d7-b196-5b97ac0128b5
+		summarizeBy: none
+		sourceColumn: Mex_UUID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_F_AP_INVOICES' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_F_AP_INVOICES = Source{[Schema="PBI",Item="V_F_AP_INVOICES"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(PBI_V_F_AP_INVOICES, each [INVOICE_DATE] >= #"Date Range"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"AMOUNT_PAID_DOC", "Amount Paid Doc"}, {"AMOUNT_PAID_LOC", "Amount Paid Loc"}, {"PAYMENT_MONTH", "Payment Month"}, {"WAVG_CONTRACTUAL_SUP", "Wavg Contractual Sup"}, {"WAVG_CONTRACTUAL", "Wavg Contractual"}, {"WAVG_LATE_PAY_SUP", "Wavg Late Pay Sup"}, {"WAVG_LATE_PAY", "Wavg Late Pay"}, {"WAVG_PAY_SUP", "Wavg Pay Sup"}, {"WAVG_PAY", "Wavg Pay"}, {"Spend_Type", "Spend Type"}, {"TERMS_DATE", "Terms Date"}, {"PAYMENT_METHOD_CODE", "Payment Method code"}, {"INVOICE_RECEIVED_DATE", "Invoice Recived Date"}, {"INVOICE_TYPE_LOOKUP_CODE", "Inoice Type Lookup Code"}, {"PAY_GROUP_LOOKUP_CODE", "Pay Group Lookup Code"}, {"INVOICE_AMOUNT_DOC", "Invoice Amount Doc"}, {"INVOICE_AMOUNT_LOC", "Invoice Amount Loc"}, {"INVOICE_AMOUNT_USD", "Invoice Amount USD"}, {"INVOICE_CREATION_DATE", "Invoice Cretion Date"}, {"INVOICE_DATE", "Invoice Date"}, {"INVOICE_NUM", "Invoice Num"}, {"AMOUNT_PAID_USD", "Amount Paid USD"}, {"ATTACHMENT_FLAG", "Attachement Flag"}, {"CHECK_NUMBER", "Check Number"}, {"DESCRIPTION", "Description"}, {"DOC_CURRENCY_CODE", "Doc Currency Code"}, {"DUE_DATE", "Due Date"}, {"GL_DATE", "GL Date"}, {"PAYMENT_STATUS_FLAG", "Payment Status Flag"}, {"invoice_period", "Invoice Period"}, {"Due_Period", "Due Period"}, {"GL_Period", "GL Period"}, {"Payment_DATE", "Payment Date"}, {"PAYMENT_PERIOD", "Payment Period"}, {"IS_Released", "Is Released"}, {"Hold_Exists", "Hold Exists"}, {"HOLD_DATE", "Hold Date"}, {"Release_Date", "Release Date"}, {"VOUCHER_NUMBER", "Voucher Number"}, {"Invoice_Matched_Date", "Invoice Matched Date"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

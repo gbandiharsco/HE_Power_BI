@@ -1,0 +1,40 @@
+table Table
+	lineageTag: 1efb36f7-3cd1-4067-9746-3a741a5000ec
+
+	column KPI
+		dataType: string
+		lineageTag: 9ece6111-999e-4aa2-9638-be477d0ff8fb
+		summarizeBy: none
+		sourceColumn: KPI
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 370d4135-e1bf-4109-9f51-7360bcd94e5d
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Page
+		dataType: string
+		lineageTag: 061e6a6e-140e-4e61-b30f-ee190878bd45
+		summarizeBy: none
+		sourceColumn: Page
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Table = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("5ZdRb9s2EID/CpGnFsuAJMU69GEPnbVkBYLYs9MFQ9MHRqJlYjJlUJRb99fvjqQkUpJlSvHb/CSSd98dj3dH+suXi4geCvLC1DfGBNnRA0lKRi4uLyK+XjPJRMzq1VQyqlihSL4mb2YbFv9LEpi4JLOMUam/3xIqEhIBAkfI+ST2OY/ZxdfLHluw+EpTFn/a3N09yh7ZGSxqwACR/AxSXSxGC+ZPUntCMkA8Gpca0/a0tfUnxtONYgmh+xQjDcsLmSdlrCP6cZuXQsE8T8g3rjZA6B4MevoE6j4vQ+MTgDarusBZLpSksSppNoZpo9TPXIDBVbnbTdn1Cy2AkAsNyDiT/SbuMQ5opyhHm0HfA8040UHJKREatuQwYPquKjs7vZb51ik5kkvSFKOLqVJxptVgxXyAk3alaPyYy5QK/oMqDoM1IN1iN3i001h1SiZGrLb4mCuIifXz8yryQxPxZhM6NBDIPZMFmlwi02jUIXlgKfizh3PJRNzl3+fxSP4wfDEnEUp9TLlI9f7WJOlW+yI3YljscSlhUZmI8IJcQft4d0XUBuTM97MYT3l3DarvLcYOpnDeo+oHy6kGU0AfUPf6xpKq0RTS9Y1W/sWi6uGzYEXG4Ov6Jwj8fKcx+lT+KqlQXB3sJcGkb6xezmUCfiTaaj05oyCbZTDdoj5KKgooYUwNmzF+Ln0WHApQYnrrVHLdcEFabqHlfIBroQ3ryUuX2eQ3JPtx6lCma91+LBTZRKgpTxepv3vj5zJdqUDwksWM71Q/uz4LDYOydQ7hhVfHfbd8+ORnkO1XCRG5In/nZbzRGeNf6rW0dmHPktb5GwO9/Ndg60x1yaYTcXhhwB0CC/UYDjcu8dZPbAfPKLQ+aYNWv0X0LK92nWB7rHp3Y6OOsGmuq3LbXGOuIMT5d5qhmx1hfwk1yErQneEvjqr5S77ak+QKunS+Xh9V7xHpMe+GkLgx1BN+LPWRpLK+9+BBAR9VLkb2stWT1d2n75zIXLy+ZeMrvg1pK8SF8b9CNMu3uYQ3hmjg+D5zb3L3hutcf5WQW2mmh8R1vWEAFhjALZWHo+jOzd2Hxj4yBLayC3wIdYDuYqCjrkrV3oaIY/yLdCx7CsAsh0UNIJ0crVtOU2Yt0pJtKReYk42I0zd6GFjZjncByCpcw1xzBC16rXvKhjniYQt4JG2+0WvR/8yzhPzxHYJbmHfYSlFVFiRiRYzPiOfy6urm17kgKGgG5kGx8RRbVPhnsMXHiIEZsD9HbjOaEvKbNbBw0XaKSsVplh2092buWRD4DZIeuqSHXI1j/NNl3Ja+J2GJGtQ5st6CtA4W528dHnlc7whw9RzN4ygwqHucjFx4+/BQZ+ofw8wzNZBhI6/uIB7+fC3Ew/5fekhvutqoz+iOfSdv9MFeQvTf2gDD+z0hj4ed/qdnhAI0TxibB9ia95jq0Ruq4RF7OqU2ZCZ4N/qATmgeMdQU1ohNufaGASetTtrjktHtUfWgfByXhIGJNyrbglJsRF6F5NLIBArOmmmZEpoeU1Kizf76Hw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [KPI = _t, Description = _t, Page = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"KPI", type text}, {"Description", type text}, {"Page", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

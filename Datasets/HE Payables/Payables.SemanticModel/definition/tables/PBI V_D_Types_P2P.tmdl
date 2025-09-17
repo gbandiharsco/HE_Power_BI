@@ -1,0 +1,64 @@
+table 'PBI V_D_Types_P2P'
+	lineageTag: 310a5cc8-9ac3-4d5c-b223-0e3988602f5c
+
+	column Key_Type
+		dataType: string
+		lineageTag: 3ce580bd-3014-4346-9791-69d36b6130f6
+		summarizeBy: none
+		sourceColumn: Key_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type_Class
+		dataType: string
+		lineageTag: f09e970e-a0ad-47f8-a22a-92499be8b5a0
+		summarizeBy: none
+		sourceColumn: Type_Class
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type_Code
+		dataType: string
+		lineageTag: 76fd75d8-3eec-4849-9e4c-ddd54b6b4263
+		summarizeBy: none
+		sourceColumn: Type_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type_Desc
+		dataType: string
+		lineageTag: e35e8286-4b28-4107-a2c4-e68fb6ee1e4e
+		summarizeBy: none
+		sourceColumn: Type_Desc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type_Src_ID
+		dataType: string
+		lineageTag: 558de133-7902-4095-8e1f-2eb67d8292d7
+		summarizeBy: none
+		sourceColumn: Type_Src_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SourceSystemID
+		dataType: string
+		lineageTag: 15be56b9-540a-407f-bbee-cf9268706f56
+		summarizeBy: none
+		sourceColumn: SourceSystemID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI V_D_Types_P2P' = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(P_Server, P_Database),
+				    PBI_V_D_Types_P2P = Source{[Schema="PBI",Item="V_D_Types_P2P"]}[Data]
+				in
+				    PBI_V_D_Types_P2P
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+
