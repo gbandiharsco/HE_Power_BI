@@ -416,3 +416,13 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Power BI local settings and cache
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Environment files
+**/.env
+
+# Azure Data Factory files (if not required)
+*.adf
